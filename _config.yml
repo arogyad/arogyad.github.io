@@ -9,8 +9,8 @@ permalink:        pretty
 title:            ADlog
 tagline:          'Arogya Dahal'
 description:      'Welcome to my Blog!'
-url:              http://arogydhl.github.io
-baseurl:          /
+url:              'http://arogydhl.github.io'
+baseurl:          ""
 
 author:
   name:           'Arogya Dahal'
