@@ -1,0 +1,29 @@
+# Dependencies
+markdown:         kramdown
+highlighter:      pygments
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            ADlog
+tagline:          'Arogya Dahal'
+description:      'Welcome to my Blog!'
+url:              http://arogydhl.github.io
+baseurl:          /
+
+author:
+  name:           'Arogya Dahal'
+  url:            https://instagram.com/arogya_dahal
+
+paginate:         1
+
+# Custom vars
+version:          2.1.0
+
+instagram:        https://instagram.com/arogya_dahal
+
+plugins:
+  - jekyll-paginate
+  - jekyll-gist
+  - redcarpet

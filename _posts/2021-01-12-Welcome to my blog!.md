@@ -1,0 +1,6 @@
+---
+layout: post
+title: Welcome to my Blog!!
+published: true
+---
+I finally got around setting up the blog using Github and jekyll. The process was pretty easy and straightforward. I am  a 17 years old high school graduate. So you can expect sloppy codes and sloppy explanations. So yeah I will be posting stuffs like what I have made and what I am planning to make. I will also be creating blogs on how I made my Github projects.
