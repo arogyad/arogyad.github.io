@@ -4,10 +4,9 @@ title: Frontend Explanation
 published: true
 ---
 
-It's a bummer that I cannot show you live how the webapp works, I am trying to host this webapp on <a href='https://www.pythonanywhere.com' target='_blank'>Python Anywhere</a> and if it works I will update the blog. In the mean while  let me tell you how the dull looking frontend was made.
+It's a bummer that I cannot show you live how the webapp works, I am trying to host this webapp on <a href='https://www.heroku.com' target='_blank'>heroku</a> and if it works I will update the blog. In the mean while  let me tell you how the dull looking frontend was made.
 <div class = 'message'>
-  I am embarrassed to even link an image here, I will link the complete project once it's finished. You can, however, download the repo from GitHub and
-  check it out <a href='https://github.com/arogydhl/HandwrittenEquationSolverWebApp' target='_blank'> here </a>.
+ Edit: I have made necessary UI changes and I am happy with how it looks and performs. The template used was provided by <a herf='https://bootstrapmade.com/' target='_blank'>Bootstrap made</a>. I am also working on getting it live which won't take that long.
 </div>
 ## The Canvas
 The canvas is where we draw/write the mathematical operations; all the processes begin here. Honestly, this is the only part of the frontend, everything else on the screen are just helper functions. Let's start by defining the canvas, you can define a canvas with an id of `canvas` in html in this way:
