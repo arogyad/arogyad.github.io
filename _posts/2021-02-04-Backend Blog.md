@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 ---
 The backend, this is where the magic happens; all the processes, from decoding the image to sending the results out, all of this is done by this backend. The backend is straight forward, it accepts the base64 encoded image and sends it to the predictor class which does all the work. What really goes on in the predictor class is what this blog is about and with a little bit of computer vision (CNN only). 
 
