@@ -6,7 +6,7 @@ published: true
 
 It's a bummer that I cannot show you live how the webapp works, I am trying to host this webapp on <a href='https://www.heroku.com' target='_blank'>heroku</a> and if it works I will update the blog. In the mean while  let me tell you how the dull looking frontend was made.
 <div class = 'message'>
- Edit: I have made necessary UI changes and I am happy with how it looks and performs. The template used was provided by <a herf='https://bootstrapmade.com/' target='_blank'>Bootstrap made</a>. I am also working on getting it live which won't take that long.
+ Edit: I have made necessary UI changes and I am happy with how it looks and performs. The template used was provided by <a herf='https://bootstrapmade.com/' target='_blank'>Bootstrap made</a>. I am also working on getting it live which won't take that long. I have added square root and now you can integrate between any intervals. The github repo can be found <a href='https://github.com/arogydhl/HandwrittenEquationSolverWebApp' target='_blank'>here</a>. 
 </div>
 ## The Canvas
 The canvas is where we draw/write the mathematical operations; all the processes begin here. Honestly, this is the only part of the frontend, everything else on the screen are just helper functions. Let's start by defining the canvas, you can define a canvas with an id of `canvas` in html in this way:
