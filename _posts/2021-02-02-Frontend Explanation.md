@@ -6,7 +6,8 @@ published: true
 
 It's a bummer that I cannot show you live how the webapp works, I am trying to host this webapp on <a href='https://www.heroku.com' target='_blank'>heroku</a> and if it works I will update the blog. In the mean while  let me tell you how the dull looking frontend was made.
 <div class = 'message'>
- Edit: I have made necessary UI changes and I am happy with how it looks and performs. The template used was provided by <a herf='https://bootstrapmade.com/' target='_blank'>Bootstrap made</a>. I am also working on getting it live which won't take that long. I have added square root and now you can integrate between any intervals. The github repo can be found <a href='https://github.com/arogydhl/HandwrittenEquationSolverWebApp' target='_blank'>here</a>. 
+ Edit: I have made necessary UI changes and I am happy with how it looks and performs. The template used was provided by <a herf='https://bootstrapmade.com/' target='_blank'>Bootstrap made</a>. The website is now live <a href='https://arogyad.herokuapp.com/' target='_blank'>here</a>. The site is hosted on Heroku's free tier so it is very slow; the problem with the site being slow is that the results provided by the web app can be wrong sometimes, or most of the time depending on the resources remaining on my Heroku account, so I would like to apologize if the web app doesn't provide the correct results. However, if you want to view the web app as I would have wanted you to view it, you can clone <a href='https://github.com/arogydhl/HandwrittenEquationSolverWebApp' target='_blank'>this</a> Github repo.
+
 </div>
 ## The Canvas
 The canvas is where we draw/write the mathematical operations; all the processes begin here. Honestly, this is the only part of the frontend, everything else on the screen are just helper functions. Let's start by defining the canvas, you can define a canvas with an id of `canvas` in html in this way:
