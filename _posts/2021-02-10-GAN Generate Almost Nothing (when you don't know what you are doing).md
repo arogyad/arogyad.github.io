@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'GAN-Generate Almost Nothing (when you don't know what you are doing)'
+title: GAN: Generate Almost Nothing (when you don't know what you are doing)
 published: true
 ---
 
