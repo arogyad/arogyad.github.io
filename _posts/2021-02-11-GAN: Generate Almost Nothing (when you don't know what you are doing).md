@@ -2,7 +2,7 @@
 published: true
 ---
 ---
-title: GAN: Generate Almost Nothing (when you don't know what you are doing)
+title: 'GAN: Generate Almost Nothing (when you don't know what you are doing)'
 ---
 
 GANs are pretty cool right? Yeah they are unless you don't know what you are doing and this is where I come in entry. I had a hard time creating a something that could actually create something other than random black and white dots on the screen. I just overestimated myself and underestimated GANs, I was a fool. I fooled myself into believing that they were 'just 2 model fighting against each other' which it was until it wasn't. My first mistake was understanding GANs in 'same network but 2' way. They are two networks no doubt but they are so sensitive to small things changes. My second mistake was trying to be fancy, which not only made increased my training time but also made the images look worse. I think this was because my images are really simple, they are just black and white numbers (<a href='http://yann.lecun.com/exdb/mnist/' target='_blank'>MNIST</a>), I might be wrong don't quote me on that (please). So yeah what I should have done was to use parameters that actually work and keep it simple, making it complex isn't always better and also I should have seen some videos on youtube on creating GANs.
