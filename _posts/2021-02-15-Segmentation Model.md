@@ -1,7 +1,4 @@
 ---
-published: true
----
----
 layout: post
 title: 'Cuda out of memory' is cool and all but have you ever tried frying your CPU!
 published: true
