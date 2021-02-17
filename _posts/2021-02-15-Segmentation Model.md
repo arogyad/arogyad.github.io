@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Cuda out of memory' is cool and all but have you ever tried frying your CPU!
+title: "Cuda out of memory" is cool and all but have you ever tried frying your CPU!
 published: true
 ---
 While there are many things that one can worry about, the thing that gets me the most worried is not knowing if today is the last day my laptop will have a working CPU. I feel so bad for my CPU, it has gone through so much i.e from me trying to play triple-A titles to making it render a video in the highest possible quality even though my screen cannot even display one-third of that resolution. My CPU is pretty cool, it does like to work but I feel like I have given it so much negative reward that it has now developed an algorithm by itself which tries to minimize this workload while trying to give optimal performance. You might be wondering why I am talking about these kinds of stuff, or why I tried rendering that video, well a couple of weeks ago I almost fried my CPU, okay I am exaggerating a little ( a lot maybe) but it was a little worrying not gonna lie.
