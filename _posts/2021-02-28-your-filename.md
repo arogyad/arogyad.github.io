@@ -1,7 +1,4 @@
 ---
-published: false
----
----
 title: Simplest Library Management System
 layout: post
 published: true
