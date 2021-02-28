@@ -4,6 +4,7 @@ published: false
 ---
 title: Simplest Library Management System
 layout: post
+published: true
 ---
 I have always wanted to learn JavaScript and some of it's libraries, the more mainstream ones, like <a href='https://www.electronjs.org/' target='_blank'>electronjs</a>,<a href='https://v3.vuejs.org/' target='_blank'> vue </a> etc. So last week I gave it a try, I originally had the idea to just read the docs and understand about them, but I am distracted easily and I find reading a little boring. So like most youtube videos on teaching programming would suggest you, I tried making a library management system. This project was a learning process, which was made super simple by the great documentation provided on electron's website. I didn't use vue because I find vanilla JavaScript cute ( I hope this doesn't sound weird ) plus this was a super simple project and I didn't want to complicate it. Electron also makes it super simple to package and distribute your projects, but I haven't checked that out.
 
