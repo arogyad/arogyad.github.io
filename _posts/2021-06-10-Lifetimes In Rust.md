@@ -102,9 +102,9 @@ fn main() {
 ```
 This will work as `_x` is available for the entire lifetime of the smallest lifetime of the parameter to the function from where it gets its reference return. 
 
-Or, change the lifetime of the return type.
+Or, something like this.
 ```rust
-fn foo<'a>(x: &'a i32, y: &i32) -> &'a i32 {
+fn foo<'a>(x: &'a i32, y: &'a i32) -> &'a i32 {
     if x < y {
         x
     } else {
@@ -113,17 +113,18 @@ fn foo<'a>(x: &'a i32, y: &i32) -> &'a i32 {
 }
 fn main() {
     let k: i32 = 100;
-    let _x;
+    let p;
+    let x_ref;
     {
-        let p: i32 = 200;
-        _x = foo(&k, &p);
+        p: i32 = 200;
+        x_ref = foo(&k, &p);
     }
-    println!("{}",_x);
+    println!("{}", x_ref);
 }
 ```
 Here, the returned reference exists for the entire lifetime of `k`.
 
-Lifetime are used to provide the returned reference with the lifetime, the lifetime of reference type should be one of parameter's lifetime. If the lifetime on the returned type isn't the lifetime one of the function parameter, it is an error.
+The lifetime of returned reference type should be one of parameter's lifetime. If the lifetime on the returned type isn't the lifetime one of the function parameter, it is an error.
 
 This is a very bad, high level overview of lifetime, great amount of features about lifetime are yet to be discussed. You can read more about it from the references below:
  -  <a href="https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html">The Rust Programming Language Book (Chapter 10)</a> 
