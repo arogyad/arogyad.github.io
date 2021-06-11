@@ -127,5 +127,5 @@ Here, the returned reference exists for the entire lifetime of `k`.
 The lifetime of returned reference type should be one of parameter's lifetime. If the lifetime on the returned type isn't the lifetime one of the function parameter, it is an error.
 
 This is a very bad, high level overview of lifetime, great amount of features about lifetime are yet to be discussed. You can read more about it from the references below:
- -  <a href="https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html">The Rust Programming Language Book (Chapter 10)</a> 
- - <a href="https://doc.rust-lang.org/rust-by-example/scope/lifetime/explicit.html">Rust by Example (Explicit Annotations)</a>  
+ -  <a href="https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html" target='_blank'>The Rust Programming Language Book (Chapter 10)</a> 
+ - <a href="https://doc.rust-lang.org/rust-by-example/scope/lifetime/explicit.html" target='_blank'>Rust by Example (Explicit Annotations)</a>  
