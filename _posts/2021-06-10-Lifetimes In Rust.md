@@ -27,7 +27,7 @@ int main() {
         p = &foo(a,b);
         std::cout << &b << std::endl;
     }
-    std::cout << &(*p) << std::endl;
+    std::cout << p << std::endl;
 }
 ```
 ```
