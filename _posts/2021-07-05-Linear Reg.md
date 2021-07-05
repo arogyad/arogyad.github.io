@@ -249,45 +249,36 @@ $$
 C = \frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2
 $$
 </span>
-
 $$
 Taking\> derivation\> wrt \> "\theta",
 $$
-
 <span style="display:table;margin:0 auto;">
 $$
-\frac{\delta C}{\delta \theta} = \frac{\frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2}{\theta}
+\frac{\delta C}{\delta \theta} = \frac{\frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2}{d\theta}
 $$
 </span>
-
 <span style="display:table;margin:0 auto;">
 $$
-\frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{\theta}
+\frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{d\theta}
 $$
 </span>
-
 <span style="display:table;margin:0 auto;">
 $$
-\frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{(h_\theta\relax(x_i)-y_i)}\times\frac{(h_\theta\relax(x_i)-y_i)}{\theta}
+\frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{d(h_\theta\relax(x_i)-y_i)}\times\frac{d(h_\theta\relax(x_i)-y_i)}{d\theta}
 $$
 </span>
-
 <span style="display:table;margin:0 auto;">
 $$
-\frac{\delta C}{\delta \theta} = \frac{1}{\cancel{2}m}\times\cancel{2}\times\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i) \lparen \frac{h_\theta\relax(x_i)}{\theta} - \frac{y_i}{\theta}\rparen
+\frac{\delta C}{\delta \theta} = \frac{1}{\cancel{2}m}\times\cancel{2}\times\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i) \lparen \frac{dh_\theta\relax(x_i)}{d\theta} - \frac{dy_i}{d\theta}\rparen
 $$
 </span>
-
-$$We \> know \> h_\theta\relax(x_i) = \theta X \> and \> \frac{y_i}{\theta} = 0,$$
-
+$$We \> know \> h_\theta\relax(x_i) = \theta X \> and \> \frac{dy_i}{d\theta} = 0,$$
 <span style="display:table;margin:0 auto;">
 $$
-\frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)(\frac{\cancel{\theta} X}{\cancel{\theta}})
+\frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)(\frac{\cancel{d\theta} X}{\cancel{d\theta}})
 $$
 </span>
-
 $$So \> we \> have,$$
-
 <span style="display:table;margin:0 auto;">
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)X
