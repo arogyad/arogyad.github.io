@@ -3,10 +3,10 @@ published: true
 title: Simple Linear Regression For Simple Soul
 layout: post
 ---
-Okay! Linear regression, the basic of the regression analysis. There is surely another better implementation of linear regression in some other language that is faster and more intuitive than the one that we will be writing. So why would anyone want another linear regression implementation?. I don't have an answer to be honest, this is from a project that I am currently working in and I thought maybe I could share it here, as there lacked a connection between the implementation side and the mathematical side of linear regression.  Here we will be looking at the maths and at the same time implement that maths into code. The codes will be choppy as this is an initial prototype (classic excuse) so sorry about that!!
+Okay! Linear regression, the basic of the regression analysis. There are surely better implementations of linear regression in some other language that is faster and more intuitive than the one that we will be writing. So why would anyone want another linear regression implementation?. I don't have an answer to be honest, this is from a project that I am currently working on, and I thought maybe I could share it here, as there lacked a connection between the implementation side and the mathematical side of linear regression.  Here we will be looking at the maths and at the same time implement that maths into code. The codes will be choppy as this is an initial prototype (classic excuse) so sorry about that!!
 
 # Maths?!
-The <a href="https://en.wikipedia.org/wiki/Linear_regression">wikipedia page</a> for linear regression is the best summary on linear regression. The maths is concrete and clear to understand as it needs only the basic understanding of matrices and linear equation. Okay! So let's get into just a bit of maths and then a bit of coding in between.
+The <a href="https://en.wikipedia.org/wiki/Linear_regression">wikipedia page</a> for linear regression is the best summary on linear regression. The maths is concrete and clear to understand as it needs only the basic understanding of matrices and linear algebra. Okay! So let's get into just a bit of maths and then a bit of coding in between.
 
 Linear regression ,as the name suggests, predicts the relation between a dependent variable $$y$$ based on a single or set of explanatory variables $$x$$ under the assumption that the data is linear.  We know that a linear equation is given as: $$y = mx + c$$ so in a linear regression we are trying to predict the $$m$$ parameter which I prefer to call $$\theta$$ as it is just the slope. So linear regression boils down to finding the slope of the given data. This is everything that you need to know tbh, other things just naturally follow as we code along. 
 
@@ -17,7 +17,7 @@ This blog will produce the most basic form of linear regression. Our optimizer w
 
 Here, $$\varDelta F\relax(x)$$ is the gradient of the function $$F \relax(x)$$, $$\gamma_n$$ is a often called a step-size. SGD is used all over the place, and it is also the father of other optimization methods like Adam. Enough with this jargon lets get writing.
 
-Okay! So the first thing that we need is basic amount of matrix algebra. Lets say we have want to predict a dependent variable $$y$$ based on explanatory variables $$X$$. Lets say that we have $$p$$ numbers of features that we can predict our results from and there are $$n$$ number of samples. 
+Okay! So the first thing that we need is basic amount of matrix algebra. Lets say we want to predict a dependent variable $$y$$ based on explanatory variables $$X$$. Lets say that we have $$p$$ numbers of features that we can predict our results from and there are $$n$$ number of samples. 
 
 So the explanatory matrix ($$X$$) can be given as,
 
@@ -33,7 +33,7 @@ x_{n1} & \cdots & x_{np}
 }
 $$</span>
 
-The size of the matrix $$X$$ is $$n \times p$$ on wikipedia you will see a extra column at the beginning consisting of all $$1s$$ but we won't struggle with that here as this is a very simple implementation. In computer terms, $$X$$ is what we feed to the model to predict from. 
+The size of the matrix $$X$$ is $$n \times p$$ on wikipedia you will see a extra column at the beginning consisting of all $$1s$$ but we won't struggle with that here as this is a very simple implementation. In computer terms, $$X$$ is what we feed to the model to predict from or train from depending on the situation. 
 
 Lets define the $$y$$ now. So there can only be one prediction to a series of input features so the shape of prediction(dependent) matrix is $$n \times 1.$$ In matrix terms,
 
@@ -51,7 +51,7 @@ $$
 </span>
 
 This is the labels that we will be sending to the model to learn from and also the prediction we get from the trained model.
-Now the part that we predict, $$\theta$$. The $$\theta$$ is of shape $$p \times 1$$ so that we can multiply it with $$X$$. As for two matrices to be able to multiply with each other the number of rows on second matrix must be equal to number of columns on second matrix.  So, as a tradition here is the matrix representation.
+Now the part that we predict, $$\theta$$. The $$\theta$$ is of shape $$p \times 1$$ so that we can multiply it with $$X$$. As for two matrices to be able to multiply with each other the number of rows on second matrix must be equal to number of columns on second matrix.  As a tradition here in this blog lets her is the matrix representation.
 
 <span style="display:table;margin:0 auto;">
 $$
@@ -196,7 +196,7 @@ C = \frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2
 $$
 </span>
 
-This is the cost function which is the average of loss function(this is why we have $$\frac{1}{2m}$$ there. The $$2$$ doesn't matter, it is there to make the equation look prettier after we take the derivative). Here $$m$$ is the number of rows. So, the gradient descent will optimize according to this cost function. Taking the derivative wrt. each $$\theta$$. You can check out the derivation on the bottom of the page. I cannot guarantee that it is correct, as it is something I did, but it is intuitive.
+This is the cost function which is the average of loss function(this is why we have $$\frac{1}{2m}$$ there. The $$2$$ doesn't matter, it is there to make the equation look prettier after we take the derivative). Here $$m$$ is the number of rows. So, the gradient descent will optimize according to this cost function. Taking the derivative wrt. each $$\theta$$. You can check out the derivation on the bottom of the page. I cannot guarantee that it is correct, as it is something I did, but it is intuitive?
 
 <span style="display:table;margin:0 auto;">
 $$
@@ -213,9 +213,13 @@ $$
 </span>
 
 Then, we divide it by `self.data.nrows()` as in the equation to get the final value. The extra `gamma` parameter is the step-size as in the equation
+
 <span style="display:table;margin:0 auto;">$$x_{n+1} = x_n - \gamma_n \varDelta F(\relax{x})$$</span>
+
 Now the final step, taking it all together. We subtract the `delta` from `self.theta` to get the new theta value. This is equivalent to the equation above. In terms of our code, the mathematical equation is given as:
+
 <span style="display:table;margin:0 auto;">$$\theta_{n+1} = \theta_n - \gamma \frac{\delta C}{\delta \theta}$$</span>
+
 The `iter` parameter is the number of iteration, surprised? Okay now the final part, the training. Lets create a training function.
 ```rust
 pub fn train(&mut self, alpha: f64, iter: i32) {
