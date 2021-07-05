@@ -21,7 +21,7 @@ Okay! So the first thing that we need is basic amount of matrix algebra. Lets sa
 
 So the explanatory matrix ($X$) can be given as,
 <span style="display:table;margin:0 auto;">
-$
+$$
 X = {
 \begin{pmatrix}
 x_{11} & \cdots & x_{1p} \\
@@ -30,7 +30,7 @@ x_{21} & \cdots & x_{2p} \\
 x_{n1} & \cdots & x_{np}
 \end{pmatrix}
 }
-$</span>
+$$</span>
 The size of the matrix $X$ is $n \times p$ on wikipedia you will see a extra column at the beginning consisting of all $1s$ but we won't struggle with that here as this is a very simple implementation. In computer terms, $X$ is what we feed to the model to predict from. 
 
 Lets define the $y$ now. So there can only be one prediction to a series of input features so the shape of prediction(dependent) matrix is $n \times 1.$ In matrix terms,
