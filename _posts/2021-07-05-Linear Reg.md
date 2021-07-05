@@ -20,6 +20,7 @@ Here, $$\varDelta F\relax(x)$$ is the gradient of the function $$F \relax(x)$$, 
 Okay! So the first thing that we need is basic amount of matrix algebra. Lets say we have want to predict a dependent variable $$y$$ based on explanatory variables $$X$$. Lets say that we have $$p$$ numbers of features that we can predict our results from and there are $$n$$ number of samples. 
 
 So the explanatory matrix ($$X$$) can be given as,
+
 <span style="display:table;margin:0 auto;">
 $$
 X = {
@@ -31,9 +32,11 @@ x_{n1} & \cdots & x_{np}
 \end{pmatrix}
 }
 $$</span>
+
 The size of the matrix $$X$$ is $$n \times p$$ on wikipedia you will see a extra column at the beginning consisting of all $$1s$$ but we won't struggle with that here as this is a very simple implementation. In computer terms, $$X$$ is what we feed to the model to predict from. 
 
 Lets define the $$y$$ now. So there can only be one prediction to a series of input features so the shape of prediction(dependent) matrix is $$n \times 1.$$ In matrix terms,
+
 <span style="display:table;margin:0 auto;">
 $$
 y = {
@@ -46,8 +49,10 @@ y_n
 }
 $$
 </span>
+
 This is the labels that we will be sending to the model to learn from and also the prediction we get from the trained model.
 Now the part that we predict, $$\theta$$. The $$\theta$$ is of shape $$p \times 1$$ so that we can multiply it with $$X$$. As for two matrices to be able to multiply with each other the number of rows on second matrix must be equal to number of columns on second matrix.  So, as a tradition here is the matrix representation.
+
 <span style="display:table;margin:0 auto;">
 $$
 \theta = {
@@ -59,10 +64,13 @@ $$
 \end{pmatrix}
 }
 $$</span>
+
 In this implementation we will be ignoring the $$\varepsilon$$ - error variable. Now combining all these things together, our final equation is given as:
+
 <span style="display:table;margin:0 auto;">
 $$y = X\theta$$
 </span>
+
 <span style="display:table;margin:0 auto;">
 $${
 \begin{pmatrix}
@@ -89,6 +97,7 @@ x_{n1} & \cdots & x_{np}
 }
 $$
 </span>
+
 <span style="display:table;margin:0 auto;">
 $$
 \begin{pmatrix}
@@ -104,10 +113,13 @@ x_{21}\theta_1+x_{22}\theta_2+\cdots+x_{2p}\theta_p \\
 x_{n1}\theta_1+x_{n2}+\cdots+x_{np}\theta_p
 \end{pmatrix}
 $$</span>
+
 This above equation is what we are trying to predict and the shape of the matrix is $$n \times 1$$. I am sorry about being unable to name the equation, I am unable to figure out the way to do it. So this function passes through origin,but this isn't optimal. The process of adding a y-intercept will be left for the reader as an exercise. Here is a hint though.
+
 <span style="display:table;margin:0 auto;">
 $$y = X\theta + \varepsilon$$
 </span>
+
 <span style="display:table;margin:0 auto;">
 $$
 \begin{pmatrix}
@@ -177,23 +189,29 @@ The initialization of `delta` variable looks complex, but I promise if I had spl
 The `delta` here is the vectorized form of gradient descent that we saw earlier. Okay so now a bit of maths :). 
 
 The cost function for linear regression is defined as:
+
 <span style="display:table;margin:0 auto;">
 $$
 C = \frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2
 $$
 </span>
+
 This is the cost function which is the average of loss function(this is why we have $$\frac{1}{2m}$$ there. The $$2$$ doesn't matter, it is there to make the equation look prettier after we take the derivative). Here $$m$$ is the number of rows. So, the gradient descent will optimize according to this cost function. Taking the derivative wrt. each $$\theta$$. You can check out the derivation on the bottom of the page. I cannot guarantee that it is correct, as it is something I did, but it is intuitive.
+
 <span style="display:table;margin:0 auto;">
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)x
 $$
 </span>
+
 And then finally, relating this to the code above. `(self.hypo() - &self.label)` is the $$(h_\theta\relax(x_i)-y_i)$$ part. Then we `reversed_axis`, which is done to allow the multiplication between the afforementioned value and $$x$$. So this code `(self.hypo()-&self.label).reversed_axes().dot(&self.data)).reversed_axes()` is equivalent to the following expression.
+
 <span style="display:table;margin:0 auto;">
 $$
 \displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)x
 $$
 </span>
+
 Then, we divide it by `self.data.nrows()` as in the equation to get the final value. The extra `gamma` parameter is the step-size as in the equation
 <span style="display:table;margin:0 auto;">$$x_{n+1} = x_n - \gamma_n \varDelta F(\relax{x})$$</span>
 Now the final step, taking it all together. We subtract the `delta` from `self.theta` to get the new theta value. This is equivalent to the equation above. In terms of our code, the mathematical equation is given as:
@@ -225,41 +243,51 @@ fn main() {
 ```
 There are lot of roads one can go from here. We could add a error-var or create a different optimization algorithm. Thank you for reading, have a great day(or night). 
 The derivation of the loss function is given as. Here, when we derivate the $$\theta$$ is $$\theta_j$$ and the equation is $$h_\theta\relax(x_i) = \theta_j X$$  but for simplicity sake we will be putting it as $$\theta$$ and $$h_\theta\relax(x_i) = \theta X$$.
+
 <span style="display:table;margin:0 auto;">
 $$
 C = \frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2
 $$
 </span>
+
 $$
 Taking\> derivation\> wrt \> "\theta",
 $$
+
 <span style="display:table;margin:0 auto;">
 $$
 \frac{\delta C}{\delta \theta} = \frac{\frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2}{\theta}
 $$
 </span>
+
 <span style="display:table;margin:0 auto;">
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{\theta}
 $$
 </span>
+
 <span style="display:table;margin:0 auto;">
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{(h_\theta\relax(x_i)-y_i)}\times\frac{(h_\theta\relax(x_i)-y_i)}{\theta}
 $$
 </span>
+
 <span style="display:table;margin:0 auto;">
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{\cancel{2}m}\times\cancel{2}\times\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i) \lparen \frac{h_\theta\relax(x_i)}{\theta} - \frac{y_i}{\theta}\rparen
 $$
 </span>
+
 $$We \> know \> h_\theta\relax(x_i) = \theta X \> and \> \frac{y_i}{\theta} = 0,$$
+
 <span style="display:table;margin:0 auto;">
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)(\frac{\cancel{\theta} X}{\cancel{\theta}})
 $$
 </span>
+
 $$So \> we \> have,$$
+
 <span style="display:table;margin:0 auto;">
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)X
