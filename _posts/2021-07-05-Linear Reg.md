@@ -297,6 +297,3 @@ $$
 \frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)X
 $$
 </span>
-
-$a^2 + b^2 = c^2$
-$$a^2 + b^2 = c^2$$
