@@ -1,6 +1,5 @@
 ---
 title: Polynomial Features Extraction 
-author: Arogya Dahal
 date: 2021-07-15
 published: true
 type: post
@@ -68,7 +67,6 @@ x_{n1} & x{n2} & \cdots & x_{np} \\
 $$
 </span>
 So, if this new $$X$$ was to be shown in the form as before, it would be something like this:
-<span style="align: left;">
 $$
 \begin{pmatrix}
 y_1 \\
@@ -90,7 +88,6 @@ x_{n1} & x_{n2} & \cdots & x_{np} & x^2_{n1} & x^2_{n2} & \cdots & x^2_{np} & \c
 \theta_{p\times m}
 \end{pmatrix}
 $$
-</span>
 That looks like a awfully long matrix, doesn't it? Here we first raise the power of each component of the matrix $$X$$ from 1 to $$m$$ and concatenate each of those to the original matrix. The shape of the matrix we are predicting changes as well: the same of the matrix \theta becomes $(m*p)\times 1$. This is still a linear regression, as the component we want to predict($$\theta$$) is linear.
 
 Now, lets view another way of making that same $X$ matrix even longer. This one requires us to write it in a more *algorithmic* style.
