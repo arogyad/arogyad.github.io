@@ -5,7 +5,7 @@ published: true
 type: post
 ---
 
-Polynomial regression adds a new feature to the normal linear regression. Something very simple and requires only one change from the classic linear regression. Polynomial regression is useful if the explanatory variable and the dependent variables are related in not linear way. For example: We need food to get energy but if we eat a lot we get tired so, a parabolic pattern is formed; When we have food in a healthy amount, we get the maximum energy,but if the opposite happens we get lazy and might go to bed faster. By the way, the last sentence is absolutely, scientifically correct and is perfect representation of polynomial representation. Polynomial is still linear in that the term that we are predicting ($$\theta$$) is linear. So polynomial regression is linear regression with polynomial features of the data. (By the way, I get the ideas for the blogs from <a href="https://pbs.twimg.com/media/DyfDnBnWsAAJ456.jpg">here</a>.)
+Polynomial regression adds a new feature to the normal linear regression. Something very simple and requires only one change from the classic linear regression. Polynomial regression is useful if the explanatory variable and the dependent variables are related in not linear way. For example: We need food to get energy but if we eat a lot we get tired so, a parabolic pattern is formed; When we have food in a healthy amount, we get the maximum energy,but if the opposite happens we get lazy and might go to bed faster. By the way, the last sentence is absolutely, scientifically correct and is perfect representation of polynomial representation. Polynomial is still linear in that the term that we are predicting ($$\theta$$) is linear. So polynomial regression is linear regression with polynomial features of the data. (By the way, I get the ideas for the blogs from <a href="https://pbs.twimg.com/media/DyfDnBnWsAAJ456.jpg" target="_blank">here</a>.)
 
 ## Little Maths
 
@@ -118,11 +118,11 @@ So for a polynomial degree $$m$$, the additional matrix to be concatenated can b
 $$Final \> X = ( X \cdots X_1^m \cdots X_1^{m-1}X_2^1 \cdots X_2^m )$$
 </span>
 
-Here, $$X_1^{m-1}X_2^1$$ means element wise exponent of $$X_1$$ to $$m-1$$ and $$X_2$$ to $$1$$, and the element wise multiplication of the result of exponential. The result is, then, concatenated to the original $$X$$. This is same as how polynomial feature extraction works in <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html">sk-learn</a>.
+Here, $$X_1^{m-1}X_2^1$$ means element wise exponent of $$X_1$$ to $$m-1$$ and $$X_2$$ to $$1$$, and the element wise multiplication of the result of exponential. The result is, then, concatenated to the original $$X$$. This is same as how polynomial feature extraction works in <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html" target="_blank">sk-learn</a>.
 
 ## Coding
 
-Programming this aforementioned process is pretty simple. We have to expand it to its binomial expansion without the coefficient, and the rest is the same as the ordinary linear regression. The feature extraction can be given as such in ***Rust***. Also this is just the follow up to my previous <a href="https://arogyad.github.io/2021/07/05/Linear-Reg/">blog</a>. The implementation can be written inside the `impl` block of the either `Poly`(If you want to treat is as a different type of machine learning model) or `Linear` struct (If you treat it as a feature extraction only.)
+Programming this aforementioned process is pretty simple. We have to expand it to its binomial expansion without the coefficient, and the rest is the same as the ordinary linear regression. The feature extraction can be given as such in ***Rust***. Also this is just the follow up to my previous <a href="https://arogyad.github.io/2021/07/05/Linear-Reg/" target="_blank">blog</a>. The implementation can be written inside the `impl` block of the either `Poly`(If you want to treat is as a different type of machine learning model) or `Linear` struct (If you treat it as a feature extraction only.)
 ```rust
 fn make_poly(data: &mut Array2<T>, poly: i32) {
 	let split = (data.ncols() / 2) as usize;
