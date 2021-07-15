@@ -1,7 +1,7 @@
 ---
 title: Polynomial Features Extraction 
 author: Arogya Dahal
-date: 2021-07-28
+date: 2021-07-15
 published: true
 type: post
 ---
@@ -22,7 +22,8 @@ x_3 & x^2_3 & \cdots & x^m_3 \\
 \vdots & \vdots & \ddots & \vdots \\
 x_n & x^2_n & \cdots & x^m_n \\
 \end{pmatrix} 
-$$ 
+$$
+,
 $$y = X \theta$$
 </span>
 We will be leaving out the $$\varepsilon$$ part to make the discussion more simpler. So the final equation can be given as,
@@ -67,7 +68,7 @@ x_{n1} & x{n2} & \cdots & x_{np} \\
 $$
 </span>
 So, if this new $$X$$ was to be shown in the form as before, it would be something like this:
-<span style="display:table;margin:0 auto;">
+<span style="align: left;">
 $$
 \begin{pmatrix}
 y_1 \\
@@ -95,7 +96,7 @@ That looks like a awfully long matrix, doesn't it? Here we first raise the power
 Now, lets view another way of making that same $X$ matrix even longer. This one requires us to write it in a more *algorithmic* style.
 
 To make this simpler, lets assume that the features $$p$$ is even,so that we can divide the matrix $$X$$ in two equal halves as such,
-<span style="display:table;margin:0 auto;">
+
 $$
 X_1 = 
 \begin{pmatrix}
@@ -112,7 +113,7 @@ x_{2(\frac{p}{2}+1)} & x_{2(\frac{p}{2}+2)} & \cdots & x_{2p} \\
 x_{n(\frac{p}{2}+1)} & x_{n(\frac{p}{2}+2)} & \cdots & x_{np}
 \end{pmatrix}
 $$
-</span>
+
 Now we perform the binomial expansion and concatenate each term of the binomial expansion without the coefficient to the original $$X$$.
 
 So for a polynomial degree $$m$$, the additional matrix to be concatenated can be given as:
