@@ -124,19 +124,21 @@ Here, $$X_1^{m-1}X_2^1$$ means element wise exponent of $$X_1$$ to $$m-1$$ and $
 
 Programming this aforementioned process is pretty simple. We have to expand it to its binomial expansion without the coefficient, and the rest is the same as the ordinary linear regression. The feature extraction can be given as such in ***Rust***. Also this is just the follow up to my previous <a href="https://arogyad.github.io/2021/07/05/Linear-Reg/" target="_blank">blog</a>. The implementation can be written inside the `impl` block of the either `Poly`(If you want to treat is as a different type of machine learning model) or `Linear` struct (If you treat it as a feature extraction only.)
 ```rust
-fn make_poly(data: &mut Array2<T>, poly: i32) {
-	let split = (data.ncols() / 2) as usize;
+fn make_poly(data: &Array2<T>, poly: i32) -> Array2<f64> {
+    let split = (data.ncols() / 2) as usize;
+    let _temp = data.clone(); // This is ugly !
     let data_1 = data.slice(s![.., 0..split]);
     let data_2 = data.slice(s![.., split..split * 2]);
     for i in 1..poly + 1 {
         for j in 0..i + 1 {
-            concatenate![
+            _temp = concatenate![
                 Axis(1),
                 *data,
                 (data_1.mapv(|a| a.powi(i - j)) * data_2.mapv(|a| a.powi(j)))
             ];
         }
     }
+    temp
 /*
     if split % 2 != 0 {
        concatenate![Axis(1), *data, data.slice(s![.., (split*2)+1..(split*2)+1])];
