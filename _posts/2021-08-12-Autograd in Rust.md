@@ -23,7 +23,7 @@ pub struct Tensor<'a> {
 ```
 This isn't much but this does the work done, atleast for the explanation.  The `_ctx` is the context field, which stores the process of creation of the `self` tensor, other are self explanatory. You might be wondering why the `_ctx` is a `Box<&' dyn Function>` and not a generic-it is easier to read and simpler this way, using generics will increase the complexity without much gain (also I don't know if will generics work). The `Tensor` declares a `new` static function which is self explantory. You can check out the code on my <a href="https://github.com/arogyad/autograd" target="_blank">github</a>. We will talk about other functions as we go along the way.
 
-## Where does the "_ctx" comes from ?!
+## Where does the "_ctx" come from ?!
 The `_ctx` is an object which implements the `Function` trait. The function trait is defined as such
 ```rust
 // /src/ftrait.rs/Function
