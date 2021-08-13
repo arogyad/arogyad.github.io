@@ -66,8 +66,8 @@ This is a recursive toposorter?(Completely inspired from<a href="https://github.
 #[test]
 fn linear_test() {
     // We create two tensors
-    let a = Tensor::new(2., None); // '_ctx' as None as this is formed by you and me not an operation 
-    let b = Tensor::new(3. None); // Same
+    let a = Tensor::new(2.0, None); // '_ctx' as None as this is formed by you and me not an operation 
+    let b = Tensor::new(3.0, None); // Same
 
     // Lets create a multiplication context which will contain tensor 'a' and 'b' as its parents
     let c_ctx = Mul::new([&a, &b]);
@@ -76,7 +76,7 @@ fn linear_test() {
     let c = c_ctx.apply();
 
     // Let's create the bais 
-    let d = Tensor::new(4., None); // Same as before the `_ctx` as None
+    let d = Tensor::new(4.0, None); // Same as before the `_ctx` as None
 
     // Lets create a addition context and apply it to obtain the final output y
     let e_ctx = Add::new([&c, &d]);
@@ -86,7 +86,7 @@ fn linear_test() {
     e.backward();
 
     // Will this assertion work?!
-    assert!(a.grad.get() == 3.); // The grads are inside Cell btw
-    assert!(b.grad.get() == 2.); // It was done to make the grad changing easier
+    assert!(a.grad.get() == 3.0); // The grads are inside Cell btw
+    assert!(b.grad.get() == 2.0); // It was done to make the grad changing easier
 } 
 ```
