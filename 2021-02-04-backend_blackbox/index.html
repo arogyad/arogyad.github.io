@@ -8,16 +8,16 @@
 
 		
 
-		<link rel="modulepreload" href="/_app/start-cad6b714.js">
+		<link rel="modulepreload" href="/_app/start-d1d3ff06.js">
 		<link rel="modulepreload" href="/_app/chunks/vendor-5b6c161e.js">
-		<link rel="modulepreload" href="/_app/pages/__layout.svelte-75368ea4.js">
-		<link rel="modulepreload" href="/_app/pages/[slug].svelte-14184443.js">
-		<link rel="modulepreload" href="/_app/chunks/BlogShow-731708a0.js">
+		<link rel="modulepreload" href="/_app/pages/__layout.svelte-77b01ce5.js">
+		<link rel="modulepreload" href="/_app/pages/[slug].svelte-ef0ff377.js">
+		<link rel="modulepreload" href="/_app/chunks/BlogShow-4299f9c2.js">
 		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
-		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b07f3b47.css">
+		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b7ed98bd.css">
 
 		<script type="module">
-			import { start } from "/_app/start-cad6b714.js";
+			import { start } from "/_app/start-d1d3ff06.js";
 			start({
 				target: document.querySelector("#svelte"),
 				paths: {"base":"","assets":""},
@@ -30,8 +30,8 @@
 					status: 200,
 					error: null,
 					nodes: [
-						import("/_app/pages/__layout.svelte-75368ea4.js"),
-						import("/_app/pages/[slug].svelte-14184443.js")
+						import("/_app/pages/__layout.svelte-77b01ce5.js"),
+						import("/_app/pages/[slug].svelte-ef0ff377.js")
 					],
 					page: {
 						host: location.host, // TODO this is redundant
@@ -51,14 +51,13 @@
 
 
 
-<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm svelte-da4aex"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
+<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
 		<span class="font-extralight p-5 text-white">Welcome to my blog!</span>
 		<a href="/" class="font-normal p-1 text-xl text-white hover:text-2xl duration-300">Home</a>
 		<a href="/about" class="font-normal md:pb-1 text-xl text-white hover:text-2xl duration-300">About</a>
 		<a href="/blogs" class="font-normal text-xl text-white hover:text-2xl duration-300">Blogs</a></div>
 	<a href="https://github.com/arogyad/" target="_blank"><i class="fa fa-github fa-2x hover:text-4xl text-white duration-200 md:ml-20"></i></a>
-	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a>
-</div>
+	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a></div>
 <button class="float-right">a </button>
 
 
@@ -75,10 +74,10 @@
 <p>This class is pretty straightforward it just does maths, nothing more. The hardest part was integrating the integration part (pun not intended), converting the user sent string into mathematical equations. For integration I had to first change the string to LaTeX format (I am not entirely sure if it is LaTeX or not) and then perform the operations; performing simple maths was easy I just had to send the maths to <a href='https://docs.python.org/3/library/functions.html#eval' target='_blank'> <code>eval()</code></a>. However, working with <code>eval</code> is very not recommended as it performs anything the user enters so if the user enters <code>__import__(&#39;os&#39;).system(rm -rf *)</code> your project is gone. In this use case, it is fine, as the user can only input inside the canvas which cannot identify alphabets. I am happy with how the class works, also the maths class can be found under <a href ='https://github.com/arogydhl/HandwrittenEquationSolverWebApp/blob/main/webapp/HWES/utils/math_lib.py' target='_blank'>webapp/HWES/utils/math_lib.py</a> so yeah feel free to take a look at it.</p>
 <p>Yeah, so this is the end of the project blog. I had the most fun during my time at the backend, frontend isn&#39;t my type. I like beautiful things, but I like it more when things work. However, I am learning react.js which seems like a great JavaScript library, and Django (I love flask but Django is more easily deployable on the web, or that is what I have heard). </p>
 <!-- HTML_TAG_END -->
-	<div id="next" class="grid pt-10">
-	<div class="float-left font-normal text-2xl pt-2 pb-1 border-t-2">More Similar Blogs:</div>
-<div class="ml-4"><ul><li><a sveltekit:prefetch href="/2021-02-02-frontend_explanation" class="text-xl font-light pb-3">Frontend Explanation [2021-02-02]</a></li>
-		<li><a sveltekit:prefetch href="/2021-02-10-gan" class="text-xl font-light pb-3">GAN [2021-02-10]</a></li></ul></div></div></div>
+	<div id="pad" class="pt-8"><div id="next" class="flex pt-2 border-t-2"><div id="pr" class="w-2/4 flex-1 hover:text-green-800"><i class="fa fa-caret-left fa-sm"></i>
+			<a href="/2021-02-02-frontend_explanation" class="text-xl font-light">Frontend Explanation <span class="font-light text-sm">[2021-02-02]</span></a></div>
+	<div id="nxt" class="w-2/4 hover:text-red-800 text-right"><a href="/2021-02-10-gan" class="text-xl font-light">GAN <span class="font-light text-sm">[2021-02-10]</span></a>
+			<i class="fa fa-caret-right fa-sm"></i></div></div></div></div>
 
 
 

@@ -8,16 +8,16 @@
 
 		
 
-		<link rel="modulepreload" href="/_app/start-cad6b714.js">
+		<link rel="modulepreload" href="/_app/start-d1d3ff06.js">
 		<link rel="modulepreload" href="/_app/chunks/vendor-5b6c161e.js">
-		<link rel="modulepreload" href="/_app/pages/__layout.svelte-75368ea4.js">
-		<link rel="modulepreload" href="/_app/pages/[slug].svelte-14184443.js">
-		<link rel="modulepreload" href="/_app/chunks/BlogShow-731708a0.js">
+		<link rel="modulepreload" href="/_app/pages/__layout.svelte-77b01ce5.js">
+		<link rel="modulepreload" href="/_app/pages/[slug].svelte-ef0ff377.js">
+		<link rel="modulepreload" href="/_app/chunks/BlogShow-4299f9c2.js">
 		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
-		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b07f3b47.css">
+		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b7ed98bd.css">
 
 		<script type="module">
-			import { start } from "/_app/start-cad6b714.js";
+			import { start } from "/_app/start-d1d3ff06.js";
 			start({
 				target: document.querySelector("#svelte"),
 				paths: {"base":"","assets":""},
@@ -30,8 +30,8 @@
 					status: 200,
 					error: null,
 					nodes: [
-						import("/_app/pages/__layout.svelte-75368ea4.js"),
-						import("/_app/pages/[slug].svelte-14184443.js")
+						import("/_app/pages/__layout.svelte-77b01ce5.js"),
+						import("/_app/pages/[slug].svelte-ef0ff377.js")
 					],
 					page: {
 						host: location.host, // TODO this is redundant
@@ -51,14 +51,13 @@
 
 
 
-<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm svelte-da4aex"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
+<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
 		<span class="font-extralight p-5 text-white">Welcome to my blog!</span>
 		<a href="/" class="font-normal p-1 text-xl text-white hover:text-2xl duration-300">Home</a>
 		<a href="/about" class="font-normal md:pb-1 text-xl text-white hover:text-2xl duration-300">About</a>
 		<a href="/blogs" class="font-normal text-xl text-white hover:text-2xl duration-300">Blogs</a></div>
 	<a href="https://github.com/arogyad/" target="_blank"><i class="fa fa-github fa-2x hover:text-4xl text-white duration-200 md:ml-20"></i></a>
-	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a>
-</div>
+	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a></div>
 <button class="float-right">a </button>
 
 
@@ -67,10 +66,10 @@
 	<!-- HTML_TAG_START --><p>GANs are pretty cool, right? Yeah, they are unless you don&#39;t know what you are doing and this is where I come in. I had a hard time creating something that could actually create something other than random black and white dots on the screen. I just overestimated myself and underestimated GANs, I was a fool. I fooled myself into believing that they were &#39;just 2 models fighting against each other&#39; which it was until it wasn&#39;t. My first mistake was understanding GANs in the &#39;same network but 2&#39; way. They are two networks no doubt but they are so sensitive to small things changes. My second mistake was trying to be fancy, which not only made increased my training time but also made the images look worse. I think this was because my images are really simple, they are just black and white numbers (MNIST), I might be wrong don&#39;t quote me on that (please). So yeah what I should have done was to use parameters that actually work and keep it simple, making it complex isn&#39;t always better, and also I should have seen some videos on youtube on creating GANs.</p>
 <p>Google colab is the best thing I found this year, seriously. The resources it provides and the thing we can do there, the best part is that it&#39;s free. I can do anything there and google will just let me do it. GANs require a lot of computation, if I had used my laptop to train GAN I would have fried my laptop&#39;s CPU in about 8 minutes (I haven&#39;t tested that but I am pretty confident). So yeah I owe google everything this time as well. You can see the generator generating images <a href = 'https://imgur.com/a/kc7NOmz' target='_blank'>here</a> . I haven&#39;t added this gif here in this blog because it&#39;s quite distracting and it kinda hurts your eyes. It&#39;s cool when you see it the first few times and then it starts being irritating and you want it to stop changing. Also, I don&#39;t think I will upload the implementation on Github as there are billion other better implementation of GAN on Github on top of that they are readable too, however if you want I did you can email me at <a href='mailto:arogyadahal20@gmail.com' target='_blank'>arogyadahal20@gmail.com</a>.</p>
 <!-- HTML_TAG_END -->
-	<div id="next" class="grid pt-10">
-	<div class="float-left font-normal text-2xl pt-2 pb-1 border-t-2">More Similar Blogs:</div>
-<div class="ml-4"><ul><li><a sveltekit:prefetch href="/2021-02-04-backend_blackbox" class="text-xl font-light pb-3">Backend Blackbox [2021-02-04]</a></li>
-		<li><a sveltekit:prefetch href="/2021-02-15-segmentation_model" class="text-xl font-light pb-3">Segmentation Model [2021-02-15]</a></li></ul></div></div></div>
+	<div id="pad" class="pt-8"><div id="next" class="flex pt-2 border-t-2"><div id="pr" class="w-2/4 flex-1 hover:text-green-800"><i class="fa fa-caret-left fa-sm"></i>
+			<a href="/2021-02-04-backend_blackbox" class="text-xl font-light">Backend Blackbox <span class="font-light text-sm">[2021-02-04]</span></a></div>
+	<div id="nxt" class="w-2/4 hover:text-red-800 text-right"><a href="/2021-02-15-segmentation_model" class="text-xl font-light">Segmentation Model <span class="font-light text-sm">[2021-02-15]</span></a>
+			<i class="fa fa-caret-right fa-sm"></i></div></div></div></div>
 
 
 
