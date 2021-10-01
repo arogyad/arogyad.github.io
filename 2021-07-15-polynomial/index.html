@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Polynomial Features Extraction</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/base16/gruvbox-light-medium.min.css" integrity="sha512-YOLBTZnIcnB3qm7sPFlGHx0no3yEGWvVTAI9uA6uaZGUBQui/DP9vh0FLmCJbOL5TxHJWwaiI23cCEJsmIeMew==" crossorigin="anonymous" referrerpolicy="no-referrer" data-svelte="svelte-8dvywl"><script src="https://use.fontawesome.com/c5d5ee5034.js" data-svelte="svelte-zlrjvv"></script>
+
+		
+
+		<link rel="modulepreload" href="/_app/start-141ab782.js">
+		<link rel="modulepreload" href="/_app/chunks/vendor-5b6c161e.js">
+		<link rel="modulepreload" href="/_app/pages/__layout.svelte-75368ea4.js">
+		<link rel="modulepreload" href="/_app/pages/[slug].svelte-14184443.js">
+		<link rel="modulepreload" href="/_app/chunks/BlogShow-731708a0.js">
+		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
+		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b07f3b47.css">
+
+		<script type="module">
+			import { start } from "/_app/start-141ab782.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":""},
+				session: {},
+				host: location.host,
+				route: true,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/_app/pages/__layout.svelte-75368ea4.js"),
+						import("/_app/pages/[slug].svelte-14184443.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "/2021-07-15-polynomial",
+						query: new URLSearchParams(""),
+						params: {"slug":"2021-07-15-polynomial"}
+					}
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<div id="svelte">
+
+
+
+
+
+
+<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm svelte-da4aex"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
+		<span class="font-extralight p-5 text-white">Welcome to my blog!</span>
+		<a href="/" class="font-normal p-1 text-xl text-white hover:text-2xl duration-300">Home</a>
+		<a href="/about" class="font-normal md:pb-1 text-xl text-white hover:text-2xl duration-300">About</a>
+		<a href="/blogs" class="font-normal text-xl text-white hover:text-2xl duration-300">Blogs</a></div>
+	<a href="https://github.com/arogyad/" target="_blank"><i class="fa fa-github fa-2x hover:text-4xl text-white duration-200 md:ml-20"></i></a>
+	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a>
+</div>
+<button class="float-right">a </button>
+
+
+<div id="blog" class="md:pl-72 md:pr-10 md:pt-10 p-10 md:text-justify"><h1 class="md:">Polynomial Features Extraction</h1>
+	<span class="font-light">2021-07-15</span>
+	<!-- HTML_TAG_START --><p>Polynomial regression adds a new feature to the normal linear regression. Something very simple and requires only one change from the classic linear regression. Polynomial regression is useful if the explanatory variable and the dependent variables are related in not linear way. For example: We need food to get energy but if we eat a lot we get tired so, a parabolic pattern is formed; When we have food in a healthy amount, we get the maximum energy,but if the opposite happens we get lazy and might go to bed faster. By the way, the last sentence is absolutely, scientifically correct and is perfect representation of polynomial representation. Polynomial is still linear in that the term that we are predicting ($$\theta$$) is linear. So polynomial regression is linear regression with polynomial features of the data. (By the way, I get the ideas for the blogs from <a href="https://pbs.twimg.com/media/DyfDnBnWsAAJ456.jpg" target="_blank">here</a>.)</p>
+<h2 id="little-maths">Little Maths</h2>
+<p>Yup, I am blatantly ripping off the math from Wikipedia, some books for this explanation(Pardon me!),and a little of my own contributions(however, I keep it to the minimum as I am most probably wrong). All of the steps will remain the same when compared to linear regression. The only thing that changes is the features that will be used to predict the $$\theta$$.</p>
+<p>Let us assume that the $$X$$ matrix, in the simplest case, is of size $$n \times 1$$. Here, $$n$$ is the number of entries or number of cases and $1$ denotes that we are predicting for only a single feature, a more complex example will be shown later. So the matrix $$X$$ can be represented as:
+<span style="display:table;margin:0 auto;">
+$$
+X = \begin{pmatrix}
+x_1 &amp; x^2_1 &amp; \cdots &amp; x^m_1 \
+x_2 &amp; x^2_2 &amp; \cdots &amp; x^m_2 \
+x_3 &amp; x^2_3 &amp; \cdots &amp; x^m_3 \
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \
+x_n &amp; x^2_n &amp; \cdots &amp; x^m_n \
+\end{pmatrix} 
+$$
+,
+$$y = X \theta$$
+</span>
+We will be leaving out the $$\varepsilon$$ part to make the discussion more simpler. So the final equation can be given as,
+<span style="display:table;margin:0 auto;">
+$$
+or, 
+\begin{pmatrix}
+y_1 \
+y_2 \
+y_3 \ 
+\vdots \
+y_n
+\end{pmatrix} =
+\begin{pmatrix}
+x_1 &amp; x^2_1 &amp; \cdots &amp; x^m_1 \
+x_2 &amp; x^2_2 &amp; \cdots &amp; x^m_2 \
+x_3 &amp; x^2_3 &amp; \cdots &amp; x^m_3 \
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \
+x_n &amp; x^2_n &amp; \cdots &amp; x^m_n \
+\end{pmatrix} 
+\begin{pmatrix}
+\theta_0 \
+\theta_1 \
+\theta_2 \
+\vdots \
+\theta_m \
+\end{pmatrix}
+$$
+</span>
+The value $$m$$ denotes that the explanatory variable $$X$$ and the dependent $$y$$ are related at $$m^{th}$$ polynomial degree(I cannot seem to word it better). For example: If $$X$$ and $$y$$ were related linearly dependent the polynomial degree($$m$$) would be 1. The example about the food would be related at polynomial degree 2.</p>
+<p>Now when we have a explanatory variable $$X$$ having $$n$$ entries and $$p$$ features, the matrix can be given as:
+<span style="display:table;margin:0 auto;">
+$$
+X = 
+\begin{pmatrix}
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} \
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2p} \
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \
+x_{n1} &amp; x{n2} &amp; \cdots &amp; x_{np} \
+\end{pmatrix}
+$$
+</span>
+So, if this new $$X$$ was to be shown in the form as before, it would be something like this:
+$$
+\begin{pmatrix}
+y_1 \
+y_2 \
+y_3 \
+\vdots \
+y_n
+\end{pmatrix} = 
+\begin{pmatrix}
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} &amp; x^2_{11} &amp; x^2_{12} &amp; \cdots &amp; x^2_{1p} &amp; \cdots &amp; x^m_{1p} \
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2p} &amp; x^2_{21} &amp; x^2_{22} &amp; \cdots &amp; x^2_{2p} &amp; \cdots &amp; x^m_{2p} \
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \
+x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{np} &amp; x^2_{n1} &amp; x^2_{n2} &amp; \cdots &amp; x^2_{np} &amp; \cdots &amp; x^m_{np} \
+\end{pmatrix}
+\begin{pmatrix}
+\theta_1 \
+\theta_2 \
+\vdots \
+\theta_{p\times m}
+\end{pmatrix}
+$$
+That looks like a awfully long matrix, doesn&#39;t it? Here we first raise the power of each component of the matrix $$X$$ from 1 to $$m$$ and concatenate each of those to the original matrix. The shape of the matrix we are predicting changes as well: the same of the matrix $$\theta$$ becomes $$(m*p)\times 1$$. This is still a linear regression, as the component we want to predict($$\theta$$) is linear.</p>
+<p>Now, lets view another way of making that same $$X$$ matrix even longer. This one requires us to write it in a more <em>algorithmic</em> style.</p>
+<p>To make this simpler, lets assume that the features $$p$$ is even,so that we can divide the matrix $$X$$ in two equal halves as such,</p>
+<p>$$
+X_1 = 
+\begin{pmatrix}
+x_{11} &amp; x_{21} &amp; \cdots &amp; x_{1\frac{p}{2}} \
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2\frac{p}{2}} \
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \
+x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{n\frac{p}{2}}
+\end{pmatrix} &gt; and &gt;
+X_2 = 
+\begin{pmatrix} 
+x_{1(\frac{p}{2}+1)} &amp; x_{1(\frac{p}{2}+2)} &amp; \cdots &amp; x_{1p} \
+x_{2(\frac{p}{2}+1)} &amp; x_{2(\frac{p}{2}+2)} &amp; \cdots &amp; x_{2p} \
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \
+x_{n(\frac{p}{2}+1)} &amp; x_{n(\frac{p}{2}+2)} &amp; \cdots &amp; x_{np}
+\end{pmatrix}
+$$</p>
+<p>Now we perform the binomial expansion and concatenate each term of the binomial expansion without the coefficient to the original $$X$$.</p>
+<p>So for a polynomial degree $$m$$, the additional matrix to be concatenated can be given as:
+<span style="display:table;margin:0 auto;">
+$$Final &gt; X = ( X \cdots X_1^m \cdots X_1^{m-1}X_2^1 \cdots X_2^m )$$
+</span></p>
+<p>Here, $$X_1^{m-1}X_2^1$$ means element wise exponent of $$X_1$$ to $$m-1$$ and $$X_2$$ to $$1$$, and the element wise multiplication of the result of exponential. The result is, then, concatenated to the original $$X$$. This is same as how polynomial feature extraction works in <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html" target="_blank">sk-learn</a>.</p>
+<h2 id="coding">Coding</h2>
+<p>Programming this aforementioned process is pretty simple. We have to expand it to its binomial expansion without the coefficient, and the rest is the same as the ordinary linear regression. The feature extraction can be given as such in <em><strong>Rust</strong></em>. Also this is just the follow up to my previous <a href="https://arogyad.github.io/2021/07/05/Linear-Reg/" target="_blank">blog</a>. The implementation can be written inside the <code>impl</code> block of the either <code>Poly</code>(If you want to treat is as a different type of machine learning model) or <code>Linear</code> struct (If you treat it as a feature extraction only.)</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">make_poly</span>(data: &amp;Array2&lt;T&gt;, poly: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> Array2&lt;<span class="hljs-type">f64</span>&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">split</span> = (data.<span class="hljs-title function_ invoke__">ncols</span>() / <span class="hljs-number">2</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">_temp</span> = data.<span class="hljs-title function_ invoke__">clone</span>(); <span class="hljs-comment">// This is ugly !</span>
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">data_1</span> = data.<span class="hljs-title function_ invoke__">slice</span>(s![.., <span class="hljs-number">0</span>..split]);
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">data_2</span> = data.<span class="hljs-title function_ invoke__">slice</span>(s![.., split..split * <span class="hljs-number">2</span>]);
+    <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..poly + <span class="hljs-number">1</span> {
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">j</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..i + <span class="hljs-number">1</span> {
+            _temp = concatenate![
+                <span class="hljs-title function_ invoke__">Axis</span>(<span class="hljs-number">1</span>),
+                *data,
+                (data_1.<span class="hljs-title function_ invoke__">mapv</span>(|a| a.<span class="hljs-title function_ invoke__">powi</span>(i - j)) * data_2.<span class="hljs-title function_ invoke__">mapv</span>(|a| a.<span class="hljs-title function_ invoke__">powi</span>(j)))
+            ];
+        }
+    }
+    temp
+<span class="hljs-comment">/*
+    if split % 2 != 0 {
+       concatenate![Axis(1), *data, data.slice(s![.., (split*2)+1..(split*2)+1])];
+     }
+*/</span>
+}
+</code></pre>
+<p>This looks a lot inefficient so I am looking into better way of implementing this. We first slice the <code>data</code> to two different halves and expand the two halves in binomial form as shown before. We could also check if the <code>split</code> is divisible by 2, if it is we don&#39;t do anything and if it isn&#39;t we could do all sorts of things like concatenating the number of terms remaining at last, squaring them and concatenating etc.... This is basically what polynomial regression is. Next on: Logistic Regression :)</p>
+<!-- HTML_TAG_END -->
+	<div id="next" class="grid pt-10">
+	<div class="float-left font-normal text-2xl pt-2 pb-1 border-t-2">More Similar Blogs:</div>
+<div class="ml-4"><ul><li><a sveltekit:prefetch href="/2021-07-05-linear_reg" class="text-xl font-light pb-3">Linear Reg [2021-07-05]</a></li>
+		<li><a sveltekit:prefetch href="/2021-08-12-autograd_in_rust" class="text-xl font-light pb-3">Autograd in Rust [2021-08-12]</a></li></ul></div></div></div>
+
+
+
+			<script type="application/json" data-type="svelte-data" data-url="/2021-07-15-polynomial.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"{\"content\":{\"out\":{\"attributes\":{\"title\":\"Polynomial Features Extraction\",\"date\":\"2021-07-15\"},\"body\":\"\u003Cp\u003EPolynomial regression adds a new feature to the normal linear regression. Something very simple and requires only one change from the classic linear regression. Polynomial regression is useful if the explanatory variable and the dependent variables are related in not linear way. For example: We need food to get energy but if we eat a lot we get tired so, a parabolic pattern is formed; When we have food in a healthy amount, we get the maximum energy,but if the opposite happens we get lazy and might go to bed faster. By the way, the last sentence is absolutely, scientifically correct and is perfect representation of polynomial representation. Polynomial is still linear in that the term that we are predicting ($$\\\\theta$$) is linear. So polynomial regression is linear regression with polynomial features of the data. (By the way, I get the ideas for the blogs from \u003Ca href=\\\"https:\u002F\u002Fpbs.twimg.com\u002Fmedia\u002FDyfDnBnWsAAJ456.jpg\\\" target=\\\"_blank\\\"\u003Ehere\u003C\u002Fa\u003E.)\u003C\u002Fp\u003E\\n\u003Ch2 id=\\\"little-maths\\\"\u003ELittle Maths\u003C\u002Fh2\u003E\\n\u003Cp\u003EYup, I am blatantly ripping off the math from Wikipedia, some books for this explanation(Pardon me!),and a little of my own contributions(however, I keep it to the minimum as I am most probably wrong). All of the steps will remain the same when compared to linear regression. The only thing that changes is the features that will be used to predict the $$\\\\theta$$.\u003C\u002Fp\u003E\\n\u003Cp\u003ELet us assume that the $$X$$ matrix, in the simplest case, is of size $$n \\\\times 1$$. Here, $$n$$ is the number of entries or number of cases and $1$ denotes that we are predicting for only a single feature, a more complex example will be shown later. So the matrix $$X$$ can be represented as:\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\nX = \\\\begin{pmatrix}\\nx_1 &amp; x^2_1 &amp; \\\\cdots &amp; x^m_1 \\\\\\nx_2 &amp; x^2_2 &amp; \\\\cdots &amp; x^m_2 \\\\\\nx_3 &amp; x^2_3 &amp; \\\\cdots &amp; x^m_3 \\\\\\n\\\\vdots &amp; \\\\vdots &amp; \\\\ddots &amp; \\\\vdots \\\\\\nx_n &amp; x^2_n &amp; \\\\cdots &amp; x^m_n \\\\\\n\\\\end{pmatrix} \\n$$\\n,\\n$$y = X \\\\theta$$\\n\u003C\u002Fspan\u003E\\nWe will be leaving out the $$\\\\varepsilon$$ part to make the discussion more simpler. So the final equation can be given as,\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\nor, \\n\\\\begin{pmatrix}\\ny_1 \\\\\\ny_2 \\\\\\ny_3 \\\\ \\n\\\\vdots \\\\\\ny_n\\n\\\\end{pmatrix} =\\n\\\\begin{pmatrix}\\nx_1 &amp; x^2_1 &amp; \\\\cdots &amp; x^m_1 \\\\\\nx_2 &amp; x^2_2 &amp; \\\\cdots &amp; x^m_2 \\\\\\nx_3 &amp; x^2_3 &amp; \\\\cdots &amp; x^m_3 \\\\\\n\\\\vdots &amp; \\\\vdots &amp; \\\\ddots &amp; \\\\vdots \\\\\\nx_n &amp; x^2_n &amp; \\\\cdots &amp; x^m_n \\\\\\n\\\\end{pmatrix} \\n\\\\begin{pmatrix}\\n\\\\theta_0 \\\\\\n\\\\theta_1 \\\\\\n\\\\theta_2 \\\\\\n\\\\vdots \\\\\\n\\\\theta_m \\\\\\n\\\\end{pmatrix}\\n$$\\n\u003C\u002Fspan\u003E\\nThe value $$m$$ denotes that the explanatory variable $$X$$ and the dependent $$y$$ are related at $$m^{th}$$ polynomial degree(I cannot seem to word it better). For example: If $$X$$ and $$y$$ were related linearly dependent the polynomial degree($$m$$) would be 1. The example about the food would be related at polynomial degree 2.\u003C\u002Fp\u003E\\n\u003Cp\u003ENow when we have a explanatory variable $$X$$ having $$n$$ entries and $$p$$ features, the matrix can be given as:\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\nX = \\n\\\\begin{pmatrix}\\nx_{11} &amp; x_{12} &amp; \\\\cdots &amp; x_{1p} \\\\\\nx_{21} &amp; x_{22} &amp; \\\\cdots &amp; x_{2p} \\\\\\n\\\\vdots &amp; \\\\vdots &amp; \\\\ddots &amp; \\\\vdots \\\\\\nx_{n1} &amp; x{n2} &amp; \\\\cdots &amp; x_{np} \\\\\\n\\\\end{pmatrix}\\n$$\\n\u003C\u002Fspan\u003E\\nSo, if this new $$X$$ was to be shown in the form as before, it would be something like this:\\n$$\\n\\\\begin{pmatrix}\\ny_1 \\\\\\ny_2 \\\\\\ny_3 \\\\\\n\\\\vdots \\\\\\ny_n\\n\\\\end{pmatrix} = \\n\\\\begin{pmatrix}\\nx_{11} &amp; x_{12} &amp; \\\\cdots &amp; x_{1p} &amp; x^2_{11} &amp; x^2_{12} &amp; \\\\cdots &amp; x^2_{1p} &amp; \\\\cdots &amp; x^m_{1p} \\\\\\nx_{21} &amp; x_{22} &amp; \\\\cdots &amp; x_{2p} &amp; x^2_{21} &amp; x^2_{22} &amp; \\\\cdots &amp; x^2_{2p} &amp; \\\\cdots &amp; x^m_{2p} \\\\\\n\\\\vdots &amp; \\\\vdots &amp; \\\\vdots &amp; \\\\vdots &amp; \\\\vdots &amp; \\\\vdots &amp; \\\\vdots &amp; \\\\vdots &amp; \\\\vdots &amp; \\\\vdots \\\\\\nx_{n1} &amp; x_{n2} &amp; \\\\cdots &amp; x_{np} &amp; x^2_{n1} &amp; x^2_{n2} &amp; \\\\cdots &amp; x^2_{np} &amp; \\\\cdots &amp; x^m_{np} \\\\\\n\\\\end{pmatrix}\\n\\\\begin{pmatrix}\\n\\\\theta_1 \\\\\\n\\\\theta_2 \\\\\\n\\\\vdots \\\\\\n\\\\theta_{p\\\\times m}\\n\\\\end{pmatrix}\\n$$\\nThat looks like a awfully long matrix, doesn&#39;t it? Here we first raise the power of each component of the matrix $$X$$ from 1 to $$m$$ and concatenate each of those to the original matrix. The shape of the matrix we are predicting changes as well: the same of the matrix $$\\\\theta$$ becomes $$(m*p)\\\\times 1$$. This is still a linear regression, as the component we want to predict($$\\\\theta$$) is linear.\u003C\u002Fp\u003E\\n\u003Cp\u003ENow, lets view another way of making that same $$X$$ matrix even longer. This one requires us to write it in a more \u003Cem\u003Ealgorithmic\u003C\u002Fem\u003E style.\u003C\u002Fp\u003E\\n\u003Cp\u003ETo make this simpler, lets assume that the features $$p$$ is even,so that we can divide the matrix $$X$$ in two equal halves as such,\u003C\u002Fp\u003E\\n\u003Cp\u003E$$\\nX_1 = \\n\\\\begin{pmatrix}\\nx_{11} &amp; x_{21} &amp; \\\\cdots &amp; x_{1\\\\frac{p}{2}} \\\\\\nx_{21} &amp; x_{22} &amp; \\\\cdots &amp; x_{2\\\\frac{p}{2}} \\\\\\n\\\\vdots &amp; \\\\vdots &amp; \\\\ddots &amp; \\\\vdots \\\\\\nx_{n1} &amp; x_{n2} &amp; \\\\cdots &amp; x_{n\\\\frac{p}{2}}\\n\\\\end{pmatrix} &gt; and &gt;\\nX_2 = \\n\\\\begin{pmatrix} \\nx_{1(\\\\frac{p}{2}+1)} &amp; x_{1(\\\\frac{p}{2}+2)} &amp; \\\\cdots &amp; x_{1p} \\\\\\nx_{2(\\\\frac{p}{2}+1)} &amp; x_{2(\\\\frac{p}{2}+2)} &amp; \\\\cdots &amp; x_{2p} \\\\\\n\\\\vdots &amp; \\\\vdots &amp; \\\\ddots &amp; \\\\vdots \\\\\\nx_{n(\\\\frac{p}{2}+1)} &amp; x_{n(\\\\frac{p}{2}+2)} &amp; \\\\cdots &amp; x_{np}\\n\\\\end{pmatrix}\\n$$\u003C\u002Fp\u003E\\n\u003Cp\u003ENow we perform the binomial expansion and concatenate each term of the binomial expansion without the coefficient to the original $$X$$.\u003C\u002Fp\u003E\\n\u003Cp\u003ESo for a polynomial degree $$m$$, the additional matrix to be concatenated can be given as:\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$Final &gt; X = ( X \\\\cdots X_1^m \\\\cdots X_1^{m-1}X_2^1 \\\\cdots X_2^m )$$\\n\u003C\u002Fspan\u003E\u003C\u002Fp\u003E\\n\u003Cp\u003EHere, $$X_1^{m-1}X_2^1$$ means element wise exponent of $$X_1$$ to $$m-1$$ and $$X_2$$ to $$1$$, and the element wise multiplication of the result of exponential. The result is, then, concatenated to the original $$X$$. This is same as how polynomial feature extraction works in \u003Ca href=\\\"https:\u002F\u002Fscikit-learn.org\u002Fstable\u002Fmodules\u002Fgenerated\u002Fsklearn.preprocessing.PolynomialFeatures.html\\\" target=\\\"_blank\\\"\u003Esk-learn\u003C\u002Fa\u003E.\u003C\u002Fp\u003E\\n\u003Ch2 id=\\\"coding\\\"\u003ECoding\u003C\u002Fh2\u003E\\n\u003Cp\u003EProgramming this aforementioned process is pretty simple. We have to expand it to its binomial expansion without the coefficient, and the rest is the same as the ordinary linear regression. The feature extraction can be given as such in \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E. Also this is just the follow up to my previous \u003Ca href=\\\"https:\u002F\u002Farogyad.github.io\u002F2021\u002F07\u002F05\u002FLinear-Reg\u002F\\\" target=\\\"_blank\\\"\u003Eblog\u003C\u002Fa\u003E. The implementation can be written inside the \u003Ccode\u003Eimpl\u003C\u002Fcode\u003E block of the either \u003Ccode\u003EPoly\u003C\u002Fcode\u003E(If you want to treat is as a different type of machine learning model) or \u003Ccode\u003ELinear\u003C\u002Fcode\u003E struct (If you treat it as a feature extraction only.)\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emake_poly\u003C\u002Fspan\u003E(data: &amp;Array2&lt;T&gt;, poly: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E Array2&lt;\u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E&gt; {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Esplit\u003C\u002Fspan\u003E = (data.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Encols\u003C\u002Fspan\u003E() \u002F \u003Cspan class=\\\"hljs-number\\\"\u003E2\u003C\u002Fspan\u003E) \u003Cspan class=\\\"hljs-keyword\\\"\u003Eas\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Eusize\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003E_temp\u003C\u002Fspan\u003E = data.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eclone\u003C\u002Fspan\u003E(); \u003Cspan class=\\\"hljs-comment\\\"\u003E\u002F\u002F This is ugly !\u003C\u002Fspan\u003E\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Edata_1\u003C\u002Fspan\u003E = data.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eslice\u003C\u002Fspan\u003E(s![.., \u003Cspan class=\\\"hljs-number\\\"\u003E0\u003C\u002Fspan\u003E..split]);\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Edata_2\u003C\u002Fspan\u003E = data.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eslice\u003C\u002Fspan\u003E(s![.., split..split * \u003Cspan class=\\\"hljs-number\\\"\u003E2\u003C\u002Fspan\u003E]);\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Efor\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ei\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Ein\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E..poly + \u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E {\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Efor\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ej\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Ein\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-number\\\"\u003E0\u003C\u002Fspan\u003E..i + \u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E {\\n            _temp = concatenate![\\n                \u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003EAxis\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E),\\n                *data,\\n                (data_1.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Emapv\u003C\u002Fspan\u003E(|a| a.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Epowi\u003C\u002Fspan\u003E(i - j)) * data_2.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Emapv\u003C\u002Fspan\u003E(|a| a.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Epowi\u003C\u002Fspan\u003E(j)))\\n            ];\\n        }\\n    }\\n    temp\\n\u003Cspan class=\\\"hljs-comment\\\"\u003E\u002F*\\n    if split % 2 != 0 {\\n       concatenate![Axis(1), *data, data.slice(s![.., (split*2)+1..(split*2)+1])];\\n     }\\n*\u002F\u003C\u002Fspan\u003E\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThis looks a lot inefficient so I am looking into better way of implementing this. We first slice the \u003Ccode\u003Edata\u003C\u002Fcode\u003E to two different halves and expand the two halves in binomial form as shown before. We could also check if the \u003Ccode\u003Esplit\u003C\u002Fcode\u003E is divisible by 2, if it is we don&#39;t do anything and if it isn&#39;t we could do all sorts of things like concatenating the number of terms remaining at last, squaring them and concatenating etc.... This is basically what polynomial regression is. Next on: Logistic Regression :)\u003C\u002Fp\u003E\\n\",\"bodyBegin\":6,\"frontmatter\":\"title: Polynomial Features Extraction \\ndate: 2021-07-15\"},\"prev\":{\"link\":\"2021-07-05-linear_reg\",\"blog\":{\"date\":\"2021-07-05\",\"title\":\"Linear Reg\"}},\"next\":{\"link\":\"2021-08-12-autograd_in_rust\",\"blog\":{\"date\":\"2021-08-12\",\"title\":\"Autograd in Rust\"}}}}"}</script>
+		</div>
+	</body>
+</html>

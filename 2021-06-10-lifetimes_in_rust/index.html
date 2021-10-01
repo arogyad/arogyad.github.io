@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Lifetime is so goodd!!!</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/base16/gruvbox-light-medium.min.css" integrity="sha512-YOLBTZnIcnB3qm7sPFlGHx0no3yEGWvVTAI9uA6uaZGUBQui/DP9vh0FLmCJbOL5TxHJWwaiI23cCEJsmIeMew==" crossorigin="anonymous" referrerpolicy="no-referrer" data-svelte="svelte-8dvywl"><script src="https://use.fontawesome.com/c5d5ee5034.js" data-svelte="svelte-zlrjvv"></script>
+
+		
+
+		<link rel="modulepreload" href="/_app/start-141ab782.js">
+		<link rel="modulepreload" href="/_app/chunks/vendor-5b6c161e.js">
+		<link rel="modulepreload" href="/_app/pages/__layout.svelte-75368ea4.js">
+		<link rel="modulepreload" href="/_app/pages/[slug].svelte-14184443.js">
+		<link rel="modulepreload" href="/_app/chunks/BlogShow-731708a0.js">
+		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
+		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b07f3b47.css">
+
+		<script type="module">
+			import { start } from "/_app/start-141ab782.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":""},
+				session: {},
+				host: location.host,
+				route: true,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/_app/pages/__layout.svelte-75368ea4.js"),
+						import("/_app/pages/[slug].svelte-14184443.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "/2021-06-10-lifetimes_in_rust",
+						query: new URLSearchParams(""),
+						params: {"slug":"2021-06-10-lifetimes_in_rust"}
+					}
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<div id="svelte">
+
+
+
+
+
+
+<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm svelte-da4aex"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
+		<span class="font-extralight p-5 text-white">Welcome to my blog!</span>
+		<a href="/" class="font-normal p-1 text-xl text-white hover:text-2xl duration-300">Home</a>
+		<a href="/about" class="font-normal md:pb-1 text-xl text-white hover:text-2xl duration-300">About</a>
+		<a href="/blogs" class="font-normal text-xl text-white hover:text-2xl duration-300">Blogs</a></div>
+	<a href="https://github.com/arogyad/" target="_blank"><i class="fa fa-github fa-2x hover:text-4xl text-white duration-200 md:ml-20"></i></a>
+	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a>
+</div>
+<button class="float-right">a </button>
+
+
+<div id="blog" class="md:pl-72 md:pr-10 md:pt-10 p-10 md:text-justify"><h1 class="md:">Lifetime is so goodd!!!</h1>
+	<span class="font-light">2021-06-10</span>
+	<!-- HTML_TAG_START --><p>The lifetime parameter in a function/object is something that I had never seen before (I have used a lot of programming languages though). The way that <em><strong>Rust</strong></em>(Yes, I will bold and italicize every time I write <em><strong>Rust</strong></em>) has the concept of lifetime wasn&#39;t that initiative to me at first; I spent a good amount of time trying to understand the basics of lifetime and here is what I have understood; these are just the surface of a mammoth iceberg. </p>
+<p>Lifetime are useful when we pass arguments through reference. Lifetime parameters are required to tell the compiler in <em>whose</em> lifetime should the value returned by reference should exist in. Before talking about  lifetimes let&#39;s look at what a dangling pointer is. </p>
+<p>Let&#39;s first look at a C++ example:</p>
+<pre><code class="hljs language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-type">int</span>&amp; <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-type">int</span>&amp; x, <span class="hljs-type">int</span>&amp; y)</span> </span>{
+    <span class="hljs-keyword">if</span> (x &lt; y) {
+        <span class="hljs-keyword">return</span> x;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> y;
+    }
+}
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-type">int</span> a = <span class="hljs-number">20</span>;
+    <span class="hljs-type">int</span> *p;
+    {
+        <span class="hljs-type">int</span> b = <span class="hljs-number">10</span>;
+        p = &amp;<span class="hljs-built_in">foo</span>(a,b);
+        std::cout &lt;&lt; &amp;b &lt;&lt; std::endl;
+    }
+    std::cout &lt;&lt; p &lt;&lt; std::endl;
+}
+</code></pre>
+<pre><code>Output: 0x7ffee8693884
+    0x7ffee8693884
+</code></pre>
+<p> The above problem looks deliberate and it is; this is a classic example of dangling pointer. The pointer <code>*p</code> refers to the memory address the <code>b</code> used to point to. This can sort of behavior is undefined, in my particular system <code>*p</code> points to the original value of <code>b</code>. </p>
+<p>Now, let&#39;s see how   <em><strong>Rust</strong></em> hopes to solve such dangling pointers. Let&#39;s look at an example:</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">foo</span>(x: &amp;<span class="hljs-type">i32</span>, y: &amp;<span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> &amp;<span class="hljs-type">i32</span> {
+    <span class="hljs-keyword">if</span> x &lt; y {
+        x
+    } <span class="hljs-keyword">else</span> {
+        y
+    }
+}
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">k</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">100</span>;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">_x</span>;
+    {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">p</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">200</span>;
+        _x = <span class="hljs-title function_ invoke__">foo</span>(&amp;k, &amp;p);
+    }
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>,_x);
+}
+</code></pre>
+<p>This will not compile. The compiler will give us an error that  the lifetime of the reference is ambiguous as <em><strong>Rust</strong></em> doesn&#39;t know what the lifetime of the reference is. Let&#39;s add the lifetime, shall we?</p>
+<p>Lifetime is the, as the name suggests, tells the compiler up to whose lifetime the returned value should exist. Lifetime is declared as a generic parameter in function name: <code>fn foo&lt;&#39;a&gt;</code>. This tells the compiler that there is a lifetime <code>&#39;a </code> such that the reference returned exists in it. It&#39;s complicated for me to explain it, here is an example:</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">foo</span>&lt;<span class="hljs-symbol">&#x27;a</span>&gt;(x: &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">i32</span>, y: &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">i32</span> {
+    <span class="hljs-keyword">if</span> x &lt; y {
+        x
+    } <span class="hljs-keyword">else</span> {
+        y
+    }
+}
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">k</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">100</span>;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">_x</span>;
+    {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">p</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">200</span>;
+        _x = <span class="hljs-title function_ invoke__">foo</span>(&amp;k, &amp;p);
+    }
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>,_x);
+}
+</code></pre>
+<p>The above code tells the compiler: Please find a lifetime <code>&#39;a</code> such that no dangling pointer is formed. Here, we are explicitly saying the compiler that there is a lifetime <code>&#39;a</code> such that the entire program is valid. Here, it look fine. The function <code>foo()</code> gets two reference and since k is smaller than p, returns reference to <code>k</code> right? Sadly this is wrong.</p>
+<p>Remember the time I said <em><strong>Rust</strong></em> is strict, I really meant it. Since all three of them ,the two parameters and the reference return,have been explicitly declared to be available in a lifetime <code>&#39;a</code>, the compiler searches for such lifetime. However, this isn&#39;t available here. The variable <code>p</code> goes out of scope at the end of the closing curly bracket after the two lines, and <code>_x</code> is still being used after the lifetime of <code>p</code>, this might cause a dangling pointer, so <em><strong>Rust</strong></em> just gives an Error!! Even though <code>_x</code> points to <code>k</code>, the lifetime of reference returned to <code>_x</code> is the lifetime of smallest parameter that is passed in the function.  </p>
+<p>So to fix this code, we could have restructure the code:</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">foo</span>&lt;<span class="hljs-symbol">&#x27;a</span>&gt;(x: &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">i32</span>, y: &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">i32</span> {
+    <span class="hljs-keyword">if</span> x &lt; y {
+        x
+    } <span class="hljs-keyword">else</span> {
+        y
+    }
+}
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">k</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">100</span>;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">_x</span>;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">p</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">200</span>;
+    _x = <span class="hljs-title function_ invoke__">foo</span>(&amp;k, &amp;p);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>,_x);
+}
+</code></pre>
+<p>This will work as <code>_x</code> is available for the entire lifetime of the smallest lifetime of the parameter to the function from where it gets its reference return. </p>
+<p>Or, something like this.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">foo</span>&lt;<span class="hljs-symbol">&#x27;a</span>&gt;(x: &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">i32</span>, y: &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">i32</span> {
+    <span class="hljs-keyword">if</span> x &lt; y {
+        x
+    } <span class="hljs-keyword">else</span> {
+        y
+    }
+}
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">k</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">100</span>;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">p</span>;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">x_ref</span>;
+    {
+        p: <span class="hljs-type">i32</span> = <span class="hljs-number">200</span>;
+        x_ref = <span class="hljs-title function_ invoke__">foo</span>(&amp;k, &amp;p);
+    }
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{}&quot;</span>, x_ref);
+}
+</code></pre>
+<p>Here, the returned reference exists for the entire lifetime of <code>k</code>.</p>
+<p>The lifetime of returned reference type should be one of parameter&#39;s lifetime. If the lifetime on the returned type isn&#39;t the lifetime one of the function parameter, it is an error.</p>
+<p>This is a very bad, high level overview of lifetime, great amount of features about lifetime are yet to be discussed. You can read more about it from the references below:</p>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html" target='_blank'>The Rust Programming Language Book (Chapter 10)</a> </li>
+<li><a href="https://doc.rust-lang.org/rust-by-example/scope/lifetime/explicit.html" target='_blank'>Rust by Example (Explicit Annotations)</a></li>
+</ul>
+<!-- HTML_TAG_END -->
+	<div id="next" class="grid pt-10">
+	<div class="float-left font-normal text-2xl pt-2 pb-1 border-t-2">More Similar Blogs:</div>
+<div class="ml-4"><ul><li><a sveltekit:prefetch href="/2021-06-08-rust_bust" class="text-xl font-light pb-3">Rust Bust [2021-06-08]</a></li>
+		<li><a sveltekit:prefetch href="/2021-06-21-random_or_not_to_be_random" class="text-xl font-light pb-3">Random Or Not to be Random [2021-06-21]</a></li></ul></div></div></div>
+
+
+
+			<script type="application/json" data-type="svelte-data" data-url="/2021-06-10-lifetimes_in_rust.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"{\"content\":{\"out\":{\"attributes\":{\"title\":\"Lifetime is so goodd!!!\",\"date\":\"2021-06-10\"},\"body\":\"\u003Cp\u003EThe lifetime parameter in a function\u002Fobject is something that I had never seen before (I have used a lot of programming languages though). The way that \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E(Yes, I will bold and italicize every time I write \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E) has the concept of lifetime wasn&#39;t that initiative to me at first; I spent a good amount of time trying to understand the basics of lifetime and here is what I have understood; these are just the surface of a mammoth iceberg. \u003C\u002Fp\u003E\\n\u003Cp\u003ELifetime are useful when we pass arguments through reference. Lifetime parameters are required to tell the compiler in \u003Cem\u003Ewhose\u003C\u002Fem\u003E lifetime should the value returned by reference should exist in. Before talking about  lifetimes let&#39;s look at what a dangling pointer is. \u003C\u002Fp\u003E\\n\u003Cp\u003ELet&#39;s first look at a C++ example:\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-cpp\\\"\u003E\u003Cspan class=\\\"hljs-meta\\\"\u003E#\u003Cspan class=\\\"hljs-keyword\\\"\u003Einclude\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-string\\\"\u003E&lt;iostream&gt;\u003C\u002Fspan\u003E\u003C\u002Fspan\u003E\\n\\n\u003Cspan class=\\\"hljs-function\\\"\u003E\u003Cspan class=\\\"hljs-type\\\"\u003Eint\u003C\u002Fspan\u003E&amp; \u003Cspan class=\\\"hljs-title\\\"\u003Efoo\u003C\u002Fspan\u003E\u003Cspan class=\\\"hljs-params\\\"\u003E(\u003Cspan class=\\\"hljs-type\\\"\u003Eint\u003C\u002Fspan\u003E&amp; x, \u003Cspan class=\\\"hljs-type\\\"\u003Eint\u003C\u002Fspan\u003E&amp; y)\u003C\u002Fspan\u003E \u003C\u002Fspan\u003E{\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Eif\u003C\u002Fspan\u003E (x &lt; y) {\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Ereturn\u003C\u002Fspan\u003E x;\\n    } \u003Cspan class=\\\"hljs-keyword\\\"\u003Eelse\u003C\u002Fspan\u003E {\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Ereturn\u003C\u002Fspan\u003E y;\\n    }\\n}\\n\u003Cspan class=\\\"hljs-function\\\"\u003E\u003Cspan class=\\\"hljs-type\\\"\u003Eint\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title\\\"\u003Emain\u003C\u002Fspan\u003E\u003Cspan class=\\\"hljs-params\\\"\u003E()\u003C\u002Fspan\u003E \u003C\u002Fspan\u003E{\\n    \u003Cspan class=\\\"hljs-type\\\"\u003Eint\u003C\u002Fspan\u003E a = \u003Cspan class=\\\"hljs-number\\\"\u003E20\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-type\\\"\u003Eint\u003C\u002Fspan\u003E *p;\\n    {\\n        \u003Cspan class=\\\"hljs-type\\\"\u003Eint\u003C\u002Fspan\u003E b = \u003Cspan class=\\\"hljs-number\\\"\u003E10\u003C\u002Fspan\u003E;\\n        p = &amp;\u003Cspan class=\\\"hljs-built_in\\\"\u003Efoo\u003C\u002Fspan\u003E(a,b);\\n        std::cout &lt;&lt; &amp;b &lt;&lt; std::endl;\\n    }\\n    std::cout &lt;&lt; p &lt;&lt; std::endl;\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cpre\u003E\u003Ccode\u003EOutput: 0x7ffee8693884\\n    0x7ffee8693884\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003E The above problem looks deliberate and it is; this is a classic example of dangling pointer. The pointer \u003Ccode\u003E*p\u003C\u002Fcode\u003E refers to the memory address the \u003Ccode\u003Eb\u003C\u002Fcode\u003E used to point to. This can sort of behavior is undefined, in my particular system \u003Ccode\u003E*p\u003C\u002Fcode\u003E points to the original value of \u003Ccode\u003Eb\u003C\u002Fcode\u003E. \u003C\u002Fp\u003E\\n\u003Cp\u003ENow, let&#39;s see how   \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E hopes to solve such dangling pointers. Let&#39;s look at an example:\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Efoo\u003C\u002Fspan\u003E(x: &amp;\u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E, y: &amp;\u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E &amp;\u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Eif\u003C\u002Fspan\u003E x &lt; y {\\n        x\\n    } \u003Cspan class=\\\"hljs-keyword\\\"\u003Eelse\u003C\u002Fspan\u003E {\\n        y\\n    }\\n}\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emain\u003C\u002Fspan\u003E() {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ek\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E100\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003E_x\u003C\u002Fspan\u003E;\\n    {\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ep\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E200\u003C\u002Fspan\u003E;\\n        _x = \u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Efoo\u003C\u002Fspan\u003E(&amp;k, &amp;p);\\n    }\\n    \u003Cspan class=\\\"hljs-built_in\\\"\u003Eprintln!\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-string\\\"\u003E&quot;{}&quot;\u003C\u002Fspan\u003E,_x);\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThis will not compile. The compiler will give us an error that  the lifetime of the reference is ambiguous as \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E doesn&#39;t know what the lifetime of the reference is. Let&#39;s add the lifetime, shall we?\u003C\u002Fp\u003E\\n\u003Cp\u003ELifetime is the, as the name suggests, tells the compiler up to whose lifetime the returned value should exist. Lifetime is declared as a generic parameter in function name: \u003Ccode\u003Efn foo&lt;&#39;a&gt;\u003C\u002Fcode\u003E. This tells the compiler that there is a lifetime \u003Ccode\u003E&#39;a \u003C\u002Fcode\u003E such that the reference returned exists in it. It&#39;s complicated for me to explain it, here is an example:\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Efoo\u003C\u002Fspan\u003E&lt;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E&gt;(x: &amp;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E, y: &amp;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E &amp;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Eif\u003C\u002Fspan\u003E x &lt; y {\\n        x\\n    } \u003Cspan class=\\\"hljs-keyword\\\"\u003Eelse\u003C\u002Fspan\u003E {\\n        y\\n    }\\n}\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emain\u003C\u002Fspan\u003E() {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ek\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E100\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003E_x\u003C\u002Fspan\u003E;\\n    {\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ep\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E200\u003C\u002Fspan\u003E;\\n        _x = \u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Efoo\u003C\u002Fspan\u003E(&amp;k, &amp;p);\\n    }\\n    \u003Cspan class=\\\"hljs-built_in\\\"\u003Eprintln!\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-string\\\"\u003E&quot;{}&quot;\u003C\u002Fspan\u003E,_x);\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThe above code tells the compiler: Please find a lifetime \u003Ccode\u003E&#39;a\u003C\u002Fcode\u003E such that no dangling pointer is formed. Here, we are explicitly saying the compiler that there is a lifetime \u003Ccode\u003E&#39;a\u003C\u002Fcode\u003E such that the entire program is valid. Here, it look fine. The function \u003Ccode\u003Efoo()\u003C\u002Fcode\u003E gets two reference and since k is smaller than p, returns reference to \u003Ccode\u003Ek\u003C\u002Fcode\u003E right? Sadly this is wrong.\u003C\u002Fp\u003E\\n\u003Cp\u003ERemember the time I said \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E is strict, I really meant it. Since all three of them ,the two parameters and the reference return,have been explicitly declared to be available in a lifetime \u003Ccode\u003E&#39;a\u003C\u002Fcode\u003E, the compiler searches for such lifetime. However, this isn&#39;t available here. The variable \u003Ccode\u003Ep\u003C\u002Fcode\u003E goes out of scope at the end of the closing curly bracket after the two lines, and \u003Ccode\u003E_x\u003C\u002Fcode\u003E is still being used after the lifetime of \u003Ccode\u003Ep\u003C\u002Fcode\u003E, this might cause a dangling pointer, so \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E just gives an Error!! Even though \u003Ccode\u003E_x\u003C\u002Fcode\u003E points to \u003Ccode\u003Ek\u003C\u002Fcode\u003E, the lifetime of reference returned to \u003Ccode\u003E_x\u003C\u002Fcode\u003E is the lifetime of smallest parameter that is passed in the function.  \u003C\u002Fp\u003E\\n\u003Cp\u003ESo to fix this code, we could have restructure the code:\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Efoo\u003C\u002Fspan\u003E&lt;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E&gt;(x: &amp;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E, y: &amp;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E &amp;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Eif\u003C\u002Fspan\u003E x &lt; y {\\n        x\\n    } \u003Cspan class=\\\"hljs-keyword\\\"\u003Eelse\u003C\u002Fspan\u003E {\\n        y\\n    }\\n}\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emain\u003C\u002Fspan\u003E() {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ek\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E100\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003E_x\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ep\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E200\u003C\u002Fspan\u003E;\\n    _x = \u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Efoo\u003C\u002Fspan\u003E(&amp;k, &amp;p);\\n    \u003Cspan class=\\\"hljs-built_in\\\"\u003Eprintln!\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-string\\\"\u003E&quot;{}&quot;\u003C\u002Fspan\u003E,_x);\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThis will work as \u003Ccode\u003E_x\u003C\u002Fcode\u003E is available for the entire lifetime of the smallest lifetime of the parameter to the function from where it gets its reference return. \u003C\u002Fp\u003E\\n\u003Cp\u003EOr, something like this.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Efoo\u003C\u002Fspan\u003E&lt;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E&gt;(x: &amp;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E, y: &amp;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E &amp;\u003Cspan class=\\\"hljs-symbol\\\"\u003E&#x27;a\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Eif\u003C\u002Fspan\u003E x &lt; y {\\n        x\\n    } \u003Cspan class=\\\"hljs-keyword\\\"\u003Eelse\u003C\u002Fspan\u003E {\\n        y\\n    }\\n}\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emain\u003C\u002Fspan\u003E() {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ek\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E100\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ep\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ex_ref\u003C\u002Fspan\u003E;\\n    {\\n        p: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E200\u003C\u002Fspan\u003E;\\n        x_ref = \u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Efoo\u003C\u002Fspan\u003E(&amp;k, &amp;p);\\n    }\\n    \u003Cspan class=\\\"hljs-built_in\\\"\u003Eprintln!\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-string\\\"\u003E&quot;{}&quot;\u003C\u002Fspan\u003E, x_ref);\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EHere, the returned reference exists for the entire lifetime of \u003Ccode\u003Ek\u003C\u002Fcode\u003E.\u003C\u002Fp\u003E\\n\u003Cp\u003EThe lifetime of returned reference type should be one of parameter&#39;s lifetime. If the lifetime on the returned type isn&#39;t the lifetime one of the function parameter, it is an error.\u003C\u002Fp\u003E\\n\u003Cp\u003EThis is a very bad, high level overview of lifetime, great amount of features about lifetime are yet to be discussed. You can read more about it from the references below:\u003C\u002Fp\u003E\\n\u003Cul\u003E\\n\u003Cli\u003E\u003Ca href=\\\"https:\u002F\u002Fdoc.rust-lang.org\u002Fbook\u002Fch10-03-lifetime-syntax.html\\\" target='_blank'\u003EThe Rust Programming Language Book (Chapter 10)\u003C\u002Fa\u003E \u003C\u002Fli\u003E\\n\u003Cli\u003E\u003Ca href=\\\"https:\u002F\u002Fdoc.rust-lang.org\u002Frust-by-example\u002Fscope\u002Flifetime\u002Fexplicit.html\\\" target='_blank'\u003ERust by Example (Explicit Annotations)\u003C\u002Fa\u003E\u003C\u002Fli\u003E\\n\u003C\u002Ful\u003E\\n\",\"bodyBegin\":6,\"frontmatter\":\"title: Lifetime is so goodd!!!\\ndate: 2021-06-10\"},\"prev\":{\"link\":\"2021-06-08-rust_bust\",\"blog\":{\"date\":\"2021-06-08\",\"title\":\"Rust Bust\"}},\"next\":{\"link\":\"2021-06-21-random_or_not_to_be_random\",\"blog\":{\"date\":\"2021-06-21\",\"title\":\"Random Or Not to be Random\"}}}}"}</script>
+		</div>
+	</body>
+</html>

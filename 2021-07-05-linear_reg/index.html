@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Simple Linear Regression For Simple Soul</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/base16/gruvbox-light-medium.min.css" integrity="sha512-YOLBTZnIcnB3qm7sPFlGHx0no3yEGWvVTAI9uA6uaZGUBQui/DP9vh0FLmCJbOL5TxHJWwaiI23cCEJsmIeMew==" crossorigin="anonymous" referrerpolicy="no-referrer" data-svelte="svelte-8dvywl"><script src="https://use.fontawesome.com/c5d5ee5034.js" data-svelte="svelte-zlrjvv"></script>
+
+		
+
+		<link rel="modulepreload" href="/_app/start-141ab782.js">
+		<link rel="modulepreload" href="/_app/chunks/vendor-5b6c161e.js">
+		<link rel="modulepreload" href="/_app/pages/__layout.svelte-75368ea4.js">
+		<link rel="modulepreload" href="/_app/pages/[slug].svelte-14184443.js">
+		<link rel="modulepreload" href="/_app/chunks/BlogShow-731708a0.js">
+		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
+		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b07f3b47.css">
+
+		<script type="module">
+			import { start } from "/_app/start-141ab782.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":""},
+				session: {},
+				host: location.host,
+				route: true,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/_app/pages/__layout.svelte-75368ea4.js"),
+						import("/_app/pages/[slug].svelte-14184443.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "/2021-07-05-linear_reg",
+						query: new URLSearchParams(""),
+						params: {"slug":"2021-07-05-linear_reg"}
+					}
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<div id="svelte">
+
+
+
+
+
+
+<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm svelte-da4aex"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
+		<span class="font-extralight p-5 text-white">Welcome to my blog!</span>
+		<a href="/" class="font-normal p-1 text-xl text-white hover:text-2xl duration-300">Home</a>
+		<a href="/about" class="font-normal md:pb-1 text-xl text-white hover:text-2xl duration-300">About</a>
+		<a href="/blogs" class="font-normal text-xl text-white hover:text-2xl duration-300">Blogs</a></div>
+	<a href="https://github.com/arogyad/" target="_blank"><i class="fa fa-github fa-2x hover:text-4xl text-white duration-200 md:ml-20"></i></a>
+	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a>
+</div>
+<button class="float-right">a </button>
+
+
+<div id="blog" class="md:pl-72 md:pr-10 md:pt-10 p-10 md:text-justify"><h1 class="md:">Simple Linear Regression For Simple Soul</h1>
+	<span class="font-light">2021-07-05</span>
+	<!-- HTML_TAG_START --><p>Okay! Linear regression, the basic of the regression analysis. There are surely better implementations of linear regression in some other language that is faster and more intuitive than the one that we will be writing. So why would anyone want another linear regression implementation?. I don&#39;t have an answer to be honest, this is from a project that I am currently working on, and I thought maybe I could share it here, as there lacked a connection between the implementation side and the mathematical side of linear regression.  Here we will be looking at the maths and at the same time implement that maths into code. The codes will be choppy as this is an initial prototype (classic excuse) so sorry about that!!</p>
+<h1 id="maths">Maths?!</h1>
+<p>The <a href="https://en.wikipedia.org/wiki/Linear_regression">wikipedia page</a> for linear regression is the best summary on linear regression. The maths is concrete and clear to understand as it needs only the basic understanding of matrices and linear algebra. Okay! So let&#39;s get into just a bit of maths and then a bit of coding in between.</p>
+<p>Linear regression ,as the name suggests, predicts the relation between a dependent variable $$y$$ based on a single or set of explanatory variables $$x$$ under the assumption that the data is linear.  We know that a linear equation is given as: $$y = mx + c$$ so in a linear regression we are trying to predict the $$m$$ parameter which I prefer to call $$\theta$$ as it is just the slope. So linear regression boils down to finding the slope of the given data. This is everything that you need to know tbh, other things just naturally follow as we code along. </p>
+<h1 id="maths-into-code">Maths into C<span style="font-size: 0.5em;">ode</span></h1>
+<p>This blog will produce the most basic form of linear regression. Our optimizer will be <a href="https://en.wikipedia.org/wiki/Gradient_descent"> gradient descent method </a> , which is just betting against the gradient until we win or go bust. Quick formula for gradient descent (I love  writing formula in $$\LaTeX$$, sorry cannot help).</p>
+<p><span style="display:table;margin:0 auto;">$$x_{n+1} = x_n - \gamma_n \varDelta F(\relax{x})$$</span></p>
+<p>Here, $$\varDelta F\relax(x)$$ is the gradient of the function $$F \relax(x)$$, $$\gamma_n$$ is a often called a step-size. SGD is used all over the place, and it is also the father of other optimization methods like Adam. Enough with this jargon lets get writing.</p>
+<p>Okay! So the first thing that we need is basic amount of matrix algebra. Lets say we want to predict a dependent variable $$y$$ based on explanatory variables $$X$$. Lets say that we have $$p$$ numbers of features that we can predict our results from and there are $$n$$ number of samples. </p>
+<p>So the explanatory matrix ($$X$$) can be given as,</p>
+<span style="display:table;margin:0 auto;">
+$$
+X = {
+\begin{pmatrix}
+x_{11} & \cdots & x_{1p} \\
+x_{21} & \cdots & x_{2p} \\
+\vdots & \ddots & \vdots \\
+x_{n1} & \cdots & x_{np}
+\end{pmatrix}
+}
+$$</span>
+
+<p>The size of the matrix $$X$$ is $$n \times p$$ on wikipedia you will see a extra column at the beginning consisting of all $$1s$$ but we won&#39;t struggle with that here as this is a very simple implementation. In computer terms, $$X$$ is what we feed to the model to predict from or train from depending on the situation. </p>
+<p>Lets define the $$y$$ now. So there can only be one prediction to a series of input features so the shape of prediction(dependent) matrix is $$n \times 1.$$ In matrix terms,</p>
+<span style="display:table;margin:0 auto;">
+$$
+y = {
+\begin{pmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n
+\end{pmatrix}
+}
+$$
+</span>
+
+<p>This is the labels that we will be sending to the model to learn from and also the prediction we get from the trained model.
+Now the part that we predict, $$\theta$$. The $$\theta$$ is of shape $$p \times 1$$ so that we can multiply it with $$X$$. As for two matrices to be able to multiply with each other the number of rows on second matrix must be equal to number of columns on second matrix.  As a tradition here in this blog lets her is the matrix representation.</p>
+<span style="display:table;margin:0 auto;">
+$$
+\theta = {
+\begin{pmatrix}
+\theta_1 \\
+\theta_2 \\
+\vdots \\
+\theta_p
+\end{pmatrix}
+}
+$$</span>
+
+<p>In this implementation we will be ignoring the $$\varepsilon$$ - error variable. Now combining all these things together, our final equation is given as:</p>
+<span style="display:table;margin:0 auto;">
+$$y = X\theta$$
+</span>
+
+<span style="display:table;margin:0 auto;">
+$${
+\begin{pmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n
+\end{pmatrix}
+} =
+{
+\begin{pmatrix}
+x_{11} & \cdots & x_{1p} \\
+x_{21} & \cdots & x_{2p} \\
+\vdots & \ddots & \vdots \\
+x_{n1} & \cdots & x_{np}
+\end{pmatrix}
+} {
+\begin{pmatrix}
+\theta_1 \\
+\theta_2 \\
+\vdots \\
+\theta_p
+\end{pmatrix}
+}
+$$
+</span>
+
+<span style="display:table;margin:0 auto;">
+$$
+\begin{pmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n
+\end{pmatrix}=
+\begin{pmatrix}
+x_{11}\theta_1+ x_{12}\theta_2+\cdots+x_{1p}\theta_p \\
+x_{21}\theta_1+x_{22}\theta_2+\cdots+x_{2p}\theta_p \\
+\vdots \\
+x_{n1}\theta_1+x_{n2}+\cdots+x_{np}\theta_p
+\end{pmatrix}
+$$</span>
+
+<p>This above equation is what we are trying to predict and the shape of the matrix is $$n \times 1$$. I am sorry about being unable to name the equation, I am unable to figure out the way to do it. So this function passes through origin,but this isn&#39;t optimal. The process of adding a y-intercept will be left for the reader as an exercise. Here is a hint though.</p>
+<span style="display:table;margin:0 auto;">
+$$y = X\theta + \varepsilon$$
+</span>
+
+<span style="display:table;margin:0 auto;">
+$$
+\begin{pmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n
+\end{pmatrix} = 
+\begin{pmatrix}
+x_{11} & \cdots & x_{1p} \\
+x_{21} & \cdots & x_{2p} \\
+\vdots & \ddots & \vdots \\
+x_{n1} & \cdots & x_{np}
+\end{pmatrix} 
+\begin{pmatrix}
+\theta_1 \\
+\theta_2 \\
+\vdots \\
+\theta_p
+\end{pmatrix}
++
+\begin{pmatrix}
+\varepsilon_1 \\
+\varepsilon_2 \\
+\vdots \\
+\varepsilon_n \\
+\end{pmatrix}
+$$
+</span>
+
+<p>Enough with the maths jargon lets get to the code. Okay so lets make a structure that will represent the linear regression. Calling it <code>Linear</code> will be good right?</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Linear</span> {
+    data: Array2&lt;<span class="hljs-type">f64</span>&gt;,
+    theta: Array2&lt;<span class="hljs-type">f64</span>&gt;,
+    label: Array2&lt;<span class="hljs-type">f64</span>&gt;
+}
+</code></pre>
+<p>We will be using <em><strong>Rust</strong></em> and a crate called <a href="https://crates.io/crates/ndarray"><code>ndarray</code></a>. <code>ndarray</code> is great and intuative. I had worked with <code>numpy</code> before and <code>ndarray</code> is similar to it (but not really similar). Our data structure(<code>Linear</code>) contains a <code>data</code> array, a <code>theta</code> array and a <code>label</code> array. The <code>label</code> array will be used during training. The <code>theta</code> represents the parameter that our model will learn and this <code>theta</code> will be used to predict from the given data. Lets implement the <code>Linear</code> regression struct step by step.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Linear</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>(data: Array2&lt;<span class="hljs-type">f64</span>&gt;, label: Array2&lt;<span class="hljs-type">f64</span>&gt;)<span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">theta</span> = Array2::<span class="hljs-title function_ invoke__">from_shape_fn</span>((data.<span class="hljs-title function_ invoke__">ncols</span>(),<span class="hljs-number">1</span>),|(_,_)| rand::<span class="hljs-title function_ invoke__">random</span>());
+        Linear {data, theta, label}
+    }
+}
+</code></pre>
+<p>Here we created a <code>new</code> function that creates a <code>Linear</code> struct. I couldn&#39;t create a  empty random matrix without using another crate, so here I am using a little hack(not really a hack though) to create a matrix of size $$n \times 1$$. 
+Now on to the most important and the simplest part. Every code after this point will be written inside the <code>impl</code> block.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">hypothesis</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> Array2&lt;<span class="hljs-type">f64</span>&gt; {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">prediction</span> = <span class="hljs-keyword">self</span>.data.<span class="hljs-title function_ invoke__">dot</span>(&amp;<span class="hljs-keyword">self</span>.theta);
+    prediction
+}
+</code></pre>
+<p>Here we do our formula of matrix multiplication ($$y = X\theta$$). We haven&#39;t talked about what inner product is, but we don&#39;t need a complete definition of it here. For our sake, inner product is the dot product for vector and matrix multiplication for matrix.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">gradient</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, gamma: <span class="hljs-type">f64</span>, iter: <span class="hljs-type">i32</span>) {
+    <span class="hljs-keyword">for</span> <span class="hljs-variable">_i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..iter{
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">delta</span> = ((<span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">hypo</span>() - &amp;<span class="hljs-keyword">self</span>.label).<span class="hljs-title function_ invoke__">reversed_axes</span>().<span class="hljs-title function_ invoke__">dot</span>(&amp;<span class="hljs-keyword">self</span>.data)).<span class="hljs-title function_ invoke__">reversed_axes</span>() * (<span class="hljs-number">1</span>/<span class="hljs-keyword">self</span>.data.<span class="hljs-title function_ invoke__">nrows</span>()) * gamma;
+        <span class="hljs-keyword">self</span>.theta = &amp;<span class="hljs-keyword">self</span>.theta - delta;
+    }
+}
+</code></pre>
+<p>The initialization of <code>delta</code> variable looks complex, but I promise if I had splited it into multiple lines, it would have looked even more worse. On that note, lets go step by step on how it it initialized.
+The <code>delta</code> here is the vectorized form of gradient descent that we saw earlier. Okay so now a bit of maths :). </p>
+<p>The cost function for linear regression is defined as:</p>
+<span style="display:table;margin:0 auto;">
+$$
+C = \frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2
+$$
+</span>
+
+<p>This is the cost function which is the average of loss function(this is why we have $$\frac{1}{2m}$$ there. The $$2$$ doesn&#39;t matter, it is there to make the equation look prettier after we take the derivative). Here $$m$$ is the number of rows. So, the gradient descent will optimize according to this cost function. Taking the derivative wrt. each $$\theta$$. You can check out the derivation on the bottom of the page. I cannot guarantee that it is correct, as it is something I did, but it is intuitive?</p>
+<span style="display:table;margin:0 auto;">
+$$
+\frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)x
+$$
+</span>
+
+<p>And then finally, relating this to the code above. <code>(self.hypo() - &amp;self.label)</code> is the $$(h_\theta\relax(x_i)-y_i)$$ part. Then we <code>reversed_axis</code>, which is done to allow the multiplication between the afforementioned value and $$x$$. So this code <code>(self.hypo()-&amp;self.label).reversed_axes().dot(&amp;self.data)).reversed_axes()</code> is equivalent to the following expression.</p>
+<span style="display:table;margin:0 auto;">
+$$
+\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)x
+$$
+</span>
+
+<p>Then, we divide it by <code>self.data.nrows()</code> as in the equation to get the final value. The extra <code>gamma</code> parameter is the step-size as in the equation</p>
+<p><span style="display:table;margin:0 auto;">$$x_{n+1} = x_n - \gamma_n \varDelta F(\relax{x})$$</span></p>
+<p>Now the final step, taking it all together. We subtract the <code>delta</code> from <code>self.theta</code> to get the new theta value. This is equivalent to the equation above. In terms of our code, the mathematical equation is given as:</p>
+<p><span style="display:table;margin:0 auto;">$$\theta_{n+1} = \theta_n - \gamma \frac{\delta C}{\delta \theta}$$</span></p>
+<p>The <code>iter</code> parameter is the number of iteration, surprised? Okay now the final part, the training. Lets create a training function.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">train</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, alpha: <span class="hljs-type">f64</span>, iter: <span class="hljs-type">i32</span>) {
+        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">gradient</span>(alpha, iter);
+}
+</code></pre>
+<p>This calls the <code>gradient</code> function with those parameters and it&#39;s done!! To predict results after training we can create a public function named <code>predict</code> and inner product the input data with the <code>theta</code> parameter in our struct.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">predict</span>(&amp;<span class="hljs-keyword">self</span>, input: Array2&lt;<span class="hljs-type">f64</span>&gt;) <span class="hljs-punctuation">-&gt;</span> Array2&lt;<span class="hljs-type">f64</span>&gt; {
+        input.<span class="hljs-title function_ invoke__">dot</span>(&amp;<span class="hljs-keyword">self</span>.theta)
+}
+</code></pre>
+<p>And this is it. Everything is done. This is the simplest linear regression, now we can train and test it. The code for training and testing it is given below:</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">use</span> ndarray::{<span class="hljs-keyword">self</span>, Array, Array2, Ix2};
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">data</span> = Array::<span class="hljs-title function_ invoke__">range</span>(<span class="hljs-number">1.0</span>, <span class="hljs-number">15.0</span>, <span class="hljs-number">1.0</span>).<span class="hljs-title function_ invoke__">into_shape</span>((<span class="hljs-number">14</span>, <span class="hljs-number">1</span>)).<span class="hljs-title function_ invoke__">unwrap</span>();
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">label</span> = Array::<span class="hljs-title function_ invoke__">range</span>(<span class="hljs-number">1.0</span>, <span class="hljs-number">15.0</span>, <span class="hljs-number">1.0</span>).<span class="hljs-title function_ invoke__">into_shape</span>((<span class="hljs-number">14</span>, <span class="hljs-number">1</span>)).<span class="hljs-title function_ invoke__">unwrap</span>();
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">lin</span> = Linear::<span class="hljs-title function_ invoke__">new</span>(data, label);
+    lin.<span class="hljs-title function_ invoke__">train</span>(<span class="hljs-number">0.01</span>, <span class="hljs-number">3</span>);
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">data</span> = Array::<span class="hljs-title function_ invoke__">range</span>(<span class="hljs-number">11.0</span>, <span class="hljs-number">25.0</span>, <span class="hljs-number">1.0</span>).<span class="hljs-title function_ invoke__">into_shape</span>((<span class="hljs-number">14</span>, <span class="hljs-number">1</span>)).<span class="hljs-title function_ invoke__">unwrap</span>();
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{:?}&quot;</span>, lin.<span class="hljs-title function_ invoke__">predict</span>(data));
+}
+</code></pre>
+<p>There are lot of roads one can go from here. We could add a error-var or create a different optimization algorithm. Thank you for reading, have a great day(or night). 
+The derivation of the loss function is given as. Here, when we derivate the $$\theta$$ is $$\theta_j$$ and the equation is $$h_\theta\relax(x_i) = \theta_j X$$  but for simplicity sake we will be putting it as $$\theta$$ and $$h_\theta\relax(x_i) = \theta X$$.</p>
+<span style="display:table;margin:0 auto;">
+$$
+C = \frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2
+$$
+</span>
+
+<p>$$
+Taking&gt; derivation&gt; wrt &gt; &quot;\theta&quot;,
+$$</p>
+<span style="display:table;margin:0 auto;">
+$$
+\frac{\delta C}{\delta \theta} = \frac{\frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2}{d\theta}
+$$
+</span>
+
+<span style="display:table;margin:0 auto;">
+$$
+\frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{d\theta}
+$$
+</span>
+
+<span style="display:table;margin:0 auto;">
+$$
+\frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{d(h_\theta\relax(x_i)-y_i)}\times\frac{d(h_\theta\relax(x_i)-y_i)}{d\theta}
+$$
+</span>
+
+<span style="display:table;margin:0 auto;">
+$$
+\frac{\delta C}{\delta \theta} = \frac{1}{\cancel{2}m}\times\cancel{2}\times\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i) \lparen \frac{dh_\theta\relax(x_i)}{d\theta} - \frac{dy_i}{d\theta}\rparen
+$$
+</span>
+
+<p>$$We &gt; know &gt; h_\theta\relax(x_i) = \theta X &gt; and &gt; \frac{dy_i}{d\theta} = 0,$$</p>
+<span style="display:table;margin:0 auto;">
+$$
+\frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)(\frac{\cancel{d\theta} X}{\cancel{d\theta}})
+$$
+</span>
+
+<p>$$So &gt; we &gt; have,$$</p>
+<span style="display:table;margin:0 auto;">
+$$
+\frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)X
+$$
+</span>
+<!-- HTML_TAG_END -->
+	<div id="next" class="grid pt-10">
+	<div class="float-left font-normal text-2xl pt-2 pb-1 border-t-2">More Similar Blogs:</div>
+<div class="ml-4"><ul><li><a sveltekit:prefetch href="/2021-06-21-random_or_not_to_be_random" class="text-xl font-light pb-3">Random Or Not to be Random [2021-06-21]</a></li>
+		<li><a sveltekit:prefetch href="/2021-07-15-polynomial" class="text-xl font-light pb-3">Polynomial [2021-07-15]</a></li></ul></div></div></div>
+
+
+
+			<script type="application/json" data-type="svelte-data" data-url="/2021-07-05-linear_reg.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"{\"content\":{\"out\":{\"attributes\":{\"title\":\"Simple Linear Regression For Simple Soul\",\"date\":\"2021-07-05\"},\"body\":\"\u003Cp\u003EOkay! Linear regression, the basic of the regression analysis. There are surely better implementations of linear regression in some other language that is faster and more intuitive than the one that we will be writing. So why would anyone want another linear regression implementation?. I don&#39;t have an answer to be honest, this is from a project that I am currently working on, and I thought maybe I could share it here, as there lacked a connection between the implementation side and the mathematical side of linear regression.  Here we will be looking at the maths and at the same time implement that maths into code. The codes will be choppy as this is an initial prototype (classic excuse) so sorry about that!!\u003C\u002Fp\u003E\\n\u003Ch1 id=\\\"maths\\\"\u003EMaths?!\u003C\u002Fh1\u003E\\n\u003Cp\u003EThe \u003Ca href=\\\"https:\u002F\u002Fen.wikipedia.org\u002Fwiki\u002FLinear_regression\\\"\u003Ewikipedia page\u003C\u002Fa\u003E for linear regression is the best summary on linear regression. The maths is concrete and clear to understand as it needs only the basic understanding of matrices and linear algebra. Okay! So let&#39;s get into just a bit of maths and then a bit of coding in between.\u003C\u002Fp\u003E\\n\u003Cp\u003ELinear regression ,as the name suggests, predicts the relation between a dependent variable $$y$$ based on a single or set of explanatory variables $$x$$ under the assumption that the data is linear.  We know that a linear equation is given as: $$y = mx + c$$ so in a linear regression we are trying to predict the $$m$$ parameter which I prefer to call $$\\\\theta$$ as it is just the slope. So linear regression boils down to finding the slope of the given data. This is everything that you need to know tbh, other things just naturally follow as we code along. \u003C\u002Fp\u003E\\n\u003Ch1 id=\\\"maths-into-code\\\"\u003EMaths into C\u003Cspan style=\\\"font-size: 0.5em;\\\"\u003Eode\u003C\u002Fspan\u003E\u003C\u002Fh1\u003E\\n\u003Cp\u003EThis blog will produce the most basic form of linear regression. Our optimizer will be \u003Ca href=\\\"https:\u002F\u002Fen.wikipedia.org\u002Fwiki\u002FGradient_descent\\\"\u003E gradient descent method \u003C\u002Fa\u003E , which is just betting against the gradient until we win or go bust. Quick formula for gradient descent (I love  writing formula in $$\\\\LaTeX$$, sorry cannot help).\u003C\u002Fp\u003E\\n\u003Cp\u003E\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E$$x_{n+1} = x_n - \\\\gamma_n \\\\varDelta F(\\\\relax{x})$$\u003C\u002Fspan\u003E\u003C\u002Fp\u003E\\n\u003Cp\u003EHere, $$\\\\varDelta F\\\\relax(x)$$ is the gradient of the function $$F \\\\relax(x)$$, $$\\\\gamma_n$$ is a often called a step-size. SGD is used all over the place, and it is also the father of other optimization methods like Adam. Enough with this jargon lets get writing.\u003C\u002Fp\u003E\\n\u003Cp\u003EOkay! So the first thing that we need is basic amount of matrix algebra. Lets say we want to predict a dependent variable $$y$$ based on explanatory variables $$X$$. Lets say that we have $$p$$ numbers of features that we can predict our results from and there are $$n$$ number of samples. \u003C\u002Fp\u003E\\n\u003Cp\u003ESo the explanatory matrix ($$X$$) can be given as,\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\nX = {\\n\\\\begin{pmatrix}\\nx_{11} & \\\\cdots & x_{1p} \\\\\\\\\\nx_{21} & \\\\cdots & x_{2p} \\\\\\\\\\n\\\\vdots & \\\\ddots & \\\\vdots \\\\\\\\\\nx_{n1} & \\\\cdots & x_{np}\\n\\\\end{pmatrix}\\n}\\n$$\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003EThe size of the matrix $$X$$ is $$n \\\\times p$$ on wikipedia you will see a extra column at the beginning consisting of all $$1s$$ but we won&#39;t struggle with that here as this is a very simple implementation. In computer terms, $$X$$ is what we feed to the model to predict from or train from depending on the situation. \u003C\u002Fp\u003E\\n\u003Cp\u003ELets define the $$y$$ now. So there can only be one prediction to a series of input features so the shape of prediction(dependent) matrix is $$n \\\\times 1.$$ In matrix terms,\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\ny = {\\n\\\\begin{pmatrix}\\ny_1 \\\\\\\\\\ny_2 \\\\\\\\\\n\\\\vdots \\\\\\\\\\ny_n\\n\\\\end{pmatrix}\\n}\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003EThis is the labels that we will be sending to the model to learn from and also the prediction we get from the trained model.\\nNow the part that we predict, $$\\\\theta$$. The $$\\\\theta$$ is of shape $$p \\\\times 1$$ so that we can multiply it with $$X$$. As for two matrices to be able to multiply with each other the number of rows on second matrix must be equal to number of columns on second matrix.  As a tradition here in this blog lets her is the matrix representation.\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\theta = {\\n\\\\begin{pmatrix}\\n\\\\theta_1 \\\\\\\\\\n\\\\theta_2 \\\\\\\\\\n\\\\vdots \\\\\\\\\\n\\\\theta_p\\n\\\\end{pmatrix}\\n}\\n$$\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003EIn this implementation we will be ignoring the $$\\\\varepsilon$$ - error variable. Now combining all these things together, our final equation is given as:\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$y = X\\\\theta$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$${\\n\\\\begin{pmatrix}\\ny_1 \\\\\\\\\\ny_2 \\\\\\\\\\n\\\\vdots \\\\\\\\\\ny_n\\n\\\\end{pmatrix}\\n} =\\n{\\n\\\\begin{pmatrix}\\nx_{11} & \\\\cdots & x_{1p} \\\\\\\\\\nx_{21} & \\\\cdots & x_{2p} \\\\\\\\\\n\\\\vdots & \\\\ddots & \\\\vdots \\\\\\\\\\nx_{n1} & \\\\cdots & x_{np}\\n\\\\end{pmatrix}\\n} {\\n\\\\begin{pmatrix}\\n\\\\theta_1 \\\\\\\\\\n\\\\theta_2 \\\\\\\\\\n\\\\vdots \\\\\\\\\\n\\\\theta_p\\n\\\\end{pmatrix}\\n}\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\begin{pmatrix}\\ny_1 \\\\\\\\\\ny_2 \\\\\\\\\\n\\\\vdots \\\\\\\\\\ny_n\\n\\\\end{pmatrix}=\\n\\\\begin{pmatrix}\\nx_{11}\\\\theta_1+ x_{12}\\\\theta_2+\\\\cdots+x_{1p}\\\\theta_p \\\\\\\\\\nx_{21}\\\\theta_1+x_{22}\\\\theta_2+\\\\cdots+x_{2p}\\\\theta_p \\\\\\\\\\n\\\\vdots \\\\\\\\\\nx_{n1}\\\\theta_1+x_{n2}+\\\\cdots+x_{np}\\\\theta_p\\n\\\\end{pmatrix}\\n$$\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003EThis above equation is what we are trying to predict and the shape of the matrix is $$n \\\\times 1$$. I am sorry about being unable to name the equation, I am unable to figure out the way to do it. So this function passes through origin,but this isn&#39;t optimal. The process of adding a y-intercept will be left for the reader as an exercise. Here is a hint though.\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$y = X\\\\theta + \\\\varepsilon$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\begin{pmatrix}\\ny_1 \\\\\\\\\\ny_2 \\\\\\\\\\n\\\\vdots \\\\\\\\\\ny_n\\n\\\\end{pmatrix} = \\n\\\\begin{pmatrix}\\nx_{11} & \\\\cdots & x_{1p} \\\\\\\\\\nx_{21} & \\\\cdots & x_{2p} \\\\\\\\\\n\\\\vdots & \\\\ddots & \\\\vdots \\\\\\\\\\nx_{n1} & \\\\cdots & x_{np}\\n\\\\end{pmatrix} \\n\\\\begin{pmatrix}\\n\\\\theta_1 \\\\\\\\\\n\\\\theta_2 \\\\\\\\\\n\\\\vdots \\\\\\\\\\n\\\\theta_p\\n\\\\end{pmatrix}\\n+\\n\\\\begin{pmatrix}\\n\\\\varepsilon_1 \\\\\\\\\\n\\\\varepsilon_2 \\\\\\\\\\n\\\\vdots \\\\\\\\\\n\\\\varepsilon_n \\\\\\\\\\n\\\\end{pmatrix}\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003EEnough with the maths jargon lets get to the code. Okay so lets make a structure that will represent the linear regression. Calling it \u003Ccode\u003ELinear\u003C\u002Fcode\u003E will be good right?\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Epub\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Estruct\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003ELinear\u003C\u002Fspan\u003E {\\n    data: Array2&lt;\u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E&gt;,\\n    theta: Array2&lt;\u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E&gt;,\\n    label: Array2&lt;\u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E&gt;\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EWe will be using \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E and a crate called \u003Ca href=\\\"https:\u002F\u002Fcrates.io\u002Fcrates\u002Fndarray\\\"\u003E\u003Ccode\u003Endarray\u003C\u002Fcode\u003E\u003C\u002Fa\u003E. \u003Ccode\u003Endarray\u003C\u002Fcode\u003E is great and intuative. I had worked with \u003Ccode\u003Enumpy\u003C\u002Fcode\u003E before and \u003Ccode\u003Endarray\u003C\u002Fcode\u003E is similar to it (but not really similar). Our data structure(\u003Ccode\u003ELinear\u003C\u002Fcode\u003E) contains a \u003Ccode\u003Edata\u003C\u002Fcode\u003E array, a \u003Ccode\u003Etheta\u003C\u002Fcode\u003E array and a \u003Ccode\u003Elabel\u003C\u002Fcode\u003E array. The \u003Ccode\u003Elabel\u003C\u002Fcode\u003E array will be used during training. The \u003Ccode\u003Etheta\u003C\u002Fcode\u003E represents the parameter that our model will learn and this \u003Ccode\u003Etheta\u003C\u002Fcode\u003E will be used to predict from the given data. Lets implement the \u003Ccode\u003ELinear\u003C\u002Fcode\u003E regression struct step by step.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Eimpl\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003ELinear\u003C\u002Fspan\u003E {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Epub\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Enew\u003C\u002Fspan\u003E(data: Array2&lt;\u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E&gt;, label: Array2&lt;\u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E&gt;)\u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003ESelf\u003C\u002Fspan\u003E {\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Etheta\u003C\u002Fspan\u003E = Array2::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Efrom_shape_fn\u003C\u002Fspan\u003E((data.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Encols\u003C\u002Fspan\u003E(),\u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E),|(_,_)| rand::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erandom\u003C\u002Fspan\u003E());\\n        Linear {data, theta, label}\\n    }\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EHere we created a \u003Ccode\u003Enew\u003C\u002Fcode\u003E function that creates a \u003Ccode\u003ELinear\u003C\u002Fcode\u003E struct. I couldn&#39;t create a  empty random matrix without using another crate, so here I am using a little hack(not really a hack though) to create a matrix of size $$n \\\\times 1$$. \\nNow on to the most important and the simplest part. Every code after this point will be written inside the \u003Ccode\u003Eimpl\u003C\u002Fcode\u003E block.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Ehypothesis\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E Array2&lt;\u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E&gt; {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Eprediction\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.data.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Edot\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.theta);\\n    prediction\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EHere we do our formula of matrix multiplication ($$y = X\\\\theta$$). We haven&#39;t talked about what inner product is, but we don&#39;t need a complete definition of it here. For our sake, inner product is the dot product for vector and matrix multiplication for matrix.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Egradient\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Emut\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E, gamma: \u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E, iter: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E) {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Efor\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003E_i\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Ein\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E..iter{\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Edelta\u003C\u002Fspan\u003E = ((\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ehypo\u003C\u002Fspan\u003E() - &amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.label).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ereversed_axes\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Edot\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.data)).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ereversed_axes\u003C\u002Fspan\u003E() * (\u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E\u002F\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.data.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Enrows\u003C\u002Fspan\u003E()) * gamma;\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.theta = &amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.theta - delta;\\n    }\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThe initialization of \u003Ccode\u003Edelta\u003C\u002Fcode\u003E variable looks complex, but I promise if I had splited it into multiple lines, it would have looked even more worse. On that note, lets go step by step on how it it initialized.\\nThe \u003Ccode\u003Edelta\u003C\u002Fcode\u003E here is the vectorized form of gradient descent that we saw earlier. Okay so now a bit of maths :). \u003C\u002Fp\u003E\\n\u003Cp\u003EThe cost function for linear regression is defined as:\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\nC = \\\\frac{1}{2m}\\\\displaystyle\\\\sum_{i=1}^m(h_\\\\theta\\\\relax(x_i)-y_i)^2\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003EThis is the cost function which is the average of loss function(this is why we have $$\\\\frac{1}{2m}$$ there. The $$2$$ doesn&#39;t matter, it is there to make the equation look prettier after we take the derivative). Here $$m$$ is the number of rows. So, the gradient descent will optimize according to this cost function. Taking the derivative wrt. each $$\\\\theta$$. You can check out the derivation on the bottom of the page. I cannot guarantee that it is correct, as it is something I did, but it is intuitive?\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\frac{\\\\delta C}{\\\\delta \\\\theta} = \\\\frac{1}{m}\\\\displaystyle\\\\sum_{i=1}^m(h_\\\\theta\\\\relax(x_i)-y_i)x\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003EAnd then finally, relating this to the code above. \u003Ccode\u003E(self.hypo() - &amp;self.label)\u003C\u002Fcode\u003E is the $$(h_\\\\theta\\\\relax(x_i)-y_i)$$ part. Then we \u003Ccode\u003Ereversed_axis\u003C\u002Fcode\u003E, which is done to allow the multiplication between the afforementioned value and $$x$$. So this code \u003Ccode\u003E(self.hypo()-&amp;self.label).reversed_axes().dot(&amp;self.data)).reversed_axes()\u003C\u002Fcode\u003E is equivalent to the following expression.\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\displaystyle\\\\sum_{i=1}^m(h_\\\\theta\\\\relax(x_i)-y_i)x\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003EThen, we divide it by \u003Ccode\u003Eself.data.nrows()\u003C\u002Fcode\u003E as in the equation to get the final value. The extra \u003Ccode\u003Egamma\u003C\u002Fcode\u003E parameter is the step-size as in the equation\u003C\u002Fp\u003E\\n\u003Cp\u003E\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E$$x_{n+1} = x_n - \\\\gamma_n \\\\varDelta F(\\\\relax{x})$$\u003C\u002Fspan\u003E\u003C\u002Fp\u003E\\n\u003Cp\u003ENow the final step, taking it all together. We subtract the \u003Ccode\u003Edelta\u003C\u002Fcode\u003E from \u003Ccode\u003Eself.theta\u003C\u002Fcode\u003E to get the new theta value. This is equivalent to the equation above. In terms of our code, the mathematical equation is given as:\u003C\u002Fp\u003E\\n\u003Cp\u003E\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E$$\\\\theta_{n+1} = \\\\theta_n - \\\\gamma \\\\frac{\\\\delta C}{\\\\delta \\\\theta}$$\u003C\u002Fspan\u003E\u003C\u002Fp\u003E\\n\u003Cp\u003EThe \u003Ccode\u003Eiter\u003C\u002Fcode\u003E parameter is the number of iteration, surprised? Okay now the final part, the training. Lets create a training function.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Epub\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Etrain\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Emut\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E, alpha: \u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E, iter: \u003Cspan class=\\\"hljs-type\\\"\u003Ei32\u003C\u002Fspan\u003E) {\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Egradient\u003C\u002Fspan\u003E(alpha, iter);\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThis calls the \u003Ccode\u003Egradient\u003C\u002Fcode\u003E function with those parameters and it&#39;s done!! To predict results after training we can create a public function named \u003Ccode\u003Epredict\u003C\u002Fcode\u003E and inner product the input data with the \u003Ccode\u003Etheta\u003C\u002Fcode\u003E parameter in our struct.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Epub\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Epredict\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E, input: Array2&lt;\u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E&gt;) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E Array2&lt;\u003Cspan class=\\\"hljs-type\\\"\u003Ef64\u003C\u002Fspan\u003E&gt; {\\n        input.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Edot\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.theta)\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EAnd this is it. Everything is done. This is the simplest linear regression, now we can train and test it. The code for training and testing it is given below:\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Euse\u003C\u002Fspan\u003E ndarray::{\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E, Array, Array2, Ix2};\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emain\u003C\u002Fspan\u003E() {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Edata\u003C\u002Fspan\u003E = Array::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erange\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E15.0\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Einto_shape\u003C\u002Fspan\u003E((\u003Cspan class=\\\"hljs-number\\\"\u003E14\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E)).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Elabel\u003C\u002Fspan\u003E = Array::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erange\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E15.0\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Einto_shape\u003C\u002Fspan\u003E((\u003Cspan class=\\\"hljs-number\\\"\u003E14\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E)).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Emut \u003C\u002Fspan\u003E\u003Cspan class=\\\"hljs-variable\\\"\u003Elin\u003C\u002Fspan\u003E = Linear::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Enew\u003C\u002Fspan\u003E(data, label);\\n    lin.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Etrain\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E0.01\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E3\u003C\u002Fspan\u003E);\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Edata\u003C\u002Fspan\u003E = Array::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erange\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E11.0\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E25.0\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Einto_shape\u003C\u002Fspan\u003E((\u003Cspan class=\\\"hljs-number\\\"\u003E14\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E1\u003C\u002Fspan\u003E)).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n    \u003Cspan class=\\\"hljs-built_in\\\"\u003Eprintln!\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-string\\\"\u003E&quot;{:?}&quot;\u003C\u002Fspan\u003E, lin.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Epredict\u003C\u002Fspan\u003E(data));\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThere are lot of roads one can go from here. We could add a error-var or create a different optimization algorithm. Thank you for reading, have a great day(or night). \\nThe derivation of the loss function is given as. Here, when we derivate the $$\\\\theta$$ is $$\\\\theta_j$$ and the equation is $$h_\\\\theta\\\\relax(x_i) = \\\\theta_j X$$  but for simplicity sake we will be putting it as $$\\\\theta$$ and $$h_\\\\theta\\\\relax(x_i) = \\\\theta X$$.\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\nC = \\\\frac{1}{2m}\\\\displaystyle\\\\sum_{i=1}^m(h_\\\\theta\\\\relax(x_i)-y_i)^2\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003E$$\\nTaking&gt; derivation&gt; wrt &gt; &quot;\\\\theta&quot;,\\n$$\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\frac{\\\\delta C}{\\\\delta \\\\theta} = \\\\frac{\\\\frac{1}{2m}\\\\displaystyle\\\\sum_{i=1}^m(h_\\\\theta\\\\relax(x_i)-y_i)^2}{d\\\\theta}\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\frac{\\\\delta C}{\\\\delta \\\\theta} = \\\\frac{1}{2m}\\\\displaystyle\\\\sum_{i=1}^m\\\\frac{(h_\\\\theta\\\\relax(x_i)-y_i)^2}{d\\\\theta}\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\frac{\\\\delta C}{\\\\delta \\\\theta} = \\\\frac{1}{2m}\\\\displaystyle\\\\sum_{i=1}^m\\\\frac{(h_\\\\theta\\\\relax(x_i)-y_i)^2}{d(h_\\\\theta\\\\relax(x_i)-y_i)}\\\\times\\\\frac{d(h_\\\\theta\\\\relax(x_i)-y_i)}{d\\\\theta}\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\frac{\\\\delta C}{\\\\delta \\\\theta} = \\\\frac{1}{\\\\cancel{2}m}\\\\times\\\\cancel{2}\\\\times\\\\displaystyle\\\\sum_{i=1}^m(h_\\\\theta\\\\relax(x_i)-y_i) \\\\lparen \\\\frac{dh_\\\\theta\\\\relax(x_i)}{d\\\\theta} - \\\\frac{dy_i}{d\\\\theta}\\\\rparen\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003E$$We &gt; know &gt; h_\\\\theta\\\\relax(x_i) = \\\\theta X &gt; and &gt; \\\\frac{dy_i}{d\\\\theta} = 0,$$\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\frac{\\\\delta C}{\\\\delta \\\\theta} = \\\\frac{1}{m}\\\\displaystyle\\\\sum_{i=1}^m(h_\\\\theta\\\\relax(x_i)-y_i)(\\\\frac{\\\\cancel{d\\\\theta} X}{\\\\cancel{d\\\\theta}})\\n$$\\n\u003C\u002Fspan\u003E\\n\\n\u003Cp\u003E$$So &gt; we &gt; have,$$\u003C\u002Fp\u003E\\n\u003Cspan style=\\\"display:table;margin:0 auto;\\\"\u003E\\n$$\\n\\\\frac{\\\\delta C}{\\\\delta \\\\theta} = \\\\frac{1}{m}\\\\displaystyle\\\\sum_{i=1}^m(h_\\\\theta\\\\relax(x_i)-y_i)X\\n$$\\n\u003C\u002Fspan\u003E\\n\",\"bodyBegin\":5,\"frontmatter\":\"title: Simple Linear Regression For Simple Soul\\ndate: 2021-07-05\"},\"prev\":{\"link\":\"2021-06-21-random_or_not_to_be_random\",\"blog\":{\"date\":\"2021-06-21\",\"title\":\"Random Or Not to be Random\"}},\"next\":{\"link\":\"2021-07-15-polynomial\",\"blog\":{\"date\":\"2021-07-15\",\"title\":\"Polynomial\"}}}}"}</script>
+		</div>
+	</body>
+</html>

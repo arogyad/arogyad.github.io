@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Backend BlackBox</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/base16/gruvbox-light-medium.min.css" integrity="sha512-YOLBTZnIcnB3qm7sPFlGHx0no3yEGWvVTAI9uA6uaZGUBQui/DP9vh0FLmCJbOL5TxHJWwaiI23cCEJsmIeMew==" crossorigin="anonymous" referrerpolicy="no-referrer" data-svelte="svelte-8dvywl"><script src="https://use.fontawesome.com/c5d5ee5034.js" data-svelte="svelte-zlrjvv"></script>
+
+		
+
+		<link rel="modulepreload" href="/_app/start-141ab782.js">
+		<link rel="modulepreload" href="/_app/chunks/vendor-5b6c161e.js">
+		<link rel="modulepreload" href="/_app/pages/__layout.svelte-75368ea4.js">
+		<link rel="modulepreload" href="/_app/pages/[slug].svelte-14184443.js">
+		<link rel="modulepreload" href="/_app/chunks/BlogShow-731708a0.js">
+		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
+		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b07f3b47.css">
+
+		<script type="module">
+			import { start } from "/_app/start-141ab782.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":""},
+				session: {},
+				host: location.host,
+				route: true,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/_app/pages/__layout.svelte-75368ea4.js"),
+						import("/_app/pages/[slug].svelte-14184443.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "/2021-02-04-backend_blackbox",
+						query: new URLSearchParams(""),
+						params: {"slug":"2021-02-04-backend_blackbox"}
+					}
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<div id="svelte">
+
+
+
+
+
+
+<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm svelte-da4aex"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
+		<span class="font-extralight p-5 text-white">Welcome to my blog!</span>
+		<a href="/" class="font-normal p-1 text-xl text-white hover:text-2xl duration-300">Home</a>
+		<a href="/about" class="font-normal md:pb-1 text-xl text-white hover:text-2xl duration-300">About</a>
+		<a href="/blogs" class="font-normal text-xl text-white hover:text-2xl duration-300">Blogs</a></div>
+	<a href="https://github.com/arogyad/" target="_blank"><i class="fa fa-github fa-2x hover:text-4xl text-white duration-200 md:ml-20"></i></a>
+	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a>
+</div>
+<button class="float-right">a </button>
+
+
+<div id="blog" class="md:pl-72 md:pr-10 md:pt-10 p-10 md:text-justify"><h1 class="md:">Backend BlackBox</h1>
+	<span class="font-light">2021-02-04</span>
+	<!-- HTML_TAG_START --><p>The backend, this is where the magic happens; all the processes, from decoding the image to sending the results out, all of this is done by this backend. The backend is straightforward, it accepts the base64 encoded image and sends it to the predictor class which does all the work. What goes on in the predictor class is what this blog is about and with a little bit of computer vision (CNN only). </p>
+<h2 id="the-predictor-class">The Predictor Class:</h2>
+<p>This is the brain of the web app, it does everything for me. The process of writing this class was pretty smooth because I like python, and I enjoyed the whole process of learning this new stuff &#39;Flask&#39;. I love flask so much, it&#39;s so simple yet so powerful, it is so easy to throw together a running local host on this stuff so fast that it took me more time to restart my laptop when the server crashed than it was for me to throw together the initial &#39;hello world&#39; on flask. The documentation for flask is super helpful, I would highly suggest flask to anyone trying to make a simple web app without having to learn intimidating libraries. The predictor model of the predictor class ( Canvas class in the repo located under <a href='https://github.com/arogydhl/HandwrittenEquationSolverWebApp/blob/main/webapp/HWES/canvas_process.py' target='_blank'>webapp/HWES/canvas_process.py</a>) is built with the help of fastai. Fastai provides a high-level API for quickly creating a deep learning model. I adore PyTorch, what more can a person want than the dynamic computational graphs of PyTorch, but the transfer learning part always seemed a little off to me. I was never successful at getting it to work, they were good but building the model from scratch gave me better results. Then I found out about <a href='https://fast.ai' target='_blank'>fastai</a>, the high level and mid-level API of fastai with its ability to seamlessly integrate any other stuff written in PyTorch is just magical. So yeah, then I trained my model on dataset provided on Kaggle by <a href='https://www.kaggle.com/xainano/handwrittenmathsymbols' target='_blank'>Xainano</a>. I used resnet50 architecture here, this is a bit of an overkill but I wanted to be on the safe side, pretrained on imagenet dataset. I didn&#39;t transform the data that much other than random rotation with a max angle of 20°. The reason I didn&#39;t many transformations is that at the end the model will be predicting from a stable image i.e the image to be predicted will just be black text with a white background. The learning rate was found using <a href='https://docs.fast.ai/callback.schedule.html#Learner.lr_find' target='_blank'> <code>lr_find()</code>, first introduced by Leslie N. Smith in his paper <a href='https://arxiv.org/pdf/1506.01186.pdf' target='_blank'> Cyclical Learning Rates for Training Neural Networks</a>, which improved the loss significantly. There are some other minor things as well but they aren&#39;t worth mentioning. I am really happy with the prediction of the model, it isn&#39;t 100% accurate but with minimal training, I cannot ask for more.</p>
+<div class='message'>
+  Fastai is open source, so all its code can be found in its GitHub repo, which is very helpful. Thank you fastai.
+  </div>
+  
+<h2 id="the-maths-class">The Maths Class:</h2>
+<p>This class is pretty straightforward it just does maths, nothing more. The hardest part was integrating the integration part (pun not intended), converting the user sent string into mathematical equations. For integration I had to first change the string to LaTeX format (I am not entirely sure if it is LaTeX or not) and then perform the operations; performing simple maths was easy I just had to send the maths to <a href='https://docs.python.org/3/library/functions.html#eval' target='_blank'> <code>eval()</code></a>. However, working with <code>eval</code> is very not recommended as it performs anything the user enters so if the user enters <code>__import__(&#39;os&#39;).system(rm -rf *)</code> your project is gone. In this use case, it is fine, as the user can only input inside the canvas which cannot identify alphabets. I am happy with how the class works, also the maths class can be found under <a href ='https://github.com/arogydhl/HandwrittenEquationSolverWebApp/blob/main/webapp/HWES/utils/math_lib.py' target='_blank'>webapp/HWES/utils/math_lib.py</a> so yeah feel free to take a look at it.</p>
+<p>Yeah, so this is the end of the project blog. I had the most fun during my time at the backend, frontend isn&#39;t my type. I like beautiful things, but I like it more when things work. However, I am learning react.js which seems like a great JavaScript library, and Django (I love flask but Django is more easily deployable on the web, or that is what I have heard). </p>
+<!-- HTML_TAG_END -->
+	<div id="next" class="grid pt-10">
+	<div class="float-left font-normal text-2xl pt-2 pb-1 border-t-2">More Similar Blogs:</div>
+<div class="ml-4"><ul><li><a sveltekit:prefetch href="/2021-02-02-frontend_explanation" class="text-xl font-light pb-3">Frontend Explanation [2021-02-02]</a></li>
+		<li><a sveltekit:prefetch href="/2021-02-10-gan" class="text-xl font-light pb-3">GAN [2021-02-10]</a></li></ul></div></div></div>
+
+
+
+			<script type="application/json" data-type="svelte-data" data-url="/2021-02-04-backend_blackbox.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"{\"content\":{\"out\":{\"attributes\":{\"title\":\"Backend BlackBox\",\"date\":\"2021-02-04\"},\"body\":\"\u003Cp\u003EThe backend, this is where the magic happens; all the processes, from decoding the image to sending the results out, all of this is done by this backend. The backend is straightforward, it accepts the base64 encoded image and sends it to the predictor class which does all the work. What goes on in the predictor class is what this blog is about and with a little bit of computer vision (CNN only). \u003C\u002Fp\u003E\\n\u003Ch2 id=\\\"the-predictor-class\\\"\u003EThe Predictor Class:\u003C\u002Fh2\u003E\\n\u003Cp\u003EThis is the brain of the web app, it does everything for me. The process of writing this class was pretty smooth because I like python, and I enjoyed the whole process of learning this new stuff &#39;Flask&#39;. I love flask so much, it&#39;s so simple yet so powerful, it is so easy to throw together a running local host on this stuff so fast that it took me more time to restart my laptop when the server crashed than it was for me to throw together the initial &#39;hello world&#39; on flask. The documentation for flask is super helpful, I would highly suggest flask to anyone trying to make a simple web app without having to learn intimidating libraries. The predictor model of the predictor class ( Canvas class in the repo located under \u003Ca href='https:\u002F\u002Fgithub.com\u002Farogydhl\u002FHandwrittenEquationSolverWebApp\u002Fblob\u002Fmain\u002Fwebapp\u002FHWES\u002Fcanvas_process.py' target='_blank'\u003Ewebapp\u002FHWES\u002Fcanvas_process.py\u003C\u002Fa\u003E) is built with the help of fastai. Fastai provides a high-level API for quickly creating a deep learning model. I adore PyTorch, what more can a person want than the dynamic computational graphs of PyTorch, but the transfer learning part always seemed a little off to me. I was never successful at getting it to work, they were good but building the model from scratch gave me better results. Then I found out about \u003Ca href='https:\u002F\u002Ffast.ai' target='_blank'\u003Efastai\u003C\u002Fa\u003E, the high level and mid-level API of fastai with its ability to seamlessly integrate any other stuff written in PyTorch is just magical. So yeah, then I trained my model on dataset provided on Kaggle by \u003Ca href='https:\u002F\u002Fwww.kaggle.com\u002Fxainano\u002Fhandwrittenmathsymbols' target='_blank'\u003EXainano\u003C\u002Fa\u003E. I used resnet50 architecture here, this is a bit of an overkill but I wanted to be on the safe side, pretrained on imagenet dataset. I didn&#39;t transform the data that much other than random rotation with a max angle of 20°. The reason I didn&#39;t many transformations is that at the end the model will be predicting from a stable image i.e the image to be predicted will just be black text with a white background. The learning rate was found using \u003Ca href='https:\u002F\u002Fdocs.fast.ai\u002Fcallback.schedule.html#Learner.lr_find' target='_blank'\u003E \u003Ccode\u003Elr_find()\u003C\u002Fcode\u003E, first introduced by Leslie N. Smith in his paper \u003Ca href='https:\u002F\u002Farxiv.org\u002Fpdf\u002F1506.01186.pdf' target='_blank'\u003E Cyclical Learning Rates for Training Neural Networks\u003C\u002Fa\u003E, which improved the loss significantly. There are some other minor things as well but they aren&#39;t worth mentioning. I am really happy with the prediction of the model, it isn&#39;t 100% accurate but with minimal training, I cannot ask for more.\u003C\u002Fp\u003E\\n\u003Cdiv class='message'\u003E\\n  Fastai is open source, so all its code can be found in its GitHub repo, which is very helpful. Thank you fastai.\\n  \u003C\u002Fdiv\u003E\\n  \\n\u003Ch2 id=\\\"the-maths-class\\\"\u003EThe Maths Class:\u003C\u002Fh2\u003E\\n\u003Cp\u003EThis class is pretty straightforward it just does maths, nothing more. The hardest part was integrating the integration part (pun not intended), converting the user sent string into mathematical equations. For integration I had to first change the string to LaTeX format (I am not entirely sure if it is LaTeX or not) and then perform the operations; performing simple maths was easy I just had to send the maths to \u003Ca href='https:\u002F\u002Fdocs.python.org\u002F3\u002Flibrary\u002Ffunctions.html#eval' target='_blank'\u003E \u003Ccode\u003Eeval()\u003C\u002Fcode\u003E\u003C\u002Fa\u003E. However, working with \u003Ccode\u003Eeval\u003C\u002Fcode\u003E is very not recommended as it performs anything the user enters so if the user enters \u003Ccode\u003E__import__(&#39;os&#39;).system(rm -rf *)\u003C\u002Fcode\u003E your project is gone. In this use case, it is fine, as the user can only input inside the canvas which cannot identify alphabets. I am happy with how the class works, also the maths class can be found under \u003Ca href ='https:\u002F\u002Fgithub.com\u002Farogydhl\u002FHandwrittenEquationSolverWebApp\u002Fblob\u002Fmain\u002Fwebapp\u002FHWES\u002Futils\u002Fmath_lib.py' target='_blank'\u003Ewebapp\u002FHWES\u002Futils\u002Fmath_lib.py\u003C\u002Fa\u003E so yeah feel free to take a look at it.\u003C\u002Fp\u003E\\n\u003Cp\u003EYeah, so this is the end of the project blog. I had the most fun during my time at the backend, frontend isn&#39;t my type. I like beautiful things, but I like it more when things work. However, I am learning react.js which seems like a great JavaScript library, and Django (I love flask but Django is more easily deployable on the web, or that is what I have heard). \u003C\u002Fp\u003E\\n\",\"bodyBegin\":5,\"frontmatter\":\"title: Backend BlackBox\\ndate: 2021-02-04\"},\"prev\":{\"link\":\"2021-02-02-frontend_explanation\",\"blog\":{\"date\":\"2021-02-02\",\"title\":\"Frontend Explanation\"}},\"next\":{\"link\":\"2021-02-10-gan\",\"blog\":{\"date\":\"2021-02-10\",\"title\":\"GAN\"}}}}"}</script>
+		</div>
+	</body>
+</html>

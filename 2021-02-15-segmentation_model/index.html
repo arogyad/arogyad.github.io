@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Cuda out of memory is cool and all but have you ever tried frying your CPU!</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/base16/gruvbox-light-medium.min.css" integrity="sha512-YOLBTZnIcnB3qm7sPFlGHx0no3yEGWvVTAI9uA6uaZGUBQui/DP9vh0FLmCJbOL5TxHJWwaiI23cCEJsmIeMew==" crossorigin="anonymous" referrerpolicy="no-referrer" data-svelte="svelte-8dvywl"><script src="https://use.fontawesome.com/c5d5ee5034.js" data-svelte="svelte-zlrjvv"></script>
+
+		
+
+		<link rel="modulepreload" href="/_app/start-141ab782.js">
+		<link rel="modulepreload" href="/_app/chunks/vendor-5b6c161e.js">
+		<link rel="modulepreload" href="/_app/pages/__layout.svelte-75368ea4.js">
+		<link rel="modulepreload" href="/_app/pages/[slug].svelte-14184443.js">
+		<link rel="modulepreload" href="/_app/chunks/BlogShow-731708a0.js">
+		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
+		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b07f3b47.css">
+
+		<script type="module">
+			import { start } from "/_app/start-141ab782.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":""},
+				session: {},
+				host: location.host,
+				route: true,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/_app/pages/__layout.svelte-75368ea4.js"),
+						import("/_app/pages/[slug].svelte-14184443.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "/2021-02-15-segmentation_model",
+						query: new URLSearchParams(""),
+						params: {"slug":"2021-02-15-segmentation_model"}
+					}
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<div id="svelte">
+
+
+
+
+
+
+<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm svelte-da4aex"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
+		<span class="font-extralight p-5 text-white">Welcome to my blog!</span>
+		<a href="/" class="font-normal p-1 text-xl text-white hover:text-2xl duration-300">Home</a>
+		<a href="/about" class="font-normal md:pb-1 text-xl text-white hover:text-2xl duration-300">About</a>
+		<a href="/blogs" class="font-normal text-xl text-white hover:text-2xl duration-300">Blogs</a></div>
+	<a href="https://github.com/arogyad/" target="_blank"><i class="fa fa-github fa-2x hover:text-4xl text-white duration-200 md:ml-20"></i></a>
+	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a>
+</div>
+<button class="float-right">a </button>
+
+
+<div id="blog" class="md:pl-72 md:pr-10 md:pt-10 p-10 md:text-justify"><h1 class="md:">Cuda out of memory is cool and all but have you ever tried frying your CPU!</h1>
+	<span class="font-light">2021-02-15</span>
+	<!-- HTML_TAG_START --><p>While there are many things that one can worry about, the thing that gets me the most worried is not knowing if today is the last day my laptop will have a working CPU. I feel so bad for my CPU, it has gone through so much i.e from me trying to play triple-A titles to making it render a video in the highest possible quality even though my screen cannot even display one-third of that resolution. My CPU is pretty cool, it does like to work but I feel like I have given it so much negative reward that it has now developed an algorithm by itself which tries to minimize this workload while trying to give optimal performance. You might be wondering why I am talking about these kinds of stuff, or why I tried rendering that video, well a couple of weeks ago I almost fried my CPU, okay I am exaggerating a little ( a lot maybe) but it was a little worrying not gonna lie.</p>
+<div class='message'>
+Find the models <a href ='https://github.com/arogyad/segmentationmodels' target='_blank'>here</a>. I hope it works. I haven't tested Tiramisu as it kept crashing even google colab's machine.
+</div>
+
+<p>So couple of weeks ago I was looking at this image segmentation model, it has a cool name, <a href='https://arxiv.org/pdf/1611.09326v3.pdf' target='_blank'>Tiramisu</a>. It is so huge (just look at <a href='https://www.researchgate.net/publication/337761543/figure/fig1/AS:832731072180225@1575549967716/FC-DenseNet-architecture.ppm' target='_blank'>this</a> monstrosity), it has more than 100 layers (100 may not seem like a huge number but for me, it&#39;s a really big number), and I tried making this model, it might look intimidating but it&#39;s like a series. Most of the time I don&#39;t know what I am doing but this one was good one reason for this was because the paper is really helpful with everything. After I was done I went to have my food, but before going to eat I made a huge mistake, I tried running a simple example a simple random tensor of small size, I thought I would come back to see the model&#39;s output but I was a fool. When I came back, the laptop&#39;s fan was running like it in London on Sep 2, 1666. I look at the time on my desktop and it&#39;s 11:04 but the present time is 11:23, I was a little worried as I had never heard my laptop sound that way. I quickly turned it off, it took about 15 minutes to boot up again and I was feeling a little sad that my CPU had to go through this. Also, I had plans to write about the segmentation model but this situation caused me to dislike segmentation model (but secretly I love it). You can find the segmentation models <a href = 'https://github.com/arogyad/segmentationmodels' target='_blank'> here </a>. They should work but I am not completely sure. I tried it on google colab, but even the VM provided by colab crashed when I tried running Tiramisu.</p>
+<!-- HTML_TAG_END -->
+	<div id="next" class="grid pt-10">
+	<div class="float-left font-normal text-2xl pt-2 pb-1 border-t-2">More Similar Blogs:</div>
+<div class="ml-4"><ul><li><a sveltekit:prefetch href="/2021-02-10-gan" class="text-xl font-light pb-3">GAN [2021-02-10]</a></li>
+		<li><a sveltekit:prefetch href="/2021-02-26-librarymb" class="text-xl font-light pb-3">LibraryMB [2021-02-26]</a></li></ul></div></div></div>
+
+
+
+			<script type="application/json" data-type="svelte-data" data-url="/2021-02-15-segmentation_model.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"{\"content\":{\"out\":{\"attributes\":{\"title\":\"Cuda out of memory is cool and all but have you ever tried frying your CPU!\",\"date\":\"2021-02-15\"},\"body\":\"\u003Cp\u003EWhile there are many things that one can worry about, the thing that gets me the most worried is not knowing if today is the last day my laptop will have a working CPU. I feel so bad for my CPU, it has gone through so much i.e from me trying to play triple-A titles to making it render a video in the highest possible quality even though my screen cannot even display one-third of that resolution. My CPU is pretty cool, it does like to work but I feel like I have given it so much negative reward that it has now developed an algorithm by itself which tries to minimize this workload while trying to give optimal performance. You might be wondering why I am talking about these kinds of stuff, or why I tried rendering that video, well a couple of weeks ago I almost fried my CPU, okay I am exaggerating a little ( a lot maybe) but it was a little worrying not gonna lie.\u003C\u002Fp\u003E\\n\u003Cdiv class='message'\u003E\\nFind the models \u003Ca href ='https:\u002F\u002Fgithub.com\u002Farogyad\u002Fsegmentationmodels' target='_blank'\u003Ehere\u003C\u002Fa\u003E. I hope it works. I haven't tested Tiramisu as it kept crashing even google colab's machine.\\n\u003C\u002Fdiv\u003E\\n\\n\u003Cp\u003ESo couple of weeks ago I was looking at this image segmentation model, it has a cool name, \u003Ca href='https:\u002F\u002Farxiv.org\u002Fpdf\u002F1611.09326v3.pdf' target='_blank'\u003ETiramisu\u003C\u002Fa\u003E. It is so huge (just look at \u003Ca href='https:\u002F\u002Fwww.researchgate.net\u002Fpublication\u002F337761543\u002Ffigure\u002Ffig1\u002FAS:832731072180225@1575549967716\u002FFC-DenseNet-architecture.ppm' target='_blank'\u003Ethis\u003C\u002Fa\u003E monstrosity), it has more than 100 layers (100 may not seem like a huge number but for me, it&#39;s a really big number), and I tried making this model, it might look intimidating but it&#39;s like a series. Most of the time I don&#39;t know what I am doing but this one was good one reason for this was because the paper is really helpful with everything. After I was done I went to have my food, but before going to eat I made a huge mistake, I tried running a simple example a simple random tensor of small size, I thought I would come back to see the model&#39;s output but I was a fool. When I came back, the laptop&#39;s fan was running like it in London on Sep 2, 1666. I look at the time on my desktop and it&#39;s 11:04 but the present time is 11:23, I was a little worried as I had never heard my laptop sound that way. I quickly turned it off, it took about 15 minutes to boot up again and I was feeling a little sad that my CPU had to go through this. Also, I had plans to write about the segmentation model but this situation caused me to dislike segmentation model (but secretly I love it). You can find the segmentation models \u003Ca href = 'https:\u002F\u002Fgithub.com\u002Farogyad\u002Fsegmentationmodels' target='_blank'\u003E here \u003C\u002Fa\u003E. They should work but I am not completely sure. I tried it on google colab, but even the VM provided by colab crashed when I tried running Tiramisu.\u003C\u002Fp\u003E\\n\",\"bodyBegin\":5,\"frontmatter\":\"title: Cuda out of memory is cool and all but have you ever tried frying your CPU!\\ndate: 2021-02-15\"},\"prev\":{\"link\":\"2021-02-10-gan\",\"blog\":{\"date\":\"2021-02-10\",\"title\":\"GAN\"}},\"next\":{\"link\":\"2021-02-26-librarymb\",\"blog\":{\"date\":\"2021-02-26\",\"title\":\"LibraryMB\"}}}}"}</script>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>To be or not to be (Random)?!</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/base16/gruvbox-light-medium.min.css" integrity="sha512-YOLBTZnIcnB3qm7sPFlGHx0no3yEGWvVTAI9uA6uaZGUBQui/DP9vh0FLmCJbOL5TxHJWwaiI23cCEJsmIeMew==" crossorigin="anonymous" referrerpolicy="no-referrer" data-svelte="svelte-8dvywl"><script src="https://use.fontawesome.com/c5d5ee5034.js" data-svelte="svelte-zlrjvv"></script>
+
+		
+
+		<link rel="modulepreload" href="/_app/start-141ab782.js">
+		<link rel="modulepreload" href="/_app/chunks/vendor-5b6c161e.js">
+		<link rel="modulepreload" href="/_app/pages/__layout.svelte-75368ea4.js">
+		<link rel="modulepreload" href="/_app/pages/[slug].svelte-14184443.js">
+		<link rel="modulepreload" href="/_app/chunks/BlogShow-731708a0.js">
+		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
+		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-b07f3b47.css">
+
+		<script type="module">
+			import { start } from "/_app/start-141ab782.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":""},
+				session: {},
+				host: location.host,
+				route: true,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/_app/pages/__layout.svelte-75368ea4.js"),
+						import("/_app/pages/[slug].svelte-14184443.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "/2021-06-21-random_or_not_to_be_random",
+						query: new URLSearchParams(""),
+						params: {"slug":"2021-06-21-random_or_not_to_be_random"}
+					}
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<div id="svelte">
+
+
+
+
+
+
+<div id="sidebar" class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm svelte-da4aex"><div id="items" class="py-4 md:pt-40 grid text-center"><a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
+		<span class="font-extralight p-5 text-white">Welcome to my blog!</span>
+		<a href="/" class="font-normal p-1 text-xl text-white hover:text-2xl duration-300">Home</a>
+		<a href="/about" class="font-normal md:pb-1 text-xl text-white hover:text-2xl duration-300">About</a>
+		<a href="/blogs" class="font-normal text-xl text-white hover:text-2xl duration-300">Blogs</a></div>
+	<a href="https://github.com/arogyad/" target="_blank"><i class="fa fa-github fa-2x hover:text-4xl text-white duration-200 md:ml-20"></i></a>
+	<a href="https://instagram.com/arogyad/" target="_blank"><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4"></i></a>
+</div>
+<button class="float-right">a </button>
+
+
+<div id="blog" class="md:pl-72 md:pr-10 md:pt-10 p-10 md:text-justify"><h1 class="md:">To be or not to be (Random)?!</h1>
+	<span class="font-light">2021-06-21</span>
+	<!-- HTML_TAG_START --><p>I have started learning <em><strong>Rust</strong></em> for over a couple of month now, and it has been quite enjoyable. The new concepts that brings in the table is magnificent. Along with that, the thing that first attracted me to <em><strong>Rust</strong></em> was <a href="https://github.com/nannou-org/nannou">Nannou </a>. This blog is about a very simple simulation using nannou. The simulation idea is taken from <a href="https://natureofcode.com/"><code>Nature of Code</code> </a>, which does the same thing but in processing. Let&#39;s get started then.</p>
+<h1 id="template-for-nannou">Template for Nannou</h1>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">use</span> nannou::prelude::*;
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    nannou::<span class="hljs-title function_ invoke__">app</span>(model).<span class="hljs-title function_ invoke__">update</span>(update).<span class="hljs-title function_ invoke__">run</span>();
+}
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Model</span> {}
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">model</span>(app: &amp;App) <span class="hljs-punctuation">-&gt;</span> Model {
+    app.<span class="hljs-title function_ invoke__">new_window</span>().<span class="hljs-title function_ invoke__">size</span>(<span class="hljs-number">640</span>, <span class="hljs-number">360</span>).<span class="hljs-title function_ invoke__">view</span>(view).<span class="hljs-title function_ invoke__">build</span>().<span class="hljs-title function_ invoke__">unwrap</span>();
+         Model{}
+}
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">update</span>(app: &amp;App, m: &amp;<span class="hljs-keyword">mut</span> Model, _update: Update) {}
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">view</span>(app: &amp;App, m: &amp;Model, frame: Frame) {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">draw</span> = app.<span class="hljs-title function_ invoke__">draw</span>();
+    draw.<span class="hljs-title function_ invoke__">background</span>().<span class="hljs-title function_ invoke__">color</span>(BLACK);
+    draw.<span class="hljs-title function_ invoke__">to_frame</span>(app, &amp;frame).<span class="hljs-title function_ invoke__">unwrap</span>();
+}
+</code></pre>
+<p>Nannou is based on <a href="https://thomasbandt.com/model-view-update"> model-view-update architecture</a>, where ,as the name suggests, the initialization of the model, the update and view are seperated. The update is where all the update is done and view is where the stuffs are viewed(Every sixty seconds in africa a minute passes!?). I won&#39;t go into the implementation of the MVU architecture , as I am don&#39;t understand 80-90% of the thing that is going on here. So let&#39;s quickly go into the implementations before I say something stupid.</p>
+<h1 id="what-are-we-doing">What are we doing?</h1>
+<p> This is something really simple. We will ,kinda, show that the random numbers generated by computers are pseudo random. If we could continue this time for infinite amount of time the of numbers of time a number is choosen at random will be similar, but since the time period required for that to happen is large, it gives us the pseudo numbers give the sense of randomness. </p>
+<p> We will create a struct named <code>Bar</code>  to keep track of an individual bar i.e, the number of times a number is choosen at random. This struct will contain a <code>f32</code> value which will correspond to the height of the bar.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Bar</span> {
+   height: <span class="hljs-type">f32</span>,
+}
+</code></pre>
+<p> Lets implement a constructor for it. I like to call it a constructor but it is actually a static function that generates the initial value.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Bar</span> {
+   <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> {
+        Bar{ height: <span class="hljs-number">0.0</span> }  
+   }
+}
+</code></pre>
+<p> Lets now create the Model struct that will contain most of the things. The model will contain a Vector of Bar; array would have been better options but I always have a hard time working with arrays. </p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Model</span> {
+   bars: <span class="hljs-type">Vec</span>&lt;Bar&gt;,
+}
+
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">Model</span> {
+   <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> {
+       Model {
+           bars: <span class="hljs-built_in">vec!</span>[Bar::<span class="hljs-title function_ invoke__">new</span>(); <span class="hljs-number">10</span>],
+       }
+   }
+
+   <span class="hljs-keyword">fn</span> <span class="hljs-title function_">update</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>) {
+       <span class="hljs-keyword">self</span>.bars[<span class="hljs-title function_ invoke__">random_range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>)].height += <span class="hljs-number">1.0</span>;
+   }
+}
+</code></pre>
+<p>We created a vector of bar and in the <code>Model::new()</code> we used created a vector with 10 bars, each one corresponding to each numbers. This code will ,however, not compile, we will have to implement the <code>Clone</code> trait on the Bar to use the quick vector creator <code>vec!</code>.</p>
+<pre><code class="hljs language-rust"><span class="hljs-meta">#[derive(Clone)]</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Bar</span>{  
+    height: <span class="hljs-type">f32</span>,
+}
+</code></pre>
+<p>In the update function inside the <code>Model</code>  struct the update function takes a random number, here we are using <code>random_range</code> which gives a random number based on the input. We ,then, take the <code>height</code>  field of the<code>bar</code> at that random index given to us by <code>random_range(0, 10)</code> and increase it by 1. We could have done the same thing in the larger update function but this simulation is pretty simple and this way it looks cleaner.  </p>
+<h1 id="finish-it">Finish It!</h1>
+<p>The model function from our original template doesn&#39;t change a lot. We return a <code>Model</code> struct from the function.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">model</span>(app: &amp;App) <span class="hljs-punctuation">-&gt;</span> Model {
+    app.<span class="hljs-title function_ invoke__">new_window</span>().<span class="hljs-title function_ invoke__">size</span>(<span class="hljs-number">640</span>, <span class="hljs-number">360</span>).<span class="hljs-title function_ invoke__">view</span>(view).<span class="hljs-title function_ invoke__">build</span>().<span class="hljs-title function_ invoke__">unwrap</span>();
+    Model::<span class="hljs-title function_ invoke__">new</span>()
+}
+</code></pre>
+<p>The update function too hasn&#39;t changed a lot and looks pretty much the same, except for calling the update function on the <code>Model</code> struct.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">update</span>(_app: &amp;App, model: &amp;<span class="hljs-keyword">mut</span> Model, _update: Update) {
+    model.<span class="hljs-title function_ invoke__">update</span>();
+}
+</code></pre>
+<p>This way it looks cleaner than updating it here in this function.</p>
+<p>Now the best part, we could have made something similar to the update function in our <code>Model</code> struct but I wanted to give an example of what doing the processes in the larger function seems like p.s. I wanted to know the size of the window. </p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">view</span>(app: &amp;App, model: &amp;Model, frame: Frame) {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">draw</span> = app.<span class="hljs-title function_ invoke__">draw</span>();
+    draw.<span class="hljs-title function_ invoke__">background</span>().<span class="hljs-title function_ invoke__">color</span>(BLACK);
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span>: <span class="hljs-type">f32</span> = <span class="hljs-number">0.0</span>;
+    <span class="hljs-keyword">for</span> <span class="hljs-variable">bar</span> <span class="hljs-keyword">in</span> &amp;model.bars {
+        draw.<span class="hljs-title function_ invoke__">rect</span>()
+            .<span class="hljs-title function_ invoke__">x_y</span>(-<span class="hljs-number">320.0</span> + <span class="hljs-number">70.0</span> * i, <span class="hljs-number">0.0</span>)
+            .<span class="hljs-title function_ invoke__">w_h</span>(<span class="hljs-number">50.0</span>, bar.height);
+        i += <span class="hljs-number">1.0</span>;
+    }
+    draw.<span class="hljs-title function_ invoke__">to_frame</span>(app, &amp;frame).<span class="hljs-title function_ invoke__">unwrap</span>();
+}
+</code></pre>
+<p>Here, we first create a draw object with <code>app.draw()</code>. We color the background black and create a mutable variable named <code>i</code>.  The variable is to provide a gap between each bars. Next we loop through the entire <code>bars</code> vector in the model and for each bar we plot a rectangle at <code>-320 + 70 * i</code> spot. The <code>-320</code> is the left most x-axis on my screen and adding <code>70 * i</code> makes sure that the bars don&#39;t get drawn on top of one another and there is a gap between all the bars. The <code>width</code> of the bar is constant and the <code>height</code> is the bar&#39;s height ,i.e, the number of time a number has been selected &quot;randomly&quot;. As we iterate further we will see that the bars begin to reach an equal level. This is kinda cool that we have a visual representation of the pseudo randomness of the random generated by computers. Also we could have drawn the points on screen as such.</p>
+<pre><code class="hljs language-rust">\\ In the implementation of Model
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">Model</span> {
+
+\\ -- Previous Code --
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">display</span>(&amp;<span class="hljs-keyword">self</span>, &amp;draw) {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span>: <span class="hljs-type">f32</span> = <span class="hljs-number">0.0</span>;
+    <span class="hljs-keyword">for</span> <span class="hljs-variable">bar</span> <span class="hljs-keyword">in</span> &amp;model.bars {
+        draw.<span class="hljs-title function_ invoke__">rect</span>()
+            .<span class="hljs-title function_ invoke__">x_y</span>(-<span class="hljs-number">320.0</span> + <span class="hljs-number">70.0</span> * i, <span class="hljs-number">0.0</span>)
+            .<span class="hljs-title function_ invoke__">w_h</span>(<span class="hljs-number">50.0</span>, bar.height);
+        i += <span class="hljs-number">1.0</span>;
+    }
+}
+}
+
+\\ In the view function
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">view</span>(app: &amp;App, model: &amp;Model, frame: Frame) {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">draw</span> = app.<span class="hljs-title function_ invoke__">draw</span>();
+    draw.<span class="hljs-title function_ invoke__">background</span>().<span class="hljs-title function_ invoke__">color</span>(BLACK);
+    model.<span class="hljs-title function_ invoke__">display</span>(&amp;draw);
+    draw.<span class="hljs-title function_ invoke__">to_frame</span>(app, &amp;frame).<span class="hljs-title function_ invoke__">unwrap</span>();
+}
+</code></pre>
+<p>This would have worked as well and this looks way cleaner than the previous version. The entire code can be found here.</p>
+<pre><code class="hljs language-rust"><span class="hljs-keyword">use</span> nannou::prelude::*;
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    nannou::<span class="hljs-title function_ invoke__">app</span>(model).<span class="hljs-title function_ invoke__">update</span>(update).<span class="hljs-title function_ invoke__">run</span>();
+}
+
+<span class="hljs-meta">#[derive(Clone)]</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Bar</span> {
+    height: <span class="hljs-type">f32</span>,
+}
+
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">Bar</span> {
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> {
+        Bar { height: <span class="hljs-number">0.0</span> }
+    }
+}
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Model</span> {
+    bars: <span class="hljs-type">Vec</span>&lt;Bar&gt;,
+}
+
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">Model</span> {
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> {
+        Model {
+            bars: <span class="hljs-built_in">vec!</span>[Bar::<span class="hljs-title function_ invoke__">new</span>(); <span class="hljs-number">10</span>],
+        }
+    }
+
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">update</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>) {
+        <span class="hljs-keyword">self</span>.bars[<span class="hljs-title function_ invoke__">random_range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>)].height += <span class="hljs-number">1.0</span>;
+    }
+}
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">model</span>(app: &amp;App) <span class="hljs-punctuation">-&gt;</span> Model {
+    app.<span class="hljs-title function_ invoke__">new_window</span>().<span class="hljs-title function_ invoke__">size</span>(<span class="hljs-number">640</span>, <span class="hljs-number">360</span>).<span class="hljs-title function_ invoke__">view</span>(view).<span class="hljs-title function_ invoke__">build</span>().<span class="hljs-title function_ invoke__">unwrap</span>();
+    Model::<span class="hljs-title function_ invoke__">new</span>()
+}
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">update</span>(_app: &amp;App, model: &amp;<span class="hljs-keyword">mut</span> Model, _update: Update) {
+    model.<span class="hljs-title function_ invoke__">update</span>();
+}
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">view</span>(app: &amp;App, model: &amp;Model, frame: Frame) {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">draw</span> = app.<span class="hljs-title function_ invoke__">draw</span>();
+    draw.<span class="hljs-title function_ invoke__">background</span>().<span class="hljs-title function_ invoke__">color</span>(BLACK);
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span>: <span class="hljs-type">f32</span> = <span class="hljs-number">0.0</span>;
+    <span class="hljs-keyword">for</span> <span class="hljs-variable">bar</span> <span class="hljs-keyword">in</span> &amp;model.bars {
+        draw.<span class="hljs-title function_ invoke__">rect</span>()
+            .<span class="hljs-title function_ invoke__">x_y</span>(-<span class="hljs-number">320.0</span> + <span class="hljs-number">70.0</span> * i, <span class="hljs-number">0.0</span>)
+            .<span class="hljs-title function_ invoke__">w_h</span>(<span class="hljs-number">50.0</span>, bar.height);
+        i += <span class="hljs-number">1.0</span>;
+    }
+    draw.<span class="hljs-title function_ invoke__">to_frame</span>(app, &amp;frame).<span class="hljs-title function_ invoke__">unwrap</span>();
+}
+</code></pre>
+<!-- HTML_TAG_END -->
+	<div id="next" class="grid pt-10">
+	<div class="float-left font-normal text-2xl pt-2 pb-1 border-t-2">More Similar Blogs:</div>
+<div class="ml-4"><ul><li><a sveltekit:prefetch href="/2021-06-10-lifetimes_in_rust" class="text-xl font-light pb-3">Lifetimes In Rust [2021-06-10]</a></li>
+		<li><a sveltekit:prefetch href="/2021-07-05-linear_reg" class="text-xl font-light pb-3">Linear Reg [2021-07-05]</a></li></ul></div></div></div>
+
+
+
+			<script type="application/json" data-type="svelte-data" data-url="/2021-06-21-random_or_not_to_be_random.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"{\"content\":{\"out\":{\"attributes\":{\"title\":\"To be or not to be (Random)?!\",\"date\":\"2021-06-21\"},\"body\":\"\u003Cp\u003EI have started learning \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E for over a couple of month now, and it has been quite enjoyable. The new concepts that brings in the table is magnificent. Along with that, the thing that first attracted me to \u003Cem\u003E\u003Cstrong\u003ERust\u003C\u002Fstrong\u003E\u003C\u002Fem\u003E was \u003Ca href=\\\"https:\u002F\u002Fgithub.com\u002Fnannou-org\u002Fnannou\\\"\u003ENannou \u003C\u002Fa\u003E. This blog is about a very simple simulation using nannou. The simulation idea is taken from \u003Ca href=\\\"https:\u002F\u002Fnatureofcode.com\u002F\\\"\u003E\u003Ccode\u003ENature of Code\u003C\u002Fcode\u003E \u003C\u002Fa\u003E, which does the same thing but in processing. Let&#39;s get started then.\u003C\u002Fp\u003E\\n\u003Ch1 id=\\\"template-for-nannou\\\"\u003ETemplate for Nannou\u003C\u002Fh1\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Euse\u003C\u002Fspan\u003E nannou::prelude::*;\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emain\u003C\u002Fspan\u003E() {\\n    nannou::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eapp\u003C\u002Fspan\u003E(model).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eupdate\u003C\u002Fspan\u003E(update).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erun\u003C\u002Fspan\u003E();\\n}\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Estruct\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EModel\u003C\u002Fspan\u003E {}\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emodel\u003C\u002Fspan\u003E(app: &amp;App) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E Model {\\n    app.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Enew_window\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Esize\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E640\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E360\u003C\u002Fspan\u003E).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eview\u003C\u002Fspan\u003E(view).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ebuild\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n         Model{}\\n}\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Eupdate\u003C\u002Fspan\u003E(app: &amp;App, m: &amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Emut\u003C\u002Fspan\u003E Model, _update: Update) {}\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Eview\u003C\u002Fspan\u003E(app: &amp;App, m: &amp;Model, frame: Frame) {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Edraw\u003C\u002Fspan\u003E = app.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Edraw\u003C\u002Fspan\u003E();\\n    draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ebackground\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ecolor\u003C\u002Fspan\u003E(BLACK);\\n    draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eto_frame\u003C\u002Fspan\u003E(app, &amp;frame).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003ENannou is based on \u003Ca href=\\\"https:\u002F\u002Fthomasbandt.com\u002Fmodel-view-update\\\"\u003E model-view-update architecture\u003C\u002Fa\u003E, where ,as the name suggests, the initialization of the model, the update and view are seperated. The update is where all the update is done and view is where the stuffs are viewed(Every sixty seconds in africa a minute passes!?). I won&#39;t go into the implementation of the MVU architecture , as I am don&#39;t understand 80-90% of the thing that is going on here. So let&#39;s quickly go into the implementations before I say something stupid.\u003C\u002Fp\u003E\\n\u003Ch1 id=\\\"what-are-we-doing\\\"\u003EWhat are we doing?\u003C\u002Fh1\u003E\\n\u003Cp\u003E This is something really simple. We will ,kinda, show that the random numbers generated by computers are pseudo random. If we could continue this time for infinite amount of time the of numbers of time a number is choosen at random will be similar, but since the time period required for that to happen is large, it gives us the pseudo numbers give the sense of randomness. \u003C\u002Fp\u003E\\n\u003Cp\u003E We will create a struct named \u003Ccode\u003EBar\u003C\u002Fcode\u003E  to keep track of an individual bar i.e, the number of times a number is choosen at random. This struct will contain a \u003Ccode\u003Ef32\u003C\u002Fcode\u003E value which will correspond to the height of the bar.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Estruct\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EBar\u003C\u002Fspan\u003E {\\n   height: \u003Cspan class=\\\"hljs-type\\\"\u003Ef32\u003C\u002Fspan\u003E,\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003E Lets implement a constructor for it. I like to call it a constructor but it is actually a static function that generates the initial value.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Eimpl\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EBar\u003C\u002Fspan\u003E {\\n   \u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Enew\u003C\u002Fspan\u003E() \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003ESelf\u003C\u002Fspan\u003E {\\n        Bar{ height: \u003Cspan class=\\\"hljs-number\\\"\u003E0.0\u003C\u002Fspan\u003E }  \\n   }\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003E Lets now create the Model struct that will contain most of the things. The model will contain a Vector of Bar; array would have been better options but I always have a hard time working with arrays. \u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Estruct\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EModel\u003C\u002Fspan\u003E {\\n   bars: \u003Cspan class=\\\"hljs-type\\\"\u003EVec\u003C\u002Fspan\u003E&lt;Bar&gt;,\\n}\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Eimpl\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EModel\u003C\u002Fspan\u003E {\\n   \u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Enew\u003C\u002Fspan\u003E() \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003ESelf\u003C\u002Fspan\u003E {\\n       Model {\\n           bars: \u003Cspan class=\\\"hljs-built_in\\\"\u003Evec!\u003C\u002Fspan\u003E[Bar::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Enew\u003C\u002Fspan\u003E(); \u003Cspan class=\\\"hljs-number\\\"\u003E10\u003C\u002Fspan\u003E],\\n       }\\n   }\\n\\n   \u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Eupdate\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Emut\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E) {\\n       \u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.bars[\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erandom_range\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E0\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E10\u003C\u002Fspan\u003E)].height += \u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E;\\n   }\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EWe created a vector of bar and in the \u003Ccode\u003EModel::new()\u003C\u002Fcode\u003E we used created a vector with 10 bars, each one corresponding to each numbers. This code will ,however, not compile, we will have to implement the \u003Ccode\u003EClone\u003C\u002Fcode\u003E trait on the Bar to use the quick vector creator \u003Ccode\u003Evec!\u003C\u002Fcode\u003E.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-meta\\\"\u003E#[derive(Clone)]\u003C\u002Fspan\u003E\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Estruct\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EBar\u003C\u002Fspan\u003E{  \\n    height: \u003Cspan class=\\\"hljs-type\\\"\u003Ef32\u003C\u002Fspan\u003E,\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EIn the update function inside the \u003Ccode\u003EModel\u003C\u002Fcode\u003E  struct the update function takes a random number, here we are using \u003Ccode\u003Erandom_range\u003C\u002Fcode\u003E which gives a random number based on the input. We ,then, take the \u003Ccode\u003Eheight\u003C\u002Fcode\u003E  field of the\u003Ccode\u003Ebar\u003C\u002Fcode\u003E at that random index given to us by \u003Ccode\u003Erandom_range(0, 10)\u003C\u002Fcode\u003E and increase it by 1. We could have done the same thing in the larger update function but this simulation is pretty simple and this way it looks cleaner.  \u003C\u002Fp\u003E\\n\u003Ch1 id=\\\"finish-it\\\"\u003EFinish It!\u003C\u002Fh1\u003E\\n\u003Cp\u003EThe model function from our original template doesn&#39;t change a lot. We return a \u003Ccode\u003EModel\u003C\u002Fcode\u003E struct from the function.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emodel\u003C\u002Fspan\u003E(app: &amp;App) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E Model {\\n    app.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Enew_window\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Esize\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E640\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E360\u003C\u002Fspan\u003E).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eview\u003C\u002Fspan\u003E(view).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ebuild\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n    Model::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Enew\u003C\u002Fspan\u003E()\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThe update function too hasn&#39;t changed a lot and looks pretty much the same, except for calling the update function on the \u003Ccode\u003EModel\u003C\u002Fcode\u003E struct.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Eupdate\u003C\u002Fspan\u003E(_app: &amp;App, model: &amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Emut\u003C\u002Fspan\u003E Model, _update: Update) {\\n    model.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eupdate\u003C\u002Fspan\u003E();\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThis way it looks cleaner than updating it here in this function.\u003C\u002Fp\u003E\\n\u003Cp\u003ENow the best part, we could have made something similar to the update function in our \u003Ccode\u003EModel\u003C\u002Fcode\u003E struct but I wanted to give an example of what doing the processes in the larger function seems like p.s. I wanted to know the size of the window. \u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Eview\u003C\u002Fspan\u003E(app: &amp;App, model: &amp;Model, frame: Frame) {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Edraw\u003C\u002Fspan\u003E = app.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Edraw\u003C\u002Fspan\u003E();\\n    draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ebackground\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ecolor\u003C\u002Fspan\u003E(BLACK);\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Emut \u003C\u002Fspan\u003E\u003Cspan class=\\\"hljs-variable\\\"\u003Ei\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ef32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E0.0\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Efor\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ebar\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Ein\u003C\u002Fspan\u003E &amp;model.bars {\\n        draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erect\u003C\u002Fspan\u003E()\\n            .\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ex_y\u003C\u002Fspan\u003E(-\u003Cspan class=\\\"hljs-number\\\"\u003E320.0\u003C\u002Fspan\u003E + \u003Cspan class=\\\"hljs-number\\\"\u003E70.0\u003C\u002Fspan\u003E * i, \u003Cspan class=\\\"hljs-number\\\"\u003E0.0\u003C\u002Fspan\u003E)\\n            .\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ew_h\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E50.0\u003C\u002Fspan\u003E, bar.height);\\n        i += \u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E;\\n    }\\n    draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eto_frame\u003C\u002Fspan\u003E(app, &amp;frame).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EHere, we first create a draw object with \u003Ccode\u003Eapp.draw()\u003C\u002Fcode\u003E. We color the background black and create a mutable variable named \u003Ccode\u003Ei\u003C\u002Fcode\u003E.  The variable is to provide a gap between each bars. Next we loop through the entire \u003Ccode\u003Ebars\u003C\u002Fcode\u003E vector in the model and for each bar we plot a rectangle at \u003Ccode\u003E-320 + 70 * i\u003C\u002Fcode\u003E spot. The \u003Ccode\u003E-320\u003C\u002Fcode\u003E is the left most x-axis on my screen and adding \u003Ccode\u003E70 * i\u003C\u002Fcode\u003E makes sure that the bars don&#39;t get drawn on top of one another and there is a gap between all the bars. The \u003Ccode\u003Ewidth\u003C\u002Fcode\u003E of the bar is constant and the \u003Ccode\u003Eheight\u003C\u002Fcode\u003E is the bar&#39;s height ,i.e, the number of time a number has been selected &quot;randomly&quot;. As we iterate further we will see that the bars begin to reach an equal level. This is kinda cool that we have a visual representation of the pseudo randomness of the random generated by computers. Also we could have drawn the points on screen as such.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\\\\\\\\ In the implementation of Model\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Eimpl\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EModel\u003C\u002Fspan\u003E {\\n\\n\\\\\\\\ -- Previous Code --\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Edisplay\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E, &amp;draw) {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Emut \u003C\u002Fspan\u003E\u003Cspan class=\\\"hljs-variable\\\"\u003Ei\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ef32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E0.0\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Efor\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ebar\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Ein\u003C\u002Fspan\u003E &amp;model.bars {\\n        draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erect\u003C\u002Fspan\u003E()\\n            .\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ex_y\u003C\u002Fspan\u003E(-\u003Cspan class=\\\"hljs-number\\\"\u003E320.0\u003C\u002Fspan\u003E + \u003Cspan class=\\\"hljs-number\\\"\u003E70.0\u003C\u002Fspan\u003E * i, \u003Cspan class=\\\"hljs-number\\\"\u003E0.0\u003C\u002Fspan\u003E)\\n            .\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ew_h\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E50.0\u003C\u002Fspan\u003E, bar.height);\\n        i += \u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E;\\n    }\\n}\\n}\\n\\n\\\\\\\\ In the view function\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Eview\u003C\u002Fspan\u003E(app: &amp;App, model: &amp;Model, frame: Frame) {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Edraw\u003C\u002Fspan\u003E = app.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Edraw\u003C\u002Fspan\u003E();\\n    draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ebackground\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ecolor\u003C\u002Fspan\u003E(BLACK);\\n    model.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Edisplay\u003C\u002Fspan\u003E(&amp;draw);\\n    draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eto_frame\u003C\u002Fspan\u003E(app, &amp;frame).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\u003Cp\u003EThis would have worked as well and this looks way cleaner than the previous version. The entire code can be found here.\u003C\u002Fp\u003E\\n\u003Cpre\u003E\u003Ccode class=\\\"hljs language-rust\\\"\u003E\u003Cspan class=\\\"hljs-keyword\\\"\u003Euse\u003C\u002Fspan\u003E nannou::prelude::*;\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emain\u003C\u002Fspan\u003E() {\\n    nannou::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eapp\u003C\u002Fspan\u003E(model).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eupdate\u003C\u002Fspan\u003E(update).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erun\u003C\u002Fspan\u003E();\\n}\\n\\n\u003Cspan class=\\\"hljs-meta\\\"\u003E#[derive(Clone)]\u003C\u002Fspan\u003E\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Estruct\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EBar\u003C\u002Fspan\u003E {\\n    height: \u003Cspan class=\\\"hljs-type\\\"\u003Ef32\u003C\u002Fspan\u003E,\\n}\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Eimpl\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EBar\u003C\u002Fspan\u003E {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Enew\u003C\u002Fspan\u003E() \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003ESelf\u003C\u002Fspan\u003E {\\n        Bar { height: \u003Cspan class=\\\"hljs-number\\\"\u003E0.0\u003C\u002Fspan\u003E }\\n    }\\n}\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Estruct\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EModel\u003C\u002Fspan\u003E {\\n    bars: \u003Cspan class=\\\"hljs-type\\\"\u003EVec\u003C\u002Fspan\u003E&lt;Bar&gt;,\\n}\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Eimpl\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title class_\\\"\u003EModel\u003C\u002Fspan\u003E {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Enew\u003C\u002Fspan\u003E() \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003ESelf\u003C\u002Fspan\u003E {\\n        Model {\\n            bars: \u003Cspan class=\\\"hljs-built_in\\\"\u003Evec!\u003C\u002Fspan\u003E[Bar::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Enew\u003C\u002Fspan\u003E(); \u003Cspan class=\\\"hljs-number\\\"\u003E10\u003C\u002Fspan\u003E],\\n        }\\n    }\\n\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Eupdate\u003C\u002Fspan\u003E(&amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Emut\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E) {\\n        \u003Cspan class=\\\"hljs-keyword\\\"\u003Eself\u003C\u002Fspan\u003E.bars[\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erandom_range\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E0\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E10\u003C\u002Fspan\u003E)].height += \u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E;\\n    }\\n}\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Emodel\u003C\u002Fspan\u003E(app: &amp;App) \u003Cspan class=\\\"hljs-punctuation\\\"\u003E-&gt;\u003C\u002Fspan\u003E Model {\\n    app.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Enew_window\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Esize\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E640\u003C\u002Fspan\u003E, \u003Cspan class=\\\"hljs-number\\\"\u003E360\u003C\u002Fspan\u003E).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eview\u003C\u002Fspan\u003E(view).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ebuild\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n    Model::\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Enew\u003C\u002Fspan\u003E()\\n}\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Eupdate\u003C\u002Fspan\u003E(_app: &amp;App, model: &amp;\u003Cspan class=\\\"hljs-keyword\\\"\u003Emut\u003C\u002Fspan\u003E Model, _update: Update) {\\n    model.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eupdate\u003C\u002Fspan\u003E();\\n}\\n\\n\u003Cspan class=\\\"hljs-keyword\\\"\u003Efn\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-title function_\\\"\u003Eview\u003C\u002Fspan\u003E(app: &amp;App, model: &amp;Model, frame: Frame) {\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Edraw\u003C\u002Fspan\u003E = app.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Edraw\u003C\u002Fspan\u003E();\\n    draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ebackground\u003C\u002Fspan\u003E().\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ecolor\u003C\u002Fspan\u003E(BLACK);\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Elet\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Emut \u003C\u002Fspan\u003E\u003Cspan class=\\\"hljs-variable\\\"\u003Ei\u003C\u002Fspan\u003E: \u003Cspan class=\\\"hljs-type\\\"\u003Ef32\u003C\u002Fspan\u003E = \u003Cspan class=\\\"hljs-number\\\"\u003E0.0\u003C\u002Fspan\u003E;\\n    \u003Cspan class=\\\"hljs-keyword\\\"\u003Efor\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-variable\\\"\u003Ebar\u003C\u002Fspan\u003E \u003Cspan class=\\\"hljs-keyword\\\"\u003Ein\u003C\u002Fspan\u003E &amp;model.bars {\\n        draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Erect\u003C\u002Fspan\u003E()\\n            .\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ex_y\u003C\u002Fspan\u003E(-\u003Cspan class=\\\"hljs-number\\\"\u003E320.0\u003C\u002Fspan\u003E + \u003Cspan class=\\\"hljs-number\\\"\u003E70.0\u003C\u002Fspan\u003E * i, \u003Cspan class=\\\"hljs-number\\\"\u003E0.0\u003C\u002Fspan\u003E)\\n            .\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Ew_h\u003C\u002Fspan\u003E(\u003Cspan class=\\\"hljs-number\\\"\u003E50.0\u003C\u002Fspan\u003E, bar.height);\\n        i += \u003Cspan class=\\\"hljs-number\\\"\u003E1.0\u003C\u002Fspan\u003E;\\n    }\\n    draw.\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eto_frame\u003C\u002Fspan\u003E(app, &amp;frame).\u003Cspan class=\\\"hljs-title function_ invoke__\\\"\u003Eunwrap\u003C\u002Fspan\u003E();\\n}\\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\\n\",\"bodyBegin\":6,\"frontmatter\":\"title: To be or not to be (Random)?!\\ndate: 2021-06-21\"},\"prev\":{\"link\":\"2021-06-10-lifetimes_in_rust\",\"blog\":{\"date\":\"2021-06-10\",\"title\":\"Lifetimes In Rust\"}},\"next\":{\"link\":\"2021-07-05-linear_reg\",\"blog\":{\"date\":\"2021-07-05\",\"title\":\"Linear Reg\"}}}}"}</script>
+		</div>
+	</body>
+</html>
