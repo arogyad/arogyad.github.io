@@ -7,16 +7,17 @@ It's a bummer that I cannot show you live how the webapp works, I am trying to h
 <div class = 'message'>
   You can test the webapp <a href='https://arogyad.herokuapp.com/' target='_blank'>here</a>. I would like to warn you that the website is very slow(Heroku's free tier websites are very slow), thus the answers provided by the webapp are mostly wrong and I would like to apologize for that. I have made a small gif of the webapp doing what it is supposed to do, you can see it <a href='https://github.com/arogyad/Somewayofdoingmaths' target='_blank'> here </a>.
 </div>
-## The Canvas
+
+# The Canvas
 The canvas is where we draw/write the mathematical operations; all the processes begin here. Honestly, this is the only part of the frontend, everything else on the screen are just helper functions. Let's start by defining the canvas, you can define a canvas with an id of `canvas` in html in this way:
-{% highlight html %}
+```js
 <div class="field">
     <canvas id="canvas"></canvas>
     <div class="tools">
         <button onclick="clear_canvas()" type="button" class="button">Clear</button>
     </div>
 </div>
-{% endhighlight %}
+```
 The `clear_canvas` function clears the canvas (are you surprised?). The html part of boring, so let's move on to the JavaScript part.
 The entire JavaScript part is pretty long, so I will be talking about the key components only. Coding in JavaScript was hands down the trickiest part, all those semi-colons and commas. First I made this canvas drawable which was pretty smooth, there were great tutorials online on how to make a canvas element drawable and I was able to make my canvas do just that quickly; adding that `clear_canvas` was easy as well. There were some hiccups here and there but they were not major problems. The hardest part was making the canvas capture the image drawn on it and sending it to the backend.
 <div class = 'message'>

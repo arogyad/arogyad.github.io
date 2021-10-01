@@ -22,16 +22,3 @@
 		><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4" /></a
 	>
 </div>
-
-<style>
-	@media (min-width: 48em) {
-		#sidebar {
-			position: fixed;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			width: 15rem;
-			text-align: left;
-		}
-	}
-</style>

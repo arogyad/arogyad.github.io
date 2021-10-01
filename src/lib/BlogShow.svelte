@@ -1,10 +1,9 @@
 <script>
-	import MoreContent from './MoreContent.svelte';
+	import NextPrev from './NextPrev.svelte';
 	export let attributes;
 	export let body;
 	export let next;
 	export let prev;
-	export let index;
 </script>
 
 <svelte:head>
@@ -15,5 +14,7 @@
 	<h1 class="md:">{attributes.title}</h1>
 	<span class="font-light">{attributes.date}</span>
 	{@html body}
-	<MoreContent {next} {prev} {index} />
+	<div id="pad" class="pt-8">
+		<NextPrev {next} {prev} />
+	</div>
 </div>
