@@ -3,9 +3,9 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "svelte-kit dev",
-		"build": "rm -rf build && svelte-kit build && touch .svelte-kit/static/build/.nojekyll",
+		"build": "rm -rf build && svelte-kit build && touch build/.nojekyll",
 		"preview": "svelte-kit preview",
-		"deploy": "npm run build && npx gh-pages -d .svelte-kit/static/build -t true",
+		"deploy": "npm run build && npx gh-pages -d build",
 		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. .",
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
 	},
