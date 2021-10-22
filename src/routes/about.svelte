@@ -9,3 +9,6 @@
 		>. The about section is pretty short as I don't have much to say about myself that isn't immensly boring. I will add things to this about as I go on with time. Thank you!
 	</p>
 </div>
+<svelte:head>
+<title>About</a>
+</svelte:head>
