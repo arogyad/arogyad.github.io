@@ -10,5 +10,5 @@
 	</p>
 </div>
 <svelte:head>
-<title>About</a>
+<title>About</title>
 </svelte:head>
