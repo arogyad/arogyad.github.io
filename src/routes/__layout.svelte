@@ -14,7 +14,6 @@
 		referrerpolicy="no-referrer"
 	/>
 </svelte:head>
-
 <SideBar />
 <Button />
 <slot />
