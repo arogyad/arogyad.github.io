@@ -18,7 +18,7 @@
 	<a href="https://github.com/arogyad/" target="_blank"
 		><i class="fa fa-github fa-2x hover:text-4xl text-white duration-200 ml-3" /></a
 	>
-	<a href="https://instagram.com/arogyad/" target="_blank"
+	<a href="https://www.instagram.com/arogya_dahal/" target="_blank"
 		><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4" /></a
 	>
 </div>
