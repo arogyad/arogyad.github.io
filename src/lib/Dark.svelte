@@ -4,4 +4,4 @@
 	}
 </script>
 
-<button on:click={toogleTheme} class="float-right"> a </button>
+<button on:click={toogleTheme} class="float-right">a</button>

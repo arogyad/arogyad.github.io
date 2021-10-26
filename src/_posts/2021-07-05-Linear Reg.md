@@ -7,21 +7,20 @@ Okay! Linear regression, the basic of the regression analysis. There are surely 
 # Maths?!
 The <a href="https://en.wikipedia.org/wiki/Linear_regression">wikipedia page</a> for linear regression is the best summary on linear regression. The maths is concrete and clear to understand as it needs only the basic understanding of matrices and linear algebra. Okay! So let's get into just a bit of maths and then a bit of coding in between.
 
-Linear regression ,as the name suggests, predicts the relation between a dependent variable $$y$$ based on a single or set of explanatory variables $$x$$ under the assumption that the data is linear.  We know that a linear equation is given as: $$y = mx + c$$ so in a linear regression we are trying to predict the $$m$$ parameter which I prefer to call $$\theta$$ as it is just the slope. So linear regression boils down to finding the slope of the given data. This is everything that you need to know tbh, other things just naturally follow as we code along. 
+Linear regression ,as the name suggests, predicts the relation between a dependent variable `$y$` based on a single or set of explanatory variables `$x$` under the assumption that the data is linear.  We know that a linear equation is given as: `$y = mx + c$` so in a linear regression we are trying to predict the `$m$` parameter which I prefer to call `$\theta$` as it is just the slope. So linear regression boils down to finding the slope of the given data. This is everything that you need to know tbh, other things just naturally follow as we code along. 
 
-# Maths into C<span style="font-size: 0.5em;">ode</span> 
-This blog will produce the most basic form of linear regression. Our optimizer will be <a href="https://en.wikipedia.org/wiki/Gradient_descent"> gradient descent method </a> , which is just betting against the gradient until we win or go bust. Quick formula for gradient descent (I love  writing formula in $$\LaTeX$$, sorry cannot help).
+# Maths into C<span style="font-size: 0.5em;">ode` 
+This blog will produce the most basic form of linear regression. Our optimizer will be <a href="https://en.wikipedia.org/wiki/Gradient_descent"> gradient descent method </a> , which is just betting against the gradient until we win or go bust. Quick formula for gradient descent (I love  writing formula in `$\LaTeX$`, sorry cannot help).
 
-<span style="display:table;margin:0 auto;">$$x_{n+1} = x_n - \gamma_n \varDelta F(\relax{x})$$</span>
+`$$x_{n+1} = x_n - \gamma_n \varDelta F(\relax{x})$$`
 
-Here, $$\varDelta F\relax(x)$$ is the gradient of the function $$F \relax(x)$$, $$\gamma_n$$ is a often called a step-size. SGD is used all over the place, and it is also the father of other optimization methods like Adam. Enough with this jargon lets get writing.
+Here, `$\varDelta F\relax(x)$` is the gradient of the function `$F \relax(x)$`, `$\gamma_n$` is a often called a step-size. SGD is used all over the place, and it is also the father of other optimization methods like Adam. Enough with this jargon lets get writing.
 
-Okay! So the first thing that we need is basic amount of matrix algebra. Lets say we want to predict a dependent variable $$y$$ based on explanatory variables $$X$$. Lets say that we have $$p$$ numbers of features that we can predict our results from and there are $$n$$ number of samples. 
+Okay! So the first thing that we need is basic amount of matrix algebra. Lets say we want to predict a dependent variable $$y$$ based on explanatory variables `$X$`. Lets say that we have `$p$` numbers of features that we can predict our results from and there are `$n$` number of samples. 
 
-So the explanatory matrix ($$X$$) can be given as,
+So the explanatory matrix (`$X$`) can be given as,
 
-<span style="display:table;margin:0 auto;">
-$$
+`$$
 X = {
 \begin{pmatrix}
 x_{11} & \cdots & x_{1p} \\
@@ -30,13 +29,13 @@ x_{21} & \cdots & x_{2p} \\
 x_{n1} & \cdots & x_{np}
 \end{pmatrix}
 }
-$$</span>
+$$`
 
-The size of the matrix $$X$$ is $$n \times p$$ on wikipedia you will see a extra column at the beginning consisting of all $$1s$$ but we won't struggle with that here as this is a very simple implementation. In computer terms, $$X$$ is what we feed to the model to predict from or train from depending on the situation. 
+The size of the matrix `$X$` is `$n \times p$` on wikipedia you will see a extra column at the beginning consisting of all `$1s$` but we won't struggle with that here as this is a very simple implementation. In computer terms, `$X$` is what we feed to the model to predict from or train from depending on the situation. 
 
-Lets define the $$y$$ now. So there can only be one prediction to a series of input features so the shape of prediction(dependent) matrix is $$n \times 1.$$ In matrix terms,
+Lets define the `$y$` now. So there can only be one prediction to a series of input features so the shape of prediction(dependent) matrix is `$n \times 1.$` In matrix terms,
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 y = {
 \begin{pmatrix}
@@ -47,13 +46,12 @@ y_n
 \end{pmatrix}
 }
 $$
-</span>
+`
 
 This is the labels that we will be sending to the model to learn from and also the prediction we get from the trained model.
-Now the part that we predict, $$\theta$$. The $$\theta$$ is of shape $$p \times 1$$ so that we can multiply it with $$X$$. As for two matrices to be able to multiply with each other the number of rows on second matrix must be equal to number of columns on second matrix.  As a tradition here in this blog lets her is the matrix representation.
+Now the part that we predict, `$\theta$`. The `$\theta$` is of shape `$p \times 1$` so that we can multiply it with `$X$`. As for two matrices to be able to multiply with each other the number of rows on second matrix must be equal to number of columns on second matrix.  As a tradition here in this blog lets her is the matrix representation.
 
-<span style="display:table;margin:0 auto;">
-$$
+`$$
 \theta = {
 \begin{pmatrix}
 \theta_1 \\
@@ -62,16 +60,15 @@ $$
 \theta_p
 \end{pmatrix}
 }
-$$</span>
+$$`
 
-In this implementation we will be ignoring the $$\varepsilon$$ - error variable. Now combining all these things together, our final equation is given as:
+In this implementation we will be ignoring the `$\varepsilon$` - error variable. Now combining all these things together, our final equation is given as:
 
-<span style="display:table;margin:0 auto;">
+`
 $$y = X\theta$$
-</span>
+`
 
-<span style="display:table;margin:0 auto;">
-$${
+`$${
 \begin{pmatrix}
 y_1 \\
 y_2 \\
@@ -94,11 +91,9 @@ x_{n1} & \cdots & x_{np}
 \theta_p
 \end{pmatrix}
 }
-$$
-</span>
+$$`
 
-<span style="display:table;margin:0 auto;">
-$$
+`$$
 \begin{pmatrix}
 y_1 \\
 y_2 \\
@@ -111,15 +106,15 @@ x_{21}\theta_1+x_{22}\theta_2+\cdots+x_{2p}\theta_p \\
 \vdots \\
 x_{n1}\theta_1+x_{n2}+\cdots+x_{np}\theta_p
 \end{pmatrix}
-$$</span>
+$$`
 
-This above equation is what we are trying to predict and the shape of the matrix is $$n \times 1$$. I am sorry about being unable to name the equation, I am unable to figure out the way to do it. So this function passes through origin,but this isn't optimal. The process of adding a y-intercept will be left for the reader as an exercise. Here is a hint though.
+This above equation is what we are trying to predict and the shape of the matrix is `$n \times 1$`. I am sorry about being unable to name the equation, I am unable to figure out the way to do it. So this function passes through origin,but this isn't optimal. The process of adding a y-intercept will be left for the reader as an exercise. Here is a hint though.
 
-<span style="display:table;margin:0 auto;">
+`
 $$y = X\theta + \varepsilon$$
-</span>
+`
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 \begin{pmatrix}
 y_1 \\
@@ -147,7 +142,7 @@ x_{n1} & \cdots & x_{np}
 \varepsilon_n \\
 \end{pmatrix}
 $$
-</span>
+`
 
 Enough with the maths jargon lets get to the code. Okay so lets make a structure that will represent the linear regression. Calling it `Linear` will be good right?
 ```rust
@@ -166,7 +161,7 @@ impl Linear {
 	}
 }
 ```
-Here we created a `new` function that creates a `Linear` struct. I couldn't create a  empty random matrix without using another crate, so here I am using a little hack(not really a hack though) to create a matrix of size $$n \times 1$$. 
+Here we created a `new` function that creates a `Linear` struct. I couldn't create a  empty random matrix without using another crate, so here I am using a little hack(not really a hack though) to create a matrix of size `$n \times 1$`. 
 Now on to the most important and the simplest part. Every code after this point will be written inside the `impl` block.
 ```rust
 fn hypothesis(&self) -> Array2<f64> {
@@ -174,12 +169,14 @@ fn hypothesis(&self) -> Array2<f64> {
 	prediction
 }
 ```
-Here we do our formula of matrix multiplication ($$y = X\theta$$). We haven't talked about what inner product is, but we don't need a complete definition of it here. For our sake, inner product is the dot product for vector and matrix multiplication for matrix.
+Here we do our formula of matrix multiplication (`$y = X\theta$`). We haven't talked about what inner product is, but we don't need a complete definition of it here. For our sake, inner product is the dot product for vector and matrix multiplication for matrix.
 
 ```rust
 fn gradient(&mut self, gamma: f64, iter: i32) {
 	for _i in 1..iter{
-		let delta = ((self.hypo() - &self.label).reversed_axes().dot(&self.data)).reversed_axes() * (1/self.data.nrows()) * gamma;
+		let delta = ((self.hypo() - &self.label).reversed_axes().dot(&self.data)).reversed_axes() 
+			* (1/self.data.nrows()) 
+			* gamma;
 		self.theta = &self.theta - delta;
 	}
 }
@@ -189,35 +186,35 @@ The `delta` here is the vectorized form of gradient descent that we saw earlier.
 
 The cost function for linear regression is defined as:
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 C = \frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2
 $$
-</span>
+`
 
-This is the cost function which is the average of loss function(this is why we have $$\frac{1}{2m}$$ there. The $$2$$ doesn't matter, it is there to make the equation look prettier after we take the derivative). Here $$m$$ is the number of rows. So, the gradient descent will optimize according to this cost function. Taking the derivative wrt. each $$\theta$$. You can check out the derivation on the bottom of the page. I cannot guarantee that it is correct, as it is something I did, but it is intuitive?
+This is the cost function which is the average of loss function(this is why we have `$\frac{1}{2m}$` there. The `$2$` doesn't matter, it is there to make the equation look prettier after we take the derivative). Here `$m$` is the number of rows. So, the gradient descent will optimize according to this cost function. Taking the derivative wrt. each `$\theta$`. You can check out the derivation on the bottom of the page. I cannot guarantee that it is correct, as it is something I did, but it is intuitive?
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)x
 $$
-</span>
+`
 
-And then finally, relating this to the code above. `(self.hypo() - &self.label)` is the $$(h_\theta\relax(x_i)-y_i)$$ part. Then we `reversed_axis`, which is done to allow the multiplication between the afforementioned value and $$x$$. So this code `(self.hypo()-&self.label).reversed_axes().dot(&self.data)).reversed_axes()` is equivalent to the following expression.
+And then finally, relating this to the code above. `(self.hypo() - &self.label)` is the `$(h_\theta\relax(x_i)-y_i)$` part. Then we `reversed_axis`, which is done to allow the multiplication between the afforementioned value and `$x$`. So this code `(self.hypo()-&self.label).reversed_axes().dot(&self.data)).reversed_axes()` is equivalent to the following expression.
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 \displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)x
 $$
-</span>
+`
 
 Then, we divide it by `self.data.nrows()` as in the equation to get the final value. The extra `gamma` parameter is the step-size as in the equation
 
-<span style="display:table;margin:0 auto;">$$x_{n+1} = x_n - \gamma_n \varDelta F(\relax{x})$$</span>
+`$$x_{n+1} = x_n - \gamma_n \varDelta F(\relax{x})$$`
 
 Now the final step, taking it all together. We subtract the `delta` from `self.theta` to get the new theta value. This is equivalent to the equation above. In terms of our code, the mathematical equation is given as:
 
-<span style="display:table;margin:0 auto;">$$\theta_{n+1} = \theta_n - \gamma \frac{\delta C}{\delta \theta}$$</span>
+`$$\theta_{n+1} = \theta_n - \gamma \frac{\delta C}{\delta \theta}$$`
 
 The `iter` parameter is the number of iteration, surprised? Okay now the final part, the training. Lets create a training function.
 ```rust
@@ -245,54 +242,52 @@ fn main() {
 }
 ```
 There are lot of roads one can go from here. We could add a error-var or create a different optimization algorithm. Thank you for reading, have a great day(or night). 
-The derivation of the loss function is given as. Here, when we derivate the $$\theta$$ is $$\theta_j$$ and the equation is $$h_\theta\relax(x_i) = \theta_j X$$  but for simplicity sake we will be putting it as $$\theta$$ and $$h_\theta\relax(x_i) = \theta X$$.
+The derivation of the loss function is given as. Here, when we derivate the `$\theta$` is `$\theta_j$` and the equation is `$h_\theta\relax(x_i) = \theta_j X$`  but for simplicity sake we will be putting it as `$\theta$` and `$h_\theta\relax(x_i) = \theta X$`.
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 C = \frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2
 $$
-</span>
+`
 
-$$
-Taking\> derivation\> wrt \> "\theta",
-$$
+Taking derivation wrt `$\theta$`,
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 \frac{\delta C}{\delta \theta} = \frac{\frac{1}{2m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)^2}{d\theta}
 $$
-</span>
+`
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{d\theta}
 $$
-</span>
+`
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{2m}\displaystyle\sum_{i=1}^m\frac{(h_\theta\relax(x_i)-y_i)^2}{d(h_\theta\relax(x_i)-y_i)}\times\frac{d(h_\theta\relax(x_i)-y_i)}{d\theta}
 $$
-</span>
+`
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{\cancel{2}m}\times\cancel{2}\times\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i) \lparen \frac{dh_\theta\relax(x_i)}{d\theta} - \frac{dy_i}{d\theta}\rparen
 $$
-</span>
+`
 
-$$We \> know \> h_\theta\relax(x_i) = \theta X \> and \> \frac{dy_i}{d\theta} = 0,$$
+We know `$h_\theta\relax(x_i) = \theta X$` and `$\frac{dy_i}{d\theta} = 0$`,
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)(\frac{\cancel{d\theta} X}{\cancel{d\theta}})
 $$
-</span>
+`
 
-$$So \> we \> have,$$
+So we have,
 
-<span style="display:table;margin:0 auto;">
+`
 $$
 \frac{\delta C}{\delta \theta} = \frac{1}{m}\displaystyle\sum_{i=1}^m(h_\theta\relax(x_i)-y_i)X
 $$
-</span>
+`

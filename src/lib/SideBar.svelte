@@ -4,7 +4,7 @@
 
 <div
 	id="sidebar"
-	class="md:h-full md:w-60 md:fixed bg-green-900 dark:bg-black text-white duration-300 text-center text-sm"
+	class="md:h-full md:w-60 md:fixed bg-red-300 text-white duration-300 text-center text-sm"
 >
 	<div id="items" class="md:pt-40 grid text-center">
 		<a href="/" class="font-bold text-6xl font-serif hover:underline text-white">Arogya Dahal</a>
@@ -22,3 +22,9 @@
 		><i class="fa fa-instagram fa-2x hover:text-4xl text-white duration-200 m-4" /></a
 	>
 </div>
+
+<style>
+	#sidebar {
+		background-color: #0f302a;
+	}
+</style>
