@@ -11,8 +11,7 @@ code {
 	@apply text-sm;
 	font-family: 'Fira Code', monospace;
 	margin: 1rem 0 1rem 0;
-	overflow: visible;
-	padding: 0.25em 0.5em;
+	overflow: auto;
 	color: #bf616a;
 	background-color: #f9f9f9;
 	border-radius: 3px;
@@ -57,9 +56,9 @@ h1 {
 	background-color: #f9f9f9;
 }
 
-.katex-html {
-	@apply hidden;
-}
+/* .katex-html { */
+/* 	@apply hidden; */
+/* } */
 
 math {
 	@apply my-1;

@@ -174,7 +174,7 @@ Here we do our formula of matrix multiplication (`$y = X\theta$`). We haven't ta
 ```rust
 fn gradient(&mut self, gamma: f64, iter: i32) {
 	for _i in 1..iter{
-		let delta = ((self.hypo() - &self.label).reversed_axes().dot(&self.data)).reversed_axes() 
+		let delta = ((self.hypo() - &self.label).reversed_axes().dot(&self.data)).reversed_axes() // long
 			* (1/self.data.nrows()) 
 			* gamma;
 		self.theta = &self.theta - delta;
@@ -200,7 +200,7 @@ $$
 $$
 `
 
-And then finally, relating this to the code above. `(self.hypo() - &self.label)` is the `$(h_\theta\relax(x_i)-y_i)$` part. Then we `reversed_axis`, which is done to allow the multiplication between the afforementioned value and `$x$`. So this code `(self.hypo()-&self.label).reversed_axes().dot(&self.data)).reversed_axes()` is equivalent to the following expression.
+And then finally, relating this to the code above. `(self.hypo() - &self.label)` is the `$(h_\theta\relax(x_i)-y_i)$` part. Then we `reversed_axis`, which is done to allow the multiplication between the afforementioned value and `$x$`. So the code marked `long` above is equivalent to the following expression.
 
 `
 $$
