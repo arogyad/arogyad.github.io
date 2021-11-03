@@ -56,10 +56,15 @@ h1 {
 	background-color: #f9f9f9;
 }
 
-/* .katex-html { */
-/* 	@apply hidden; */
-/* } */
+.katex-display {
+	overflow-x: auto;
+	overflow-y: hidden;
+}
 
 math {
 	@apply my-1;
+}
+
+::selection {
+	background: #ade8e6;
 }
